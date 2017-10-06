@@ -4,9 +4,9 @@ A directory of really 'awful' front-end pages. No Style guide requirements. Temp
 
 ## Purpose 
 
-What we're doing here is giving everyone regardless of skill level a chance to contribute to a repository without being terrified of things like styleguides, making people mad (it's kind of the point), and all the other things that come with big scary things like trying to make stuff with people you've never met who definintely probably maybe know more than you. 
+What we're doing here is giving everyone regardless of skill level a chance to contribute to a repository without being terrified of things like styleguides, making people mad (it's kind of the point), and all the other things that come with big scary stuff normally associated with first time collaborations like trying to make stuff with people you've never met who definintely probably maybe know more than you. 
 
-In other words, It's designed to be difficult to fuck this up from a new person's perspective. While being 'fun' for everyone.
+To put it simply, It's designed to be difficult to fuck this up from a new person's perspective. While being 'fun' for everyone.
 
 ## Getting Started
 
