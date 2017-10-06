@@ -16,7 +16,7 @@ Suggested Reading for those new to github
 
 [Are you Sort of new?](https://guides.github.com/activities/forking/)
 
-Template.html contains a basic page's requirements.
+Template.html  in the subFolder contains a basic page's requirements.
 
 ## Contributing Requirements
 
