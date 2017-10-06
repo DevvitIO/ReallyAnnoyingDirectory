@@ -10,7 +10,8 @@ In other words, It's designed to be difficult to fuck this up from a new person'
 
 ## Getting Started
 
-Suggested Reading for those new to github: 
+Suggested Reading for those new to github 
+
 [Are You Completely New?](https://guides.github.com/activities/hello-world/)
 
 [Are you Sort of new?](https://guides.github.com/activities/forking/)
