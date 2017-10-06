@@ -25,7 +25,7 @@ Template.html contains a basic page's requirements.
 * All new pages must link back to the directory.
 * All new pages must be added in the subDirectory folder.
 * No modifications to the directory page are allowed **EXCEPT** adding a link to your page. Maintain the directory structure when adding your link
-* The anchor back to the directory on your page**must not be impossible to reach**, but you can make it hard to get.
+* The anchor back to the directory on your page **must not be impossible to reach**, but you can make it hard to get.
 * In the description of the pull request detail what it is your page does that is annoying.
 * Only 1 page may be added, but you can go back and update your original page later if you choose to (No external style sheets but CDNs are fine)
 
