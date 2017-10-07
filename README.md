@@ -40,3 +40,9 @@ Template.html  in the subFolder contains a basic page's requirements.
 * Creativity is heavily endorsed, make it as complicated or as simple as you want / are able to.
 * Memes are endorsed
 * You can use a CDN to bring in frameworks.
+
+## Additional QAs
+
+[Check the Wiki](https://github.com/LearnDevelopmentPublic/ReallyAnnoyingDirectory/wiki)
+
+You can also ask me a question in the Discord if you want to know something else.
