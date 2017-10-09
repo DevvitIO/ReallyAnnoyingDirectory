@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  .main {
+    height: 100vh;
+    position: relative;
+  }
+
+  .section {
+    height: 100%;
+    width: 100%;
+  }
+
+  .section--one {
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    background: #fff;
+  }
+
+  .section__row {
+    flex: 1;
+    display: flex;
+    opacity: 0;
+  }
+
+  .section__row>p {
+    font-size: 3.5rem;
+    margin: auto;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .section__row:nth-child(even) {
+    background: paleturquoise;
+  }
+
+  .section__row:nth-child(odd) {
+    background: palegoldenrod;
+  }
+
+  .section--two {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    opacity: 0;
+    z-index: 20;
+  }
+
+  .section__title {
+    font-size: 5vw;
+    font-weight: lighter;
+    letter-spacing: 0.06em;
+  }
+
+  .section__pop-up {
+    margin: 0;
+    position: absolute;
+    max-width: 60vw;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+    background: palevioletred;
+    color: whitesmoke;
+    border-radius: 5px;
+    padding: 10px 15px;
+    border: solid 2px white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    transform: translate(-100%, -100%)
+  }
+
+  .section__pop-up--replay {
+    transform-origin: center center;
+  }
+
+  .section__pop-up>p {
+    margin: auto;
+    font-size: 1.5rem;
+  }
+
+  .section__pop-up:last-of-type {
+    padding: 0;
+    background: palegreen;
+  }
+
+  .section__pop-up>button {
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    color: black;
+    display: block;
+    min-height: 50vh;
+    width: 50vw;
+    background: transparent;
+    border-width: 0;
+    cursor: pointer;
+  }
+
+  .transition {
+    position: absolute;
+    left: calc(50% - 60vw);
+    top: calc(50% - 60vw);
+    height: 120vw;
+    width: 120vw;
+    border-radius: 50%;
+    background: #fff;
+    z-index: 10;
+    transform: scale(0);
+  }
+
+  .footer {
+    height: 10vh;
+    background: palegreen;
+    z-index: 999;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: solid 2px white;
+  }
+
+  .footer>a {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: palevioletred;
+  }
