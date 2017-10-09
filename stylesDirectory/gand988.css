@@ -1,0 +1,45 @@
+/* Styles Here */
+*{
+    box-sizing: border-box;
+  }
+  body{
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #333;
+    font-family: 'Montserrat', sans-serif;
+  }
+  nav{
+    margin: 15px 0;
+  }
+  .back{
+    padding: 10px;
+    background-color: #fff;
+  }
+  .container{
+    margin: 5px 0;
+    color: #fff;
+    text-align: center;
+    border: 1px solid #fff;
+  }
+  .opening{
+    height: 100%;
+    background: linear-gradient(90deg, #5E35B1 50%, #2980b9 50%);
+  }
+  a.join{
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #e67e22;
+  }
+  a.join:link{
+    color: #fff;
+  }
+  .join:hover{
+    color: #d50000;
+    background-color: #27ae60;
+  }
+  .some-text{
+
+  }
+  .btn{
+    margin: 50px 0;
+  }

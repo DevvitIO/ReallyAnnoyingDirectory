@@ -1,0 +1,24 @@
+body {
+    text-align: center;
+    background-image: url("http://www.zingerbugimages.com/backgrounds/puzzle_pieces_background_tiled_forest_green.jpg");
+    text-decoration: none;
+}
+
+header {
+    background-color: #FFFF00;
+    margin-top: 2rem;
+}
+
+main {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+footer a {
+    text-decoration: none;
+    color: #FFF000;
+}
+
+footer a:hover {
+    color: #FF69B4;
+}

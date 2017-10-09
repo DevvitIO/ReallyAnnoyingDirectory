@@ -1,0 +1,19 @@
+		/* Styles Here */
+body {
+    text-align: center;
+    background-image: url("https://s3.us-east-2.amazonaws.com/mrico/hehe.gif");
+    color: red;
+}
+
+#directory-link {
+    text-align: left;
+}
+
+h1 {
+    background-color: black;
+}
+
+p {
+    font-size: 23px;
+    background-color: black;
+}
