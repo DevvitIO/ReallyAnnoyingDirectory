@@ -163,11 +163,11 @@
 <body>
 
       <div class="stage first">
-        <h2>Hey, Nothing to see here, let's take you back!</h2>
+        <h2>Hey! Nothing to see here, let's take you back!</h2>
         <div class='content'>
           <p>
-            Listen I am just, super duper sorry about this. There's nothing on this page!.
-            There's no 'cool' feature - no 'interesting' styling. It's just. Boring.
+            Listen, I am just super duper sorry about this. There's nothing on this page!.
+            There's no 'cool' feature - no 'interesting' styling. It's just...Boring.
           </p>
           <div class='button back-button-one'>...Ok?</div>
         </div>
@@ -178,33 +178,33 @@
         <div class='content'>
           <p>Look, this is just awful. I feel, just awful about this.</p>
           <p>I've forgotten your name. </br>
-             I'm so sorry - Maybe I'm just getting old  -  could you remind me of it?</p>
+             I'm so sorry - maybe I'm just getting old - could you remind me of it?</p>
 
           <div class='input-container'>
             <input type="text" class='text' id="user_name" name='user_name' value='' placeholder="Go on, don't be shy!">
           </div>
 
-          <div class="button name-ok">This, belive it or not, is my name.</div>
+          <div class="button name-ok">This, believe it or not, is my name.</div>
         </div>
 
       </div>
 
       <div class='stage two'>
-        <h2>Ok, <span class='user_name'></span> , Listen.</h2>
+        <h2>Ok, <span class='user_name'></span>, Listen.</h2>
         <div class='content'>
           <p>Things are bad. There was meant to be a button here. A button to take you back.</p>
           <p>If my boss finds out that our button has gone missing, I could be in real big trouble.</p>
-          <p>Look, could you try this button instead, it should be fine, honestly. I've tested it.</p>
+          <p>Look, could you try this button instead? It should be fine, honestly. I've tested it.</p>
           <div class='button stage-two'>RUN -> BUTTON_BACK();</div>
         </div>
       </div>
 
       <div class='stage three'>
-        <h2>Ah. OK. You are still here.</h2>
+        <h2>Ah. OK. You're still here.</h2>
         <div class='content'>
           <p><span class='user_name'></span>, I'm going to level with you. I messed up.</p>
-          <p>Maybe I put the flux-capacitor in the wrong way. It's happend once before.</p>
-          <p>Tell you what, why don't you try flicking that switch for me?</p>
+          <p>Maybe I put the flux-capacitor in the wrong way? It has happend once before.</p>
+          <p>I'll tell you what...why don't you try flicking that switch for me?</p>
           <div class='button turn-off active'>Turn Internet Off</div>
         </div>
       </div>
@@ -212,15 +212,15 @@
       <div class='stage four'>
         <h2>Nope. Nada. Nothing.</h2>
         <div class="content">
-          <p>This is so bad. Worse than that time I confessed my love to a cat whilst drunk on a tinder date. </br> Yikes. </p>
-          <p>Ok <span class="user_name"></span> think!, what could have happened to the button?</p>
+          <p>This is so bad. Worse than that time I confessed my love to a cat whilst drunk on a Tinder date. </br> Yikes. </p>
+          <p>Ok <span class="user_name"></span>, think! What could have happened to the button?</p>
           <div class='input-container'>
             <select name="" id="choice">
               <option value="-1">Button where art thou?</option>
-              <option value="hacker">I'm a hacker. I hacked the mainframe and delted it.</option>
+              <option value="hacker">I'm a hacker. I hacked the mainframe and deleted it.</option>
               <option value="breakup">I think it had a bad breakup. Give it time man.</option>
-              <option value="ransom">It's being held to ransom! We need to save it!</option>
-              <option value="look">Look man, this is annoying take me back!</option>
+              <option value="ransom">It's being held for ransom! We need to save it!</option>
+              <option value="look">Look man, this is annoying. Take me back!</option>
             </select>
           </div>
         </div>
@@ -247,10 +247,10 @@
   var turnOffIndex = 0;
 
 
-  var user_choice_result_hack = "You hacked my button!? Wha.. Why? What did I ever do to you! Just Leave. Not cool!. So not cool!";
-  var user_choice_result_breakup = "You know what, maybe you are right? A broken heart can kill a button. I was so selfish. I'm sorry button. I'll never hurt you again!";
-  var user_choice_result_ransom = "I have just got off the phone from F Society. They agree to relase the button if we pay the £9000 by tommorow. I told them to contact you via paypal. They have provided us a temporary replacment 'back' button in the meantime.";
-  var user_choice_result_look = "Well, Ain't you Mr/Mrs busy body. Fine. Have your button. Go. Let me listen to the Smiths in peace.";
+  var user_choice_result_hack = "You hacked my button!? Wha.. Why? What did I ever do to you! Just Leave. Not cool! Not cool at all!";
+  var user_choice_result_breakup = "You know what, maybe you're right? A broken heart can kill a button. I was so selfish. I'm sorry button. I'll never hurt you again!";
+  var user_choice_result_ransom = "I have just gotten off the phone with the F Society. They agree to relase the button if we pay the £9000 by tommorow. I told them to contact you via PayPal. They have provided us a temporary replacment 'back' button in the meantime.";
+  var user_choice_result_look = "Well, Ain't you Mr/Mrs busy body? Fine. Have your button. Go. Let me listen to the Smiths in peace.";
 
 
   function check_stage(){
