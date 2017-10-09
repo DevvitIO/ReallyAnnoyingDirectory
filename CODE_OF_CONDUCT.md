@@ -40,7 +40,7 @@ Unacceptable behavior from any community member, including sponsors and those wi
 
 If anyone tells you to stop doing something that was mentioned above it's expected you'll do so.
 
-If for some insane reason I, or anyone else in charge of maintaining this repo/organization start behaving like this, I expect/ would appreciate someone telling me / them to stop being an asshole. 
+If for some reason I, or anyone else in charge of maintaining this repo/organization start behaving like this, I expect/would appreciate someone telling me / them to stop being an asshole. 
 
 ## 6. Reporting Guidelines
 
