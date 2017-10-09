@@ -27,8 +27,9 @@ The following behaviors are expected and requested of all community members:
 
 The following behaviors are considered harassment and are unacceptable within our community:
 
-*   Don't Be an asshole
-*   doing or saying anything that is, sexist, racist, homophobic, transphobic, ableist, threats of violence  or otherwise discriminatory jokes and language makes you an asshole. 
+
+*   Doing or saying anything that is, sexist, racist, homophobic, transphobic, ableist, threats of violence  or otherwise discriminatory jokes and language makes you an Asshole. 
+*   Don't Be An Asshole
 *   Posting or displaying sexually explicit or violent material.
 *   Deliberate intimidation, stalking or following (online or in person).
 *   Advocating for, or encouraging, any of the above behavior.
