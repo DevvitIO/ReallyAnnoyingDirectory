@@ -66,16 +66,42 @@
       text-align: center;
     }
 
+    #github-link-back {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 1.2rem;
+      background: white;
+      color: steelblue;
+      padding: 10px;
+      text-decoration: none;
+    }
+
+    #github-link-back:hover{
+      text-decoration: underline;
+    }
+
     @media only screen and (max-width: 414px) {
       .page-box {
         width: 40%;
+      }
+
+      #github-link-back {
+        position: initial;
+        text-align: center;
+        display: block;
       }
     }
   </style>
 </head>
 
 <body>
+  <a id="github-link-back" href="https://github.com/LearnDevelopmentPublic/ReallyAnnoyingDirectory">
+    View on Github <i class="fa fa-github"></i>
+  </a>
+
   <h1>Directory</h1>
+
   <main id="pages-area">
     <a class="page-box" href="subDirectory/TEMPLATE.html">
       <h4>Template Page</h4>
@@ -105,6 +131,8 @@
       <h4>WTSampler</h4>
     </a>
   </main>
+
+  <script src="https://use.fontawesome.com/77dd874e10.js"></script>
 </body>
 
 </html>
