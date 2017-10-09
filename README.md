@@ -16,7 +16,14 @@ Suggested Reading for those new to github
 
 [Are you Sort of new?](https://guides.github.com/activities/forking/)
 
-Template.html  in the subFolder contains a basic page's requirements.
+Template.html  in the subDirectory folder contains a basic page's requirements.
+
+Begginer Hints:
+
+Every file that you see that ends with .md is just a text file anyone can read. If you accidentally delete one, it's not a big deal.
+
+If you want to add an .html page/file to the directory, you can simply make a copy of the template located within the subDirectory, rename it and then make a pull request with your file added into the subDirectory.
+
 
 ## Contributing Requirements
 
