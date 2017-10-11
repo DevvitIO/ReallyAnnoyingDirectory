@@ -47,11 +47,13 @@
     color:black;
   }
   .searchIn{
-    height: 30px;
-    margin-top:15px;
-    margin-bottom:15px;
-    border:1px solid #bbbbbb;
-    margin-left:20px;
+    height: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #bbbbbb;
+    margin-left: 20px;
+    padding: 5px;
+    border-radius: 2px;
   }
 
   .articlel{
@@ -85,7 +87,7 @@
     margin-top: 25px;
   }
   .artSubHead{
-    margin-top: 25px;
+    margin-top: 95px;
     font-size: 25px;
     font-weight: 600px;
   }
@@ -97,6 +99,8 @@
 
   .readMoreCon{
     width: 100%;
+    position: absolute;
+    box-shadow:0px 0px 24px 8px rgba(255, 255, 255, 0.89);
     background-color: white;
   }
   .readMore{
@@ -119,6 +123,7 @@
     width: 100%;
     display: inline-block;
     margin-bottom:15px;
+    cursor: pointer;
   }
   .authorImg{
     margin-top:10px;
@@ -134,6 +139,11 @@
   .staff{
     color:gray;
     font-size: 15px;
+  }
+
+  .mainCon{
+    max-height: 1800px;
+    overflow: hidden;
   }
 
 
@@ -169,6 +179,7 @@
   .commentName{
     color:#365899;
     margin-bottom: 5px;
+    cursor: pointer;
   }
   .commentBottom span{
     font-size: 12px;
@@ -179,6 +190,62 @@
   .commentBottom .comDate{
     cursor: default!important;
     color:#888888!important;
+  }
+
+  /* popup */
+  .emailCon{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 100;
+    margin-top: -60px;
+    background: rgba(0, 0, 0, 0.92);
+    display: none;
+  }
+  .popUp{
+    position: fixed;
+    top:50%;
+    left: 50%;
+    z-index: 100;
+    transform: perspective(1px) translateY(-50%) translateX(-50%);
+    margin: 0 auto;
+    background: white;
+    border-radius:5px;
+    padding:20px;
+  }
+  .col{
+    font-size: 40px;
+  }
+  .emailField{
+    margin-top:10px;
+    padding:10px;
+    border:1px solid #cacaca;
+    border-radius: 3px;
+    width: calc(100% - 22px);
+  }
+  .buttons{
+    margin-top:10px;
+  }
+  .buttons button{
+    height: 35px;
+    background: none;
+    border:none;
+    color:gray;
+    cursor: pointer;
+  }
+  .buttons button:nth-child(2){
+    float:right;
+    background: blue;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  .disclaim{
+    margin-top:10px;
+    font-size: 8px;
+    text-align: center;
   }
   </style>
 </head>
@@ -199,45 +266,69 @@
     </div>
   </div>
   <!-- three pane system -->
+  <div class="emailCon">
+    <div class="popUp">
+      <div class="col">
+        You have to subscirbe to our newsletter to view full articles!
+      </div>
+      <input class="emailField" placeholder="email"/>
+      <div class="buttons">
+        <button class="guilt">No I hate democracy</button>
+        <button class="send">Subscribe</button>
+      </div>
+      <div class="disclaim">
+        *We promise to only send you spam and sell your data
+      </div>
+    </div>
+  </div>
+
   <div class="padding">
     <div class="adsBrah">
 
     </div>
     <div class="articlel">
-      <div class="title">
-        The 36 Most Unbelievably Flawless And Life-Changing Doge Memes From Last Night's "Saturday Night Live"
-      </div>
-      <div class="subHeader">
-        Number 15 will shock you!
-      </div>
-      <div class="date">
-        Posted on October 6, 2017, at 2:01 p.m.
-      </div>
-
-      <!-- author con -->
-      <div class="author">
-        <img src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/s150x150/12976456_1727761970831844_2009558910_a.jpg" class="authorImg" />
-        <div class="authorName">
-          Chris Bolton
+      <div class="mainCon">
+        <div class="title">
+          The 36 Most Unbelievably Flawless And Life-Changing Doge Memes From Last Night's "Saturday Night Live"
         </div>
-        <div class="staff">
-          FinchFeed Staff
+        <div class="subHeader">
+          Number 15 will shock you!
         </div>
-      </div>
+        <div class="date">
+          Posted on October 6, 2017, at 2:01 p.m.
+        </div>
 
-      <div class="hero">
-        <!-- a real human bean -->
-        <img src="http://i0.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg" class="heroImg" />
+        <!-- author con -->
+        <div class="author">
+          <img src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/s150x150/12976456_1727761970831844_2009558910_a.jpg" class="authorImg" />
+          <div class="authorName">
+            Chris Bolton
+          </div>
+          <div class="staff">
+            FinchFeed Staff
+          </div>
+        </div>
+
+        <div class="hero">
+          <!-- a real human bean -->
+          <img src="http://i0.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg" class="heroImg" />
+        </div>
+        <div class="meat">
+          Last night's "Saturday Night Live" sure was a doozy with longtime comedian Norm McDonald firing out the Doge memes left and right for the entire time the show was running. We here at FinchFeed have hand picked the top 36 out of 39 Doge memes for your viewing pleasure.
+        </div>
+        <div class="artSubHead">
+          1. The first meme fired out toward the audience was the Classic 'Twinkie Doge' meme populirized in 2016 to much critcal acclaim. Many wows.
+        </div>
+        <img class="artImage" src="http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/twinkieDoge.jpg" />
+
+        <!-- these two should be hidden -->
+        <div class="artSubHead">
+          2. Happy little borkidents. The second best Doge meme fired out into the ether was the commoritive Doge Ross Meme, populirzed from the TV series featuring a dog painting scenery. An instant classic your family is sure to love.
+        </div>
+        <img class="artImage" src="https://img.memecdn.com/doge-ross_o_2411101.jpg" />
       </div>
-      <div class="meat">
-        Last night's "Saturday Night Live" sure was a doozy with longtime comedian Norm McDonald firing out the Doge memes left and right for the entire time the show was running. We here at FinchFeed have hand picked the top 36 out of 39 Doge memes for your viewing pleasure.
-      </div>
-      <div class="artSubHead">
-        1. The first meme fired out toward the audience was the Classic 'Twinkie Doge' meme populirized in 2016 to much critcal acclaim. Many wows.
-      </div>
-      <img class="artImage" src="http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/twinkieDoge.jpg" />
       <div class="readMoreCon">
-        <div class="readMore">
+        <div onclick="letThereBePopups()" class="readMore">
           Read More
         </div>
       </div>
@@ -271,7 +362,7 @@
             Sally Fingers
           </div>
           <div class="commentMeat">
-            FinchFeed please have my childrend!!!
+            FinchFeed please have my children!!!
           </div>
           <div class="commentBottom">
             <span>Like</span> <span>Reply</span> <span class="comDate">Oct 7, 2017 2:11pm</span>
@@ -284,7 +375,9 @@
     </div>
   </div>
   <script>
-  /* Javascript Here*/
+  function letThereBePopups(){
+    document.getElementsByClassName('emailCon')[0].style.display = 'block'
+  }
   </script>
 </body>
 </html>

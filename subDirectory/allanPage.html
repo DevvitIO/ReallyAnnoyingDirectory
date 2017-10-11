@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Such An Annoying Document</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <style>
+
+
+    /* Styles Here */
+    body, *{
+      box-sizing: border-box;
+      margin:0;
+      padding:0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body{
+      background-color: #ececec;
+      text-align: center;
+    }
+
+    h1,p{
+      cursor: default;
+    }
+
+    .stage{
+      position: fixed;
+      top:-50%;
+      left:50%;
+      text-align: center;
+      background-color: #fff;
+      font-size: 16px;
+      color:#000;
+      cursor: default;
+      z-index: 10;
+      width: 500px;
+      margin-left:-250px;
+      height: auto;
+      margin-top: -150px;
+      border-radius: 2px;
+      box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: all 1s;
+    }
+
+    .stage h2{
+      float:Left;
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      height: 60px;
+      line-height: 60px;
+      border-bottom: 1px solid #eee;
+      cursor: default;
+      font-size: 18px;
+      font-weight: 400;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .stage p {
+      font-size: 16px;
+      letter-spacing: 1px;
+      line-height: 26px;
+      margin:0 0 20px 0;
+    }
+
+    .stage .content{
+      float:left;
+      width: 100%;
+      height: auto;
+      padding: 20px 40px;
+      text-align: center;
+      overflow: scroll;
+    }
+
+    .stage.active{
+      opacity:1;
+      top:50%;
+      transition: all 0.6s
+    }
+
+    .input-container{
+      float:Left;
+      width: 100%;
+      height: 50px;
+      margin: 0 0 20px 0;
+      border: 1px solid #000;
+      overflow: hidden;
+    }
+    .input-container input ,
+    .input-container select{
+      float:left;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border: none;
+      font-size: 16px;
+    }
+
+    .button{
+      float:Left;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      background-color: #79DD78;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      padding: 0;
+      color:#fff;
+      margin-bottom: 20px;
+      transition: all 0.4s;
+    }
+    .button:hover{
+      background-color: #98EF97;
+    }
+      .stage-two , .button.turn-off{
+        background-color: orange;
+      }
+        .stage-two:hover , .button.turn-off:hover{
+          background-color: red;
+          font-size: 20px;
+          text-shadow: 2px 2px 2px rgba(0,0,0,1);
+        }
+
+    .button.turn-off.active{
+      background-color: #B93535;
+    }
+      .button.turn-off.active:hover{
+        background-color: #FF0000;
+        text-shadow: 2px 2px 2px rgba(0,0,0,1);
+        font-size: 20px;
+      }
+
+
+    .shamless-self-promotion{
+      position: fixed;
+      right:20px;
+      bottom:20px;
+      color:#000;
+      font-size: 16px;
+      opacity:0.8;
+      cursor: pointer;
+      transition: all 0.5s;
+    }
+      .shamless-self-promotion:hover{
+        opacity:1;
+      }
+
+
+
+
+
+  </style>
+</head>
+<body>
+
+      <div class="stage first">
+        <h2>Hey! Nothing to see here, let's take you back!</h2>
+        <div class='content'>
+          <p>
+            Listen, I am just super duper sorry about this. There's nothing on this page!.
+            There's no 'cool' feature - no 'interesting' styling. It's just...Boring.
+          </p>
+          <div class='button back-button-one'>...Ok?</div>
+        </div>
+      </div>
+
+      <div class='stage one'>
+        <h2>Oh no...</h2>
+        <div class='content'>
+          <p>Look, this is just awful. I feel, just awful about this.</p>
+          <p>I've forgotten your name. </br>
+             I'm so sorry - maybe I'm just getting old - could you remind me of it?</p>
+
+          <div class='input-container'>
+            <input type="text" class='text' id="user_name" name='user_name' value='' placeholder="Go on, don't be shy!">
+          </div>
+
+          <div class="button name-ok">This, believe it or not, is my name.</div>
+        </div>
+
+      </div>
+
+      <div class='stage two'>
+        <h2>Ok, <span class='user_name'></span>, Listen.</h2>
+        <div class='content'>
+          <p>Things are bad. There was meant to be a button here. A button to take you back.</p>
+          <p>If my boss finds out that our button has gone missing, I could be in real big trouble.</p>
+          <p>Look, could you try this button instead? It should be fine, honestly. I've tested it.</p>
+          <div class='button stage-two'>RUN -> BUTTON_BACK();</div>
+        </div>
+      </div>
+
+      <div class='stage three'>
+        <h2>Ah. OK. You're still here.</h2>
+        <div class='content'>
+          <p><span class='user_name'></span>, I'm going to level with you. I messed up.</p>
+          <p>Maybe I put the flux-capacitor in the wrong way? It has happend once before.</p>
+          <p>I'll tell you what...why don't you try flicking that switch for me?</p>
+          <div class='button turn-off active'>Turn Internet Off</div>
+        </div>
+      </div>
+
+      <div class='stage four'>
+        <h2>Nope. Nada. Nothing.</h2>
+        <div class="content">
+          <p>This is so bad. Worse than that time I confessed my love to a cat whilst drunk on a Tinder date. </br> Yikes. </p>
+          <p>Ok <span class="user_name"></span>, think! What could have happened to the button?</p>
+          <div class='input-container'>
+            <select name="" id="choice">
+              <option value="-1">Button where art thou?</option>
+              <option value="hacker">I'm a hacker. I hacked the mainframe and deleted it.</option>
+              <option value="breakup">I think it had a bad breakup. Give it time man.</option>
+              <option value="ransom">It's being held for ransom! We need to save it!</option>
+              <option value="look">Look man, this is annoying. Take me back!</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class='stage finish'>
+        <h2>Well that explains it...</h2>
+        <div class="content">
+          <p>Throughout history there have been loads of great teams. Jack and Jill. Romeo and Juliet. Bill and Bob. Allan and <span class='user_name'></span>.</p>
+          <p>Time for us to part ways, but before we go, I just want to say...</p>
+          <p class='user_choice_text'></p>
+
+          <a class='button' href="https://learndevelopmentpublic.github.io/ReallyAnnoyingDirectory/" class="back-button">The End.</a>
+        </div>
+      </div>
+
+
+  <a href="http://www.workofcode.com" class='shamless-self-promotion'>See more of my rubbish here.</a>
+
+  <script>
+  var currentStage = 0;
+  var username;
+  var userchoice;
+  var turnOffIndex = 0;
+
+
+  var user_choice_result_hack = "You hacked my button!? Wha.. Why? What did I ever do to you! Just Leave. Not cool! Not cool at all!";
+  var user_choice_result_breakup = "You know what, maybe you're right? A broken heart can kill a button. I was so selfish. I'm sorry button. I'll never hurt you again!";
+  var user_choice_result_ransom = "I have just gotten off the phone with the F Society. They agree to relase the button if we pay the £9000 by tommorow. I told them to contact you via PayPal. They have provided us a temporary replacment 'back' button in the meantime.";
+  var user_choice_result_look = "Well, Ain't you Mr/Mrs busy body? Fine. Have your button. Go. Let me listen to the Smiths in peace.";
+
+
+  function check_stage(){
+    //Remove all actives first
+    $('.stage.active').removeClass('active');
+
+    //Check the stages
+    if(currentStage === 0){
+      $('.stage.first').addClass('active');
+    }
+    if(currentStage === 1){
+      $('.stage.one').addClass('active');
+    }
+    if(currentStage === 2){
+      $('.stage.two').addClass('active');
+    }
+    if(currentStage === 3){
+      $('.stage.three').addClass('active');
+    }
+    if(currentStage === 4){
+      $('.stage.four').addClass('active');
+    }
+    if(currentStage === 5){
+      $('.stage.finish').addClass('active');
+    }
+  }
+
+  //Event driven features
+
+    //When the first button is clicked
+    $('.back-button-one').click(function(){
+      currentStage = 1;
+      check_stage();
+    });
+
+    //User clicks the name button
+    $('.name-ok').click(function(){
+      currentStage = 2;
+      username = $('#user_name').val();
+      $('.user_name').text(username);
+      check_stage();
+    });
+
+    //User clicks the stage two button
+    $('.button.stage-two').click(function(){
+      currentStage = 3;
+      check_stage();
+    });
+
+    //Turn off functionality
+    $('.turn-off').click(function(){
+      if(turnOffIndex === 0){
+        $('.turn-off').removeClass('active').text('TURN ON INTERNET');
+      }if(turnOffIndex > 0){
+        $('.turn-off').addClass('active').text('TURN OFF INTERNET');
+        currentStage = 4;
+        check_stage();
+      }
+      turnOffIndex++;
+    });
+
+    //When user picks a drop down item
+    $('#choice').change(function(){
+      userchoice = $('#choice').val();
+      if(userchoice != -1 && userchoice != '-1'){
+        if(userchoice == 'hacker'){
+          $('.user_choice_text').text(user_choice_result_hack);
+        }
+        if(userchoice == 'breakup'){
+          $('.user_choice_text').text(user_choice_result_breakup);
+        }
+        if(userchoice == 'ransom'){
+          $('.user_choice_text').text(user_choice_result_ransom);
+        }
+        if(userchoice == 'look'){
+          $('.user_choice_text').text(user_choice_result_look);
+        }
+        currentStage = 5;
+        check_stage();
+      }
+    });
+
+
+
+  //On first page, check stage
+  setTimeout(function(){ check_stage(); }, 1000);
+
+
+
+
+
+
+  </script>
+</body>
+</html>
