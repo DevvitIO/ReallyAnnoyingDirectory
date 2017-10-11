@@ -7,96 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Directory</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Roboto');
-html,
-body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    background: #FDD761;
-}
-
-* {
-    font-family: Roboto, sans-serif;
-}
-
-#pages-area {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.page-box {
-    width: 15%;
-    min-height: 100px;
-    max-height: 200px;
-    background: white;
-    color: steelblue;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    margin: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0px 5px 0px rgba(0, 0, 0, 0.15);
-    transition: all .2s ease-in-out;
-    text-align: center;
-}
-
-.page-box>h4 {
-    font-size: 1.2rem;
-    word-break: break-all;
-    white-space: normal;
-    padding: 5px;
-}
-
-.page-box:hover {
-    color: black;
-    transform: scale(1.2);
-    box-shadow: none;
-}
-
-h1 {
-    color: steelblue;
-    text-align: center;
-}
-
-#github-link-back {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 1.2rem;
-    background: white;
-    color: steelblue;
-    padding: 10px;
-    text-decoration: none;
-}
-
-#github-link-back:hover {
-    text-decoration: underline;
-}
-
-@media only screen and (max-width: 414px) {
-    .page-box {
-        width: 40%;
-    }
-    #github-link-back {
-        position: initial;
-        text-align: center;
-        display: block;
-    }
-}
-
-    </style>
+    <link rel="stylesheet" href="styles/default.css">
 </head>
 
 <body>
     <a id="github-link-back" href="https://github.com/LearnDevelopmentPublic/ReallyAnnoyingDirectory">
-    View on Github <i class="fa fa-github"></i>
-  </a>
+        View on Github <i class="fa fa-github"></i>
+    </a>
+
+    <div class="style-select-wrap">
+        <div class="style-select">Page Layout <span class="select-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span></div>
+        <ul class="style-list">
+            <li class="style-list-item">Style Name</li>
+            <li class="style-list-item">Style Name</li>
+            <li class="style-list-item">Style Name</li>
+        </ul>
+    </div>
 
     <h1>Directory</h1>
 
