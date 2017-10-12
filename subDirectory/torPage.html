@@ -1,34 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>memes</title>
-<style>
-  a{position:absolute;}
-</style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+  <style>
+    a {
+      position: absolute;
+    }
+    /* audio{ width:100%;} */
+
+    .btn {
+      padding: 1em;
+      background-color: Green;
+      border-radius: .5em;
+      border: 1px solid black;
+      position: absolute;
+    }
+
+    a.btn {
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+    }
+
+
+  </style>
 
 </head>
+
 <body>
 
-  <a id = 'urnvrgonnaleave' href="https://learndevelopmentpublic.github.io/ReallyAnnoyingDirectory/">Back to Directory</a>
 
+
+
+
+
+
+  <a href="https://learndevelopmentpublic.github.io/ReallyAnnoyingDirectory/" class='btn' id='btn-return'> Back to Directory</a>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Prompt on screen to slide out ask for name -->
+  <!-- Oh your name is John Cena? -->
+  <!-- ALl gifs appear sound starts playing -->
+  <!-- Button NO I DIDN"T WRITE THAT PLS STOP -->
+  <!-- SpecialMLGforces -->
+
+
+  <audio id='player' preload='auto' autoplay loop>
+
+    <source src="https://res.cloudinary.com/tor020/video/upload/v1507759079/TastefulElevatorRadioFilter_vkgeeb.ogg" type="audio/ogg"
+    />
+    <em>Sorry, your browser doesn't support HTML5 audio.</em>
+  </audio>
 </body>
-
 <script>
-(function(){
 
-setInterval(function(){
-  alert
-}, 1250)
+class Ele {
+  constructor(element, id, _class) {
+    this.element = element;
+    this.id = id;
+    this.class = _class;
+  }
+  getID() {
+    return document.getElementById(`${this.id}`);
+  }
+  chngText(text){
+    document.getElementById(`${this.id}`).innerHTML = `${text}`;
+  }
+  changePos(top, left) {
+    document.getElementById(`${this.id}`).style.top   = `${top}px`;
+    document.getElementById(`${this.id}`).style.left  = `${left}px`;
+  }
+ }
 
 
-})();
+
+class Utility {
+  constructor(){
+    this.num1_10 = Math.floor(Math.random() * 10);
+    this.num1_20 = Math.floor(Math.random() * 20);
+    this.num1_50 = Math.floor(Math.random() * 50);
+    this.num1_100 = Math.floor(Math.random() * 100);
+    this.randPageHeight = Math.floor(Math.random() * window.innerHeight);
+    this.randPageWidth = Math.floor(Math.random() * window.innerWidth);
+  }
+
+}
+
+
+  //Instantiation
+  let audio = new Ele('audio', 'player', 'null');
+  let dirBtn = new Ele('button', 'btn-return', 'btn');
+
+  let randCent = new Utility();
+  //Audio
+  let ap = audio.getID();
+  ap.volume = 1;
+  let counter = 0;
+  let myBtn = dirBtn.getID();
+
+dirBtn.changePos(window.innerHeight/2, window.innerWidth/2);
+
+
+function btnmove(){
+  let rand = new Utility();
+    
+  dirBtn.changePos(rand.randPageWidth/2, rand.randPageHeight/2)
+  counter += 1;
+  if (counter > 3){
+    dirBtn.chngText('Still under construction check back soon!')
+    this.removeEventListener('mousemove', btnmove)
+  }
+}
+
+  myBtn.addEventListener('mousemove', btnmove)
 
 </script>
 
 </html>
-
-
-
