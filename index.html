@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Directory</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-  <link rel="stylesheet" href="styles/default.css">
 </head>
 
 <body>
@@ -70,16 +69,16 @@
 
   // ADDING A STYLESHEET?
   // Kindly add your sheet name to the 'syleSheets' array
-  ​var styleSheets = ['default', 'fmg'];
+  var styleSheets = ['default', 'finchMFG'];
 
   // 'random' number generator, based on size of array
   var chosenSheet = Math.floor(Math.random() * (styleSheets.length + 0 ));
 
   var link = document.createElement( "link" );
-  link.href = styleSheets[chosenSheet] + '.css'
+  link.href = './styles/' + styleSheets[chosenSheet] + '.css'
   link.type = "text/css";
   link.rel = "stylesheet";
-  ​
+
   document.getElementsByTagName( "head" )[0].appendChild( link );
 
   </script>
