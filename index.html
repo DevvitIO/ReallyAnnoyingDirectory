@@ -81,6 +81,13 @@
 
   document.getElementsByTagName( "head" )[0].appendChild( link );
 
+  // populates the css list automagically
+  for(var i = 0; i < styleSheets.length; i++){
+    var opt = document.createElement( "li" );
+    opt.className = "style-list-item";
+    opt.appendChild(document.createTextNode(styleSheets[i]));
+    document.getElementsByClassName( "style-list" )[0].appendChild( opt );
+  }
   </script>
 
   <script src="https://use.fontawesome.com/77dd874e10.js"></script>
