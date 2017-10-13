@@ -75,36 +75,43 @@ h1 {
     margin-left: 50px;
     position: relative;
     padding-top: 20px;
+    z-index: 100;
 }
 
 .style-select {
     width: 200px;
     padding: 15px;
-    background: white;
+    background: #ecf0f1;
     border-radius: 5px;
     color: steelblue;
     cursor: pointer;
 }
 
-.style-list {
-    background: white;
+.style-list-wrap {
+    visibility: hidden;
+    background: #ecf0f1;
     width: 200px;
-    padding: 15px 15px 25px 15px;
-    left: 0;
-    top: 53px;
-    border: 1px solid grey;
-    border-top: none;
-    border-radius: 0px 0px 5px 5px;
+    padding-top: 5px;
+    max-height: 0;
+    overflow: hidden;
     position: absolute;
-    display: none;
-    list-style: none;
-    color: steelblue;
+    left: 0;
+    top: 64px;
+    transition: visibility 1s linear, max-height 1s linear;
+    border-radius: 0px 0px 5px 5px;
 }
 
-.style-select-active {
-    border-radius: 5px 5px 0px 0px;
-    border: 1px solid grey;
-    border-bottom: none;
+.style-list {
+    background: #ecf0f1;
+    list-style: none;
+    color: steelblue;
+    margin: 0;
+    padding: 0;
+}
+
+.slide-down {
+    max-height: 1000px;
+    visibility: visible;
 }
 
 .select-icon {
@@ -112,9 +119,17 @@ h1 {
 }
 
 .style-list-item {
-    padding: 8px 0 8px 0;
+    padding: 15px 15px 15px 15px;
     border-bottom: 1px solid grey;
     cursor: pointer;
+}
+
+.style-list-item:hover {
+    background: #bdc3c7;
+}
+
+.style-list-item:last-child {
+    border-bottom: none;
 }
 
 
