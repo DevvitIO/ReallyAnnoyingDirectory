@@ -19,13 +19,20 @@ var chosenSheet = Math.floor(Math.random() * (styleSheets.length + 0 ));
 appendStyleSheet(styleSheets[chosenSheet])
 
 function appendStyleSheet(target){
-	if(document.styleSheets[3])
-		document.styleSheets[3].disabled = true;
-	var link = document.createElement( "link" );
-	link.href = './styles/' + target + '.css'
-	link.type = "text/css";
-	link.rel = "stylesheet";
-	document.getElementsByTagName( "head" )[0].appendChild( link );
+	// if you add a stylesheet, please edit this accordingly. 
+	if(document.styleSheets[2]){
+		var d = document.getElementsByTagName("head");
+		document.head.childNodes[12].href = "./styles/"+target+'.css'
+		console.log(d)
+		document.styleSheets[2].disabled = true;
+	}else{
+		var link = document.createElement( "link" );
+		link.href = './styles/' + target + '.css'
+		link.type = "text/css";
+		link.rel = "stylesheet";
+		link.id = "cssHead"
+		document.getElementsByTagName( "head" )[0].appendChild( link );
+	}
 }
 
 // populates the css list automagically
