@@ -50,7 +50,16 @@ If you want to add an .html page/file to the directory, you can simply make a co
 
 ## Additional QAs
 
-[Check the Wiki](https://github.com/LearnDevelopmentPublic/ReallyAnnoyingDirectory/wiki)
+### Q. Can I work on this 'Issue'?
+
+So, lets say you stop by the issues tab and see something that you'd like to work on. You look a little further and see that someone said they're working on it already. Maybe nobody has commented on it yet but you're still not sure if you can work on it. So here are some guidelines for you.
+
+* Issues are completed on a first come first serve basis. What this means in context is that that if the issue is still there you may work on it and nobody has been officially assigned it you may work on it. Here is a gif on how to check if there are any assignees for issues. [gif](https://i.gyazo.com/f69aa4ec41124f0b603ca99e19ba595d.mp4)
+* This means that if someone said they are working on it, and you decide you want to work on it and you both submit PRs, I will find a way to incorporate both changes even if it's fixing the same thing.
+
+The reason being is that I don't anyone to feel like they can't work on an issue. So if things overlap, that is absolutely fine I'll make sure to incorporate the code somehow.
+
+For other QAs [Check the Wiki](https://github.com/LearnDevelopmentPublic/ReallyAnnoyingDirectory/wiki)
 
 You can also ask me a question in the Discord if you want to know something else.
 
