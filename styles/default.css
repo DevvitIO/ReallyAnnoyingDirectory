@@ -66,6 +66,7 @@ h1 {
     color: steelblue;
     padding: 10px;
     text-decoration: none;
+    z-index: 101;
 }
 
 #github-link-back:hover {
@@ -144,4 +145,3 @@ h1 {
         display: block;
     }
 }
-
