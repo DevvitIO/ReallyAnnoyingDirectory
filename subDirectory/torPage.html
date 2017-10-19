@@ -13,7 +13,7 @@
         position: absolute;
         }
         /* audio{ width:100%;} */
-
+        body{background-color:#edf735}
         .btn {
         padding: 1em;
         background-color: Green;
@@ -221,14 +221,28 @@
     let rand = new Utility();
 
     dirBtn.changePos(rand.randPageWidth / 2, rand.randPageHeight / 2)
-    counter += 1;
-    if (counter > 3) {
+    counter++ ; 
+
+  if (counter === 4) {
       dirBtn.chngText('Still under construction check back soon!')
       this.removeEventListener('mousemove', btnmove)
+    }
+
+  else if (counter === 3){
+      document.body.style.backgroundColor = "#0cffae";
+    }
+  else if (counter === 2){
+      document.body.style.backgroundColor = "#f902d0"
+    }
+  else if (counter === 1){
+      document.body.style.backgroundColor = "#5cf901"
     }
   }
 
   myBtn.addEventListener('mousemove', btnmove)
+
+
+
 </script>
 
 </html>
