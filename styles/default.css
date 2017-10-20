@@ -5,8 +5,18 @@
     box-sizing: border-box;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 html,
 body {
+    animation: 1s ease-out 0s 1 fadeIn;
     overflow-x:hidden;
     height: 100%;
     width: 100%;
