@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  
+  body {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .fade {
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+    top: -25px;
+    background-image: linear-gradient(0deg, transparent, black 75%);
+    z-index: 1;
+  }
+
+  .star-wars {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 800px;
+    color: #feda4a;
+    font-family: 'Pathway Gothic One', sans-serif;
+    font-size: 500%;
+    font-weight: 600;
+    letter-spacing: 6px;
+    line-height: 150%;
+    perspective: 400px;
+    text-align: justify;
+  }
+
+  .crawl {
+    position: relative;
+    top: 99999px;
+    transform-origin: 50% 100%;
+    animation: crawl 60s linear;
+  }
+
+  .crawl > .title {
+    font-size: 90%;
+    text-align: center;
+  }
+
+  .crawl > .title h1 {
+    margin: 0 0 100px;
+    text-transform: uppercase;
+  }
+
+  @keyframes crawl {
+      0% {
+      top: -100px;
+      transform: rotateX(20deg)  translateZ(0);
+    }
+      100% { 
+      top: -6000px;
+      transform: rotateX(25deg) translateZ(-2500px);
+    }
+  }
+
+
+  </style>
+</head>
+<body>
+ 
+<form>
+  <input type="button" value="Back to Directory" onclick="window.location.href='https://learndevelopmentpublic.github.io/ReallyAnnoyingDirectory/'" />
+</form>
+
+ <section class="star-wars">
+  <div class="crawl">    
+    <div class="title">
+      <p>Episode I</p>
+      <h1>A journey to contribute</h1>
+    </div>
+    
+    <p>Today is <span id=current-date></span>, about <span id="days"></span> days had pass since i written this.</p>
+    <p>A brief introduction of myself. My name is Presley. I'm from a tropical country called Malaysia. English is not my first language so please excuse me if i has written broken english here and there. </p>
+
+    <p>Speaking about language i never good at them even for my own native language. I know 3 human languages namely English, Malay&amp;Chinese and 5 programming languages i.e. C, C++, Javascript, Ruby&amp; Python.</p> 
+
+    <p>It has been a while i want to contribute to open source project but i'm not sure how, where and when to start until stumble across this project during hacktoberfest 2017 event. I read the ReadMe file and it seem to be beginner friendly project. So i think to myself why not give it a try? So there you are i created this page :) 
+    </p>
+
+    <p>In future i wish can contribute more and learn from others....</p>
+  </div>
+</section>
+
+
+
+
+
+  <script>
+    var oneDay = 24*60*60*1000; 
+    var firstDate = new Date(2017,9,21);
+    var secondDate = new Date();
+    var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+
+    document.getElementById("days").innerText=diffDays;
+    document.getElementById("current-date").innerText= new Date().toDateString();
+  </script>
+</body>
+</html>
+
+
