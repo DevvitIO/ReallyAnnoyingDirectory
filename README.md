@@ -70,3 +70,6 @@ New Feature suggestions are welcome and encouraged, Create a new issue if you ha
 Alternatively, you can tweet suggestions at me
 
 [Twitter](https://twitter.com/Tor_kcWebDev)
+
+Also if you want to talk about this project with other developers you can join the Devvit.io Discord
+[Discord](https://discordapp.com/invite/ZeMcrJQ)
