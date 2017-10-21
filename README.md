@@ -66,3 +66,5 @@ You can also ask me a question in the Discord if you want to know something else
 ## Feature Suggestions
 
 New Feature suggestions are welcome and encouraged, Create a new issue if you have a feature suggestion.
+
+Alternatively, you can tweet suggestions at [me](https://twitter.com/Tor_kcWebDev)
