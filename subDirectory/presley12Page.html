@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <style>
   
   body {
@@ -65,34 +66,36 @@
       transform: rotateX(25deg) translateZ(-2500px);
     }
   }
-
-
+  
   </style>
 </head>
 <body>
  
-<form>
-  <input type="button" value="Back to Directory" onclick="window.location.href='https://learndevelopmentpublic.github.io/ReallyAnnoyingDirectory/'" />
-</form>
+  <form class="anim" style="position:fixed; z-index: 100;">
+    <input type="button" value="Back to Directory" onclick="window.location.href='https://learndevelopmentpublic.github.io/ReallyAnnoyingDirectory/'" />
+  </form>
 
- <section class="star-wars">
-  <div class="crawl">    
-    <div class="title">
-      <p>Episode I</p>
-      <h1>A journey to contribute</h1>
+  <section class="star-wars">
+    <div class="crawl">    
+      <div class="title">
+        <p>Episode I</p>
+        <h1>A journey to contribute</h1>
+      </div>
+      
+      <p>Today is <span id=current-date></span>, about <span id="days"></span> days had pass since i written this.</p>
+      <p>A brief introduction of myself. My name is Presley. I'm from a tropical country called Malaysia. English is not my first language so please excuse me if there is gramma mistake here and there. </p>
+
+      <p>Speaking about language i never good at them even for my own native language. I know 3 human languages namely English, Malay&amp;Chinese and 5 programming languages i.e. C, C++, Javascript, Ruby&amp; Python.</p> 
+
+      <p>It has been a while i want to contribute to open source project but i'm not sure how, where and when to start until stumble across this project during hacktoberfest 2017 event. I read the ReadMe file and it seem to be beginner friendly project. So i think to myself why not give it a try? So there you are i created this page :) 
+      </p>
+
+      <p>That's it for now. I will leave you an annoying button to keep you company...</p>
+      <br>
+      <center><img src="http://cdn.playbuzz.com/cdn/87c4514c-cd4e-44fc-ba48-c4b8c4105ba3/0a787b0d-c3d7-4ecb-8e95-4c8b0d9fb333.png"></center>
+
     </div>
-    
-    <p>Today is <span id=current-date></span>, about <span id="days"></span> days had pass since i written this.</p>
-    <p>A brief introduction of myself. My name is Presley. I'm from a tropical country called Malaysia. English is not my first language so please excuse me if i has written broken english here and there. </p>
-
-    <p>Speaking about language i never good at them even for my own native language. I know 3 human languages namely English, Malay&amp;Chinese and 5 programming languages i.e. C, C++, Javascript, Ruby&amp; Python.</p> 
-
-    <p>It has been a while i want to contribute to open source project but i'm not sure how, where and when to start until stumble across this project during hacktoberfest 2017 event. I read the ReadMe file and it seem to be beginner friendly project. So i think to myself why not give it a try? So there you are i created this page :) 
-    </p>
-
-    <p>In future i wish can contribute more and learn from others....</p>
-  </div>
-</section>
+  </section>
 
 
 
@@ -106,6 +109,33 @@
 
     document.getElementById("days").innerText=diffDays;
     document.getElementById("current-date").innerText= new Date().toDateString();
+
+
+    $(document).ready(function(){
+      animateDiv('.anim');
+    });
+
+    function makeNewPosition(){     
+        var h = $(window).height() - 50;
+        var w = $(window).width() - 50;
+        
+        var nh = Math.floor(Math.random() * h);
+        var nw = Math.floor(Math.random() * w);      
+        return [nh,nw];            
+    }
+
+    function animateDiv(myclass){
+        var newq = makeNewPosition();
+        $(myclass).animate({ top: newq[0], left: newq[1] }, getRandomArbitrary(200, 1800),   function(){
+          animateDiv(myclass);        
+        });
+        
+    };
+
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
   </script>
 </body>
 </html>
