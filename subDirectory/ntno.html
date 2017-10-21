@@ -6,6 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title></title>
   <style>
+    *{
+      font-family:'Times New Roman', serif;
+    }
     .navbar {
         overflow: hidden;
         background-color: white;
@@ -54,11 +57,10 @@
   </style>
 </head>
 <body>
-  <h1>my first fork :)</h1>
+  <h1>my awesome website :)</h1>
   <div class="navbar">
     <div class="dropdown">
       <button class="dropbtn"><p>Links!</p>
-        <!-- <i class="fa fa-caret-down"></i> -->
       </button>
       <div id="lol" class="dropdown-content">
       </div>
@@ -72,7 +74,7 @@
 
     for(var i=0; i< hellcount; i++){
       //breakem
-      var linktxt = "Link 1";
+      var linktxt = "<- go back";
       var heckitup = url.split('').splice(0);
       var strtHecking = Math.floor(Math.random()*(url.length - dontHeckThisPartUp.length)) + dontHeckThisPartUp.length;
       heckitup[strtHecking] = '-';
