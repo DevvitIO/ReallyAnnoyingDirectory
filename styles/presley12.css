@@ -27,6 +27,8 @@ body {
 
 .page-box {
     width: 15%;
+    height: 100px;
+    box-sizing: border-box;
     min-height: 100px;
     max-height: 200px;
     background: white;
@@ -87,7 +89,7 @@ body {
 
 
 .page-box>h4 {
-    font-size: 1.2rem;
+    font-size: 15px;
     word-break: break-all;
     white-space: normal;
     padding: 5px;
