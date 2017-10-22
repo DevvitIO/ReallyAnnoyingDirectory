@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+
+* {
+    font-family: Poiret One, sans-serif;
+    box-sizing: border-box;
+    font-weight: 900;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background: url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/retina_wood.png);
+}
+
+#pages-area {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+   -webkit-animation: fadein 5s; /* Safari, Chrome and Opera > 12.1 */
+   -moz-animation: fadein 5s; /* Firefox < 16 */
+    -ms-animation: fadein 5s; /* Internet Explorer */
+     -o-animation: fadein 5s; /* Opera < 12.1 */
+        animation: fadein 5s;
+}
+
+.page-box {
+    width: 15%;
+    min-height: 100px;
+    max-height: 200px;
+    background: white;
+    color: #6ec9f5;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 10px 10px 5px grey;
+    transition: all .2s ease-in-out;
+    text-align: center;    
+}
+
+
+.page-box:nth-child(13n+1){
+  background: url(http://lorempixel.com/400/200/city);
+}
+.page-box:nth-child(13n+2){
+  background: url(http://lorempixel.com/400/200/people);
+}
+.page-box:nth-child(13n+3){
+  background: url(http://lorempixel.com/400/200/sports);
+}
+.page-box:nth-child(13n+4){
+  background: url(http://lorempixel.com/400/200/nature);
+}
+.page-box:nth-child(13n+5){
+  background: url(http://lorempixel.com/400/200/fashion);
+}
+.page-box:nth-child(13n+6){
+  background: url(http://lorempixel.com/400/200/abstract);
+}
+.page-box:nth-child(13n+7){
+  background: url(http://lorempixel.com/400/200/animals);
+}
+.page-box:nth-child(13n+8){
+  background: url(http://lorempixel.com/400/200/business);
+}
+.page-box:nth-child(13n+9){
+  background: url(http://lorempixel.com/400/200/cats);
+}
+.page-box:nth-child(13n+10){
+  background: url(http://lorempixel.com/400/200/nightlife);
+}
+.page-box:nth-child(13n+11){
+  background: url(http://lorempixel.com/400/200/food);
+}
+.page-box:nth-child(13n+12){
+  background: url(http://lorempixel.com/400/200/technics);
+}
+.page-box:nth-child(13n+13){
+  background: url(http://lorempixel.com/400/200/transport);
+}
+
+
+.page-box>h4 {
+    font-size: 1.2rem;
+    word-break: break-all;
+    white-space: normal;
+    padding: 5px;
+}
+
+.page-box:hover {
+    color: yellow;
+  	animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  	transform: translate3d(0, 0, 0);
+  	backface-visibility: hidden;
+  	perspective: 1000px;
+}
+
+h1 {
+    color: #6ec9f5;
+    text-align: center;
+}
+
+#github-link-back {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.2rem;
+    background: white;
+    color: steelblue;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#github-link-back:hover {
+    text-decoration: underline;
+}
+
+.style-select-wrap {
+    margin-left: 50px;
+    position: relative;
+    padding-top: 20px;
+    z-index: 100;
+}
+
+.style-select {
+    width: 200px;
+    padding: 15px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    color: steelblue;
+    cursor: pointer;
+}
+
+.style-list-wrap {
+    visibility: hidden;
+    background: #ecf0f1;
+    width: 200px;
+    padding-top: 5px;
+    max-height: 0;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 64px;
+    transition: visibility 1s linear, max-height 1s linear;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.style-list {
+    background: #ecf0f1;
+    list-style: none;
+    color: steelblue;
+    margin: 0;
+    padding: 0;
+}
+
+.slide-down {
+    max-height: 1000px;
+    visibility: visible;
+}
+
+.select-icon {
+    float: right;
+}
+
+.style-list-item {
+    padding: 15px 15px 15px 15px;
+    border-bottom: 1px solid grey;
+    cursor: pointer;
+}
+
+.style-list-item:hover {
+    background: #bdc3c7;
+}
+
+.style-list-item:last-child {
+    border-bottom: none;
+}
+
+
+@media only screen and (max-width: 414px) {
+    .page-box {
+        width: 40%;
+    }
+    #github-link-back {
+        position: initial;
+        text-align: center;
+        display: block;
+    }
+}
+
+
+a>h4{
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
+body{
+	background: none;	
+	background-image: url('http://www.wearewebstars.dk/codepen/img/s1.png'), url('http://www.wearewebstars.dk/codepen/img//s2.png'), url('http://www.wearewebstars.dk/codepen/img//s3.png');
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index:1;
+	-webkit-animation: snow 10s linear infinite;
+	-moz-animation: snow 10s linear infinite;
+	-ms-animation: snow 10s linear infinite;
+	animation: snow 10s linear infinite;
+}
+@keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+}
+@-moz-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 400px 1000px, 200px 400px, 100px 300px;}
+}
+@-webkit-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+}
+@-ms-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+}	
+
+
