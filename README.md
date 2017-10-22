@@ -18,7 +18,7 @@ Suggested Reading for those new to github
 
 Template.html  in the subDirectory folder contains a basic page's requirements.
 
-Begginer Hints:
+Beginner Hints:
 
 Every file that you see that ends with .md is just a text file anyone can read. If you accidentally delete one, it's not a big deal.
 
