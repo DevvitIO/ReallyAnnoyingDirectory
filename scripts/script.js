@@ -7,7 +7,8 @@ styleSelect.onclick = function() {
 }
 
 styleList.onclick = function(e){
-	appendStyleSheet(e.target.innerHTML)
+	saveSheetSelection(e.target.innerHTML);
+	appendStyleSheet(e.target.innerHTML);
 	styleList.classList.toggle("slide-down");
 	styleSelect.innerHTML = e.target.innerHTML + '<span class="select-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span>'
 }
@@ -16,18 +17,24 @@ styleList.onclick = function(e){
 // 'random' number generator, based on size of array
 var chosenSheet = Math.floor(Math.random() * (styleSheets.length + 0 ));
 
+//load previously chosen sheet if any
+if(localStorage["chosen-sheet"]){
+	chosenSheet = localStorage["chosen-sheet"];
+	styleSelect.innerHTML = styleSheets[chosenSheet] + '<span class="select-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span>'
+}
+
 appendStyleSheet(styleSheets[chosenSheet])
 
 function appendStyleSheet(target){
 	// if you add a stylesheet, please edit this accordingly. 
-	if(document.styleSheets[2]){
-		var d = document.getElementsByTagName("head");
-		document.head.childNodes[12].href = "./styles/"+target+'.css'
-		console.log(d)
-		document.styleSheets[2].disabled = true;
-	}else{
+	var styleNode = document.getElementById("cssHead");
+
+	if(styleNode){	
+		styleNode.href = "./styles/"+target+'.css';
+		document.styleSheets[document.styleSheets.length-1].disabled = true;
+	}else{		
 		var link = document.createElement( "link" );
-		link.href = './styles/' + target + '.css'
+		link.href = './styles/' + target + '.css';
 		link.type = "text/css";
 		link.rel = "stylesheet";
 		link.id = "cssHead"
@@ -35,11 +42,16 @@ function appendStyleSheet(target){
 	}
 }
 
-// populates the css list automagically
+// populates the css list automatically
 for(var i = 0; i < styleSheets.length; i++){
 	var opt = document.createElement( "li" );
 	opt.className = "style-list-item";
 	opt.appendChild(document.createTextNode(styleSheets[i]));
 	document.getElementsByClassName( "style-list" )[0].appendChild( opt );
+}
+
+//save chosen sheet in browser
+function saveSheetSelection(chosen){
+	localStorage["chosen-sheet"] = styleSheets.indexOf(chosen);	
 }
 /* END STYLESHEET CHANGER */
