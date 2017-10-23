@@ -20,12 +20,14 @@ appendStyleSheet(styleSheets[chosenSheet])
 
 function appendStyleSheet(target){
 	// if you add a stylesheet, please edit this accordingly. 
-	if(document.styleSheets[2]){
-		var d = document.getElementsByTagName("head");
-		document.head.childNodes[12].href = "./styles/"+target+'.css'
-		console.log(d)
-		document.styleSheets[2].disabled = true;
+	var styleNode = document.getElementById("cssHead")
+	console.log(styleNode)
+
+	if(styleNode){	
+		styleNode.href = "./styles/"+target+'.css';
+		document.styleSheets[styleSheets.length].disabled = true;
 	}else{
+		// debugger;
 		var link = document.createElement( "link" );
 		link.href = './styles/' + target + '.css'
 		link.type = "text/css";
