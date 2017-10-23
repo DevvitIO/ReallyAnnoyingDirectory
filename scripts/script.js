@@ -7,6 +7,7 @@ styleSelect.onclick = function() {
 }
 
 styleList.onclick = function(e){
+	saveSheetSelection(e.target.innerHTML);
 	appendStyleSheet(e.target.innerHTML)
 	styleList.classList.toggle("slide-down");
 	styleSelect.innerHTML = e.target.innerHTML + '<span class="select-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span>'
