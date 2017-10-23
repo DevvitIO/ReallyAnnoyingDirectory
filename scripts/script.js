@@ -31,7 +31,7 @@ function appendStyleSheet(target){
 
 	if(styleNode){	
 		styleNode.href = "./styles/"+target+'.css';
-		document.styleSheets[styleSheets.length].disabled = true;
+		document.styleSheets[document.styleSheets.length-1].disabled = true;
 	}else{
 		// debugger;
 		var link = document.createElement( "link" );
