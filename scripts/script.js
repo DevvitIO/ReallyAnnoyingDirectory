@@ -16,6 +16,12 @@ styleList.onclick = function(e){
 // 'random' number generator, based on size of array
 var chosenSheet = Math.floor(Math.random() * (styleSheets.length + 0 ));
 
+//load previously chosen sheet if any
+if(localStorage["chosen-sheet"]){
+	chosenSheet = localStorage["chosen-sheet"];
+	styleSelect.innerHTML = styleSheets[chosenSheet] + '<span class="select-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span>'
+}
+
 appendStyleSheet(styleSheets[chosenSheet])
 
 function appendStyleSheet(target){
@@ -43,5 +49,10 @@ for(var i = 0; i < styleSheets.length; i++){
 	opt.className = "style-list-item";
 	opt.appendChild(document.createTextNode(styleSheets[i]));
 	document.getElementsByClassName( "style-list" )[0].appendChild( opt );
+}
+
+//save chosen sheet in browser
+function saveSheetSelection(chosen){
+	localStorage["chosen-sheet"] = styleSheets.indexOf(chosen);	
 }
 /* END STYLESHEET CHANGER */
