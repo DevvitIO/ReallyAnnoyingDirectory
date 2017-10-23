@@ -33,8 +33,7 @@ function appendStyleSheet(target){
 	if(styleNode){	
 		styleNode.href = "./styles/"+target+'.css';
 		document.styleSheets[document.styleSheets.length-1].disabled = true;
-	}else{
-		// debugger;
+	}else{		
 		var link = document.createElement( "link" );
 		link.href = './styles/' + target + '.css'
 		link.type = "text/css";
