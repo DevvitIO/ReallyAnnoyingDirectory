@@ -8,7 +8,7 @@ styleSelect.onclick = function() {
 
 styleList.onclick = function(e){
 	saveSheetSelection(e.target.innerHTML);
-	appendStyleSheet(e.target.innerHTML)
+	appendStyleSheet(e.target.innerHTML);
 	styleList.classList.toggle("slide-down");
 	styleSelect.innerHTML = e.target.innerHTML + '<span class="select-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span>'
 }
@@ -27,15 +27,14 @@ appendStyleSheet(styleSheets[chosenSheet])
 
 function appendStyleSheet(target){
 	// if you add a stylesheet, please edit this accordingly. 
-	var styleNode = document.getElementById("cssHead")
-	console.log(styleNode)
+	var styleNode = document.getElementById("cssHead");
 
 	if(styleNode){	
 		styleNode.href = "./styles/"+target+'.css';
 		document.styleSheets[document.styleSheets.length-1].disabled = true;
 	}else{		
 		var link = document.createElement( "link" );
-		link.href = './styles/' + target + '.css'
+		link.href = './styles/' + target + '.css';
 		link.type = "text/css";
 		link.rel = "stylesheet";
 		link.id = "cssHead"
@@ -43,7 +42,7 @@ function appendStyleSheet(target){
 	}
 }
 
-// populates the css list automagically
+// populates the css list automatically
 for(var i = 0; i < styleSheets.length; i++){
 	var opt = document.createElement( "li" );
 	opt.className = "style-list-item";
