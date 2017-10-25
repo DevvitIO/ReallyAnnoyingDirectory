@@ -3,6 +3,7 @@ var styleSelect = document.getElementsByClassName("style-select")[0];
 var styleList = document.getElementsByClassName("style-list-wrap")[0];
 
 styleSelect.onclick = function() {
+	populatesStyleList();
 	styleList.classList.toggle("slide-down");
 }
 
@@ -11,6 +12,7 @@ styleList.onclick = function(e){
 	appendStyleSheet(e.target.innerHTML);
 	styleList.classList.toggle("slide-down");
 	styleSelect.innerHTML = e.target.innerHTML + '<span class="select-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span>'
+	hideAwhile();
 }
 
 /* STYLESHEET CHANGER */
@@ -43,15 +45,35 @@ function appendStyleSheet(target){
 }
 
 // populates the css list automatically
-for(var i = 0; i < styleSheets.length; i++){
-	var opt = document.createElement( "li" );
-	opt.className = "style-list-item";
-	opt.appendChild(document.createTextNode(styleSheets[i]));
-	document.getElementsByClassName( "style-list" )[0].appendChild( opt );
+function populatesStyleList(){
+	var styleList = document.getElementsByClassName("style-list")[0];
+	while (styleList.firstChild) {
+    	styleList.removeChild(styleList.firstChild);
+	}
+
+	for(var i = 0; i < styleSheets.length; i++){
+		var opt = document.createElement( "li" );
+		opt.className = "style-list-item";
+		opt.appendChild(document.createTextNode(styleSheets[i]));	
+
+		if(i == localStorage["chosen-sheet"]) {
+			continue;
+		}
+
+		document.getElementsByClassName( "style-list" )[0].appendChild( opt );
+
+	}
 }
 
 //save chosen sheet in browser
 function saveSheetSelection(chosen){
 	localStorage["chosen-sheet"] = styleSheets.indexOf(chosen);	
 }
+
+function hideAwhile(){		
+	var element = document.getElementsByClassName("style-select-wrap")[0];
+	element.style.display = "none"; 
+	setTimeout( function(){element.style.display = "block"} , 500 );
+}
+
 /* END STYLESHEET CHANGER */
