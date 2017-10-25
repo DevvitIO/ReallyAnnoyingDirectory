@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  <title>Kelly's really annoying page</title>
+  <style>
+      html body {
+          text-align: center;
+          background: black;
+      }
+
+      h1 {
+          color: yellow;
+      }
+
+      img {
+          height: 550px;
+          width: 800px;
+      }
+
+      .message {
+          color: red;
+      }
+
+      .jumbotron {
+          height: 100vh;
+          background: green;
+      }
+  </style>
+</head>
+<body>
+
+<a class="btn btn-danger btn-lg" href="https://devvit.io/ReallyAnnoyingDirectory/">Back to Directory</a>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Hi! This is my page. Do you like it?</h1>
+        <div class="container">
+            <img src="http://hdwpro.com/wp-content/uploads/2016/05/Top-Funny-Baby.jpeg" alt="Funny Baby" />     
+        </div>    
+        <h3><span class="message"></span></h3>
+    </div>
+</div>
+  <script>
+  var button = document.querySelector(".btn"), counter = 0, css = button.style, message = document.getElementsByTagName("h1")[0];
+  button.addEventListener("mouseover", function() {
+    counter++;
+        if (counter < 5) {
+        css.marginLeft = Math.random() * 700 + "px";
+        css.marginTop = Math.random() * 700 + "px";
+        document.getElementsByTagName("body")[0].style.background = "red";
+        message.innerHTML = "Don't go just yet!";
+        } else {
+        css.marginLeft = "0px";
+        css.marginTop = "0px";
+        document.getElementsByTagName("body")[0].style.background = "black";
+        }
+  });
+  </script>
+</body>
+</html>
