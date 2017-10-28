@@ -4,13 +4,13 @@ A directory of really 'awful' front-end pages. No Style guide requirements. Temp
 
 Purpose
 
-What we're doing here is giving everyone regardless of skill level a chance to contribute to a repository without being terrified of things like styleguides, making people mad (it's kind of the point), and all the other things that come with big scary stuff normally associated with first time collaborations like trying to make stuff with people you've never met who definintely probably maybe know more than you.
+What we're doing here is giving everyone regardless of skill level a chance to contribute to a repository without being terrified of things like styleguides, making people mad (it's kind of the point), and all the other things that come with big scary stuff normally associated with first time collaborations like trying to make stuff with people you've never met who definitely probably maybe know more than you.
 
-To put it simply, It's designed to be difficult to fuck this up from a new person's perspective. While being 'fun' for everyone.
+To put it simply, it's designed to be difficult to fuck this up from a new person's perspective. While being 'fun' for everyone.
 
 Getting Started
 
-Suggested Reading for those new to github
+Suggested Reading for those new to GitHub
 
 Are You Completely New?
 
@@ -44,7 +44,7 @@ Partial secrets/surprises/are acceptable but nothing that's NSFW / Screamers / T
 We're having fun screwing around here not trying to brick people's computers / cause damage.
 Guidelines
 
-Pages should be annoying/funny, but it's subjective and thats fine.
+Pages should be annoying/funny, but it's subjective and that's fine.
 Creativity is heavily endorsed, make it as complicated or as simple as you want / are able to.
 Memes are endorsed
 You can use a CDN to bring in frameworks.
@@ -52,11 +52,11 @@ Additional QAs
 
 Q. Can I work on this 'Issue'?
 
-So, lets say you stop by the issues tab and see something that you'd like to work on. You look a little further and see that someone said they're working on it already. Maybe nobody has commented on it yet but you're still not sure if you can work on it. So here are some guidelines for you.
+So, let's say you stop by the issues tab and see something that you'd like to work on. You look a little further and see that someone said they're working on it already. Maybe nobody has commented on it yet but you're still not sure if you can work on it. So here are some guidelines for you.
 
 Issues are completed on a first come first serve basis. What this means in context is that that if the issue is still there you may work on it and nobody has been officially assigned it you may work on it. Here is a gif on how to check if there are any assignees for issues. gif
 This means that if someone said they are working on it, and you decide you want to work on it and you both submit PRs, will do my best to try to incorporate everything if possible.
-The reason being is that I don't anyone to feel like they can't work on an issue. This project is supposed to be extremely new contributor friendly. So if things overlap, that is absolutely fine I'll do my best to incorporate all the code if possible.
+The reason being is that I don't anyone to feel like they can't work on an issue. This project is supposed to be extremely new contributor friendly. So, if things overlap, that is absolutely fine I'll do my best to incorporate all the code if possible.
 
 For other QAs Check the Wiki
 
@@ -64,7 +64,7 @@ You can also ask me a question in the Discord if you want to know something else
 
 Feature Suggestions
 
-New Feature suggestions are welcome and encouraged, Create a new issue if you have a feature suggestion.
+New Feature suggestions are welcome and encouraged, create a new issue if you have a feature suggestion.
 
 Alternatively, you can tweet suggestions at me
 
