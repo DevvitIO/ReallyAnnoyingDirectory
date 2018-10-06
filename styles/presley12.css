@@ -43,7 +43,7 @@ body {
     font-weight: bold;
     box-shadow: 10px 10px 5px grey;
     transition: all .2s ease-in-out;
-    text-align: center;    
+    text-align: center;
 }
 
 
@@ -206,7 +206,7 @@ a>h4{
   10%, 90% {
     transform: translate3d(-1px, 0, 0);
   }
-  
+
   20%, 80% {
     transform: translate3d(2px, 0, 0);
   }
@@ -252,8 +252,8 @@ a>h4{
 
 
 body{
-	background: none;	
-	background-image: url('http://www.wearewebstars.dk/codepen/img/s1.png'), url('http://www.wearewebstars.dk/codepen/img//s2.png'), url('http://www.wearewebstars.dk/codepen/img//s3.png');
+	background: none;
+	background-image: url('https://i.imgur.com/X8XWEGT.png'), url('https://i.imgur.com/IxFQEmg.png'), url('https://i.imgur.com/IthKus5.png');
 	height: 100%;
 	left: 0;
 	position: absolute;
@@ -284,6 +284,4 @@ body{
   0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
   50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
   100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
-}	
-
-
+}
