@@ -24,6 +24,9 @@ Every file that you see that ends with .md is just a text file anyone can read. 
 
 If you want to add an .html page/file to the directory, you can simply make a copy of the template located within the subDirectory, rename it and then make a pull request with your file added into the subDirectory.
 
+Join our organization by visiting here: https://orgmanager.miguelpiedrafita.com/join/32555830
+
+Come hang out with us at our Discord channel here: https://discordapp.com/invite/erPjG7C
 
 ## Contributing Requirements
 
