@@ -18,7 +18,7 @@ Suggested Reading for those new to github
 
 Template.html  in the subDirectory folder contains a basic page's requirements.
 
-Beginner Hints:
+Beginner Hints:6
 
 Every file that you see that ends with .md is just a text file anyone can read. If you accidentally delete one, it's not a big deal.
 
@@ -52,6 +52,10 @@ Come hang out with us at our Discord channel here: https://discordapp.com/invite
 * You can use a CDN to bring in frameworks.
 
 ## Additional QAs
+
+### Q. Halp what is a bad website?
+
+https://www.inc.com/laurel-mintz/25-reasons-your-website-needs-an-upgrade.html
 
 ### Q. Can I work on this 'Issue'?
 
