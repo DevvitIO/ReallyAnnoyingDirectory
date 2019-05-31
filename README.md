@@ -80,4 +80,4 @@ Alternatively, you can tweet suggestions at me
 
 Also if you want to talk about this project with other developers you can join the Devvit.io Discord
 
-[Discord](https://discordapp.com/invite/ZeMcrJQ)
+[Discord](https://discordapp.com/invite/9EwbGSW)
