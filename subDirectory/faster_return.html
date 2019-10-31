@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)file:///C:/Users/Admin/Desktop/vs%20code/test.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      .class_label{
+        /* width : 10px; */
+        /* height: 20px; */
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        padding : 10px;
+        position: relative;
+        /* position: center; */
+        }
+        .cls_link{
+            font-family: 'Trebuchet MS';
+            /* margin-left: 12px; */
+            /* margin-top: 12px; */
+            /* border: 1px; */
+            /* border-block: 1px; */
+            border-color: blue;    
+            border-style: groove;
+            /* margin-right: 2px; */
+            
+        }
+  </style>
+</head>
+<body>
+    <div align="left">
+    <label id="time_label" class="class_label">ready set go!!!!!</label>
+</div>
+
+<!-- <div align="center"> -->
+
+
+        <div style="width: 100px; height: 100px; 
+        border: solid 1px #ccc; display: inline-block;">
+        <meter class="mymeter" max="100" value="0" min="0" style="
+    margin-left: 10px;
+">
+        </meter> 
+        <meter class="mymeter" max="100" value="0" min="0">
+        </meter> 
+        <meter class="mymeter" max="100" value="0" min="0">
+        </meter> 
+        </div>    
+
+<div style="width: 100px; height: 100px; 
+border: solid 1px #ccc; display: inline-block;">
+<div id="link" >
+    <p class="class_label"> <a href="https://devvit.io/ReallyAnnoyingDirectory/">Back to Directory</a></p>
+ </div></div>
+
+<!-- </div> -->
+    <script>
+        // document.
+        var interval_ = setInterval(NaN, 1000000);
+        var presenttime =5;
+        var lab = document.getElementById("time_label");
+        var link_ = document.getElementById("link");
+        var meter_var = document.getElementsByClassName("mymeter");
+        var meter_tm =0;
+        var floor_tm = 0;
+        
+        function new_var()
+        {
+
+            meter_var[0].value = floor_tm%100;
+            meter_var[1].value = floor_tm%100;
+            meter_var[2].value = floor_tm%100;
+            
+            floor_tm+=5;
+            if(floor_tm>300)
+               { clearInterval(interval_);
+            floor_tm=0;
+               
+            }
+        }
+        
+        
+        
+        
+        
+        function time()
+        {
+            presenttime--;
+            if(presenttime==0)
+            {
+                clearInterval(timer);
+                link_.hidden = true;
+                return "now you cant return back lol!!!";
+            }
+            
+            else
+            {   
+                interval_ = setInterval(new_var,1);
+                return presenttime;
+            }
+
+        }
+
+        function time_func(){
+            lab.innerHTML = time();
+        }
+        
+
+        var timer = setInterval(time_func,1000);
+        
+
+
+
+
+
+    </script>
+
+</body></html>
