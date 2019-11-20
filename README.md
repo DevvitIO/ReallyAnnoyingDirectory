@@ -53,7 +53,7 @@ Come hang out with us at our Discord channel here: https://discordapp.com/invite
 
 ## Additional QAs
 
-### Q. Halp what is a bad website?
+### Q. Help what is a bad website?
 
 https://www.inc.com/laurel-mintz/25-reasons-your-website-needs-an-upgrade.html
 
