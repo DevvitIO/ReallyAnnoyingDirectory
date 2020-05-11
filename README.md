@@ -1,8 +1,11 @@
 # ReallyAnnoyingDirectory - Introduction Project
 
 A directory of really 'awful' front-end pages.
+
 No Style guide requirements.
+
 Template Provided.
+
 Write as much or as little as you want. 
 
 ## Purpose 
