@@ -18,8 +18,6 @@ Suggested Reading for those new to github
 
 Template.html  in the subDirectory folder contains a basic page's requirements.
 
-Beginner Hints:6
-
 Every file that you see that ends with .md is just a text file anyone can read. If you accidentally delete one, it's not a big deal.
 
 If you want to add an .html page/file to the directory, you can simply make a copy of the template located within the subDirectory, rename it and then make a pull request with your file added into the subDirectory.
