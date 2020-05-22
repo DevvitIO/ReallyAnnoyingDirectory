@@ -11,15 +11,40 @@
 
     .one{
      background-color:rgba(59, 69, 201, 0.212);
-     transform:scale(5) skew(22deg, 2deg) rotate(14deg) translate(10rem, 50%);
-    animation: move1 4s linear infinite;
+     transform: translate(-300%, 1000px);
+    animation: move1 3s ease-in-out infinite;
+    overflow-x:hidden;
+    z-index:5;
+        box-shadow: 1px 1px 12px 1px rgba(0,0,0,0.6);
     }
     .two{
      background-color:rgba(86, 202, 32, 0.753);
-     transform:rotate(56deg) skew(30deg, 10deg);
-     animation: move2 4s linear infinite;
+     width:140%;
+     position:absolute;
+     transform: perspective(300px) rotate3d(0.1, 0.79, 1, 18deg);
+     z-index:5;
+    box-shadow: 1px 1px 12px 1px rgba(0,0,0,0.6);
+    }
+    .three{
+    color:white;
+    background-color:rgba(202, 123, 32, 0.453);
+     width:120%;
+     position:absolute;
+     transform: perspective(1120px) rotate3d(-38.9, 288.79, -79, 18deg);
+     z-index:5;
+         box-shadow: 1px 1px 12px 1px rgba(0,0,0,0.6);
+    }
+
+    .five{
+    box-shadow: 1px 1px 12px 1px rgba(0,0,0,0.6);
+    position:absolute;
+    width:100%;
+    top:90%;
+    padding:2rem;
+    background-color:rgba(0, 0, 0, 0.9);
   
     }
+
     .marquee {
     
       line-height: 50px;
@@ -29,42 +54,104 @@
       box-sizing: border-box;
       
     }
-
     .marquee p {
       display: inline-block;
       padding-left: 100%;
-      animation: marquee 15s linear infinite;
+      animation: marquee 15s ease-in-out infinite;
     }
+    .marqueeReverse p {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marqueeReverse 15s ease-in-out infinite;
+    }
+    .marqueeVertical p {
+    display: inline-block;
+    border-radius:3px;
+    padding:8rem;
+    animation: marqueeVertical 15s ease-in-out infinite;
+    color:white;
+    background-color:rgba(255, 192, 203, 0.5);
+    box-shadow: 1px 1px 12px 1px rgba(0,0,0,0.6);
   
+    } 
+    .marqueeBottom p {
+    display: inline-block;
+    font-size:2rem;
+    animation: marqueeBottom 9s ease-out infinite;
+    color:rgb(103, 233, 27);
+
+
+  transform: translate(-150%, 0);
+    }
+
+    #marqueeMoveOne p{
+      
+    }
+    #marqueeMoveOne{
+      position:absolute;
+      width:100%;
+      transition:all 3s ease-in-out;
+      background-color:rgba(222,34,23,0.7)
+    }
+
+
+
     @keyframes marquee {
       0% {
-        transform: translate(0, 0);
+        transform: translate(10%, 0);
       }
   
       100% {
         transform: translate(-100%, 0);
       }
     }
-  
-  @keyframes move1 {
+    @keyframes marqueeReverse {
       0% {
-        transform: translate(0, 0)rotate(30deg);
-        
+        transform: translate(-100%, 0);
       }
   
       100% {
-        transform: translate(-100%, 55) rotate(60deg) skew(20deg)
+        transform: translate(0%, 0);
       }
     }
+    @keyframes marqueeVertical {
+      0% {
+        transform: translate(0, 500%);
+      }
   
+      100% {
+        transform: translate(0, -200%);
+      }
+    }
+    @keyframes marqueeBottom {
+      0% {
+        transform: translate(-200%, 0);
+      }
+  
+      100% {
+        transform: translate(600%, 0);
+      }
+    }
+
+    @keyframes move1 {
+        0% {
+          transform: translate(100%, 20%)rotate(30deg) skew(0deg);
+          
+        }
+    
+        100% {
+          transform: translate(-100%, 50%) rotate(360deg) skew(20deg);
+        }
+      }
+    
     @keyframes move2 {
       0% {
-        transform: translate(0, 0)rotate(0deg);
+      
         
       }
   
       100% {
-        transform: translate(-500%, 55) rotate(580deg) skew(20deg)
+       
       }
     }
 
@@ -76,7 +163,8 @@
   
     /* audio{ width:100%;} */
     body {
-      background-color: #edf735
+    background-color: #edf735;
+    overflow:hidden;
     }
   
     .btn {
@@ -91,6 +179,7 @@
       color: #fff;
       text-align: center;
       text-decoration: none;
+      z-index:100;
     }
   
     .modalDialog {
@@ -145,22 +234,6 @@
 
 <body>
 
-
-
-  <a href="https://devvit.io/ReallyAnnoyingDirectory/" class='btn' id='btn-return'> Back to Directory</a>
-
-
-
-
-<div class='marquee one'>
-  <p>Why did they Get rid of Marquees?</p>
-</div>
-
- <div class='marquee two'>
-  <p>Why did they Get rid of Marquees?</p>
-</div>
-
-  
   <div id="openModal" class="modalDialog">
       <div>	<a href="#" title="" class="close">X</a>
   
@@ -231,7 +304,37 @@
   </div>
 
 
+  <a href="https://devvit.io/ReallyAnnoyingDirectory/" class='btn' id='btn-return'> Back to Directory</a>
 
+
+
+
+<div class='marquee one'>
+  <p>Why did they Get rid of Marquees?</p>
+</div>
+
+ <div class='marquee two'>
+  <p>Why did they Get rid of Marquees?</p>
+</div>
+
+  
+ <div class='marqueeReverse three'>
+  <p>Why did they Get rid of Marquees?</p>
+</div>
+
+<div class="marqueeVertical four">
+    <p>Why did they Get rid of Marquees?</p>
+
+</div>
+
+<div id="marqueeMoveOne" class= "marquee"> 
+  <p>Why did they Get rid of Marquees?</p>
+</div>
+
+<div class="marqueeBottom five">
+    <p>Why did they Get rid of Marquees?</p>
+
+</div>
 
 <!-- Add more marquees, Differentiate Color Styles between them. Make them overlap Add filter effects to the overlaps -->
 <!-- Write code that makes a cycling Rainbow Marquee -->
@@ -245,6 +348,8 @@
     />
     <em>Sorry, your browser doesn't support HTML5 audio.</em>
   </audio>
+
+  
 </body>
 <script>
 
@@ -276,9 +381,13 @@
       this.randPageWidth = Math.floor(Math.random() * window.innerWidth);
     }
   }
+
+
   //Instantiation
   let audio = new Ele('audio', 'player', 'null');
   let dirBtn = new Ele('button', 'btn-return', 'btn');
+  let moveMarquee = new Ele('div', 'marqueeMoveOne', 'marquee')
+
 
   let randCent = new Utility();
   //Audio
@@ -286,8 +395,38 @@
   ap.volume = 1;
   let counter = 0;
   let myBtn = dirBtn.getID();
-
   dirBtn.changePos(window.innerHeight / 2, window.innerWidth / 2);
+
+  
+
+
+
+(function(window, document) {
+
+
+
+
+let randPageHeight = Math.floor(Math.random() * window.innerHeight);
+let randPageWidth = Math.floor(Math.random() * window.innerWidth-300);
+
+moveMarquee.changePos(randPageHeight, randPageWidth)
+
+
+
+
+})(window, document);
+
+
+
+setInterval(() => {
+  
+let randPageHeight = Math.floor(Math.random() * window.innerHeight);
+let randPageWidth = Math.floor(Math.random() * window.innerWidth-300);
+
+moveMarquee.changePos(randPageHeight, randPageWidth)
+
+}, 4000);
+
 
 
   function btnmove() {
