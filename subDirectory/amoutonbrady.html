@@ -1,398 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>(not so) Annoying website</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>(not so) Annoying website</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
-      overflow: hidden;
-    }
-
-    .main {
-      height: 100vh;
-      position: relative;
-    }
-
-    .section {
-      height: 100%;
-      width: 100%;
-    }
-
-    .section--one {
-      height: 100%;
-      display: flex;
-      flex-flow: column nowrap;
-      background: #fff;
-    }
-
-    .section__row {
-      flex: 1;
-      display: flex;
-      opacity: 0;
-    }
-
-    .section__row>p {
-      font-size: 3.5rem;
-      margin: auto;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .section__row:nth-child(even) {
-      background: paleturquoise;
-    }
-
-    .section__row:nth-child(odd) {
-      background: palegoldenrod;
-    }
-
-    .section--two {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #fff;
-      opacity: 0;
-      z-index: 20;
-    }
-
-    .section__title {
-      font-size: 5vw;
-      font-weight: lighter;
-      letter-spacing: 0.06em;
-    }
-
-    .section__pop-up {
-      margin: 0;
-      position: absolute;
-      max-width: 60vw;
-      opacity: 0;
-      top: 0;
-      left: 0;
-      transform-origin: 0 0;
-      background: palevioletred;
-      color: whitesmoke;
-      border-radius: 5px;
-      padding: 10px 15px;
-      border: solid 2px white;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
-      transform: translate(-100%, -100%)
-    }
-
-    .section__pop-up--replay {
-      transform-origin: center center;
-    }
-
-    .section__pop-up>p {
-      margin: auto;
-      font-size: 1.5rem;
-    }
-
-    .section__pop-up:last-of-type {
-      padding: 0;
-      background: palegreen;
-    }
-
-    .section__pop-up>button {
-      padding: 10px 15px;
-      font-size: 1.5rem;
-      color: black;
-      display: block;
-      min-height: 50vh;
-      width: 50vw;
-      background: transparent;
-      border-width: 0;
-      cursor: pointer;
-    }
-
-    .transition {
-      position: absolute;
-      left: calc(50% - 60vw);
-      top: calc(50% - 60vw);
-      height: 120vw;
-      width: 120vw;
-      border-radius: 50%;
-      background: #fff;
-      z-index: 10;
-      transform: scale(0);
-    }
-
-    .footer {
-      height: 10vh;
-      background: palegreen;
-      z-index: 999;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-top: solid 2px white;
-    }
-
-    .footer>a {
-      font-size: 1.2rem;
-      text-decoration: none;
-      color: palevioletred;
-    }
-  </style>
-</head>
-
-<body>
-  <main class="main">
-    <section class="section section--one">
-      <div class="section__row">
-        <p>This is</p>
-      </div>
-      <div class="section__row">
-        <p>Perhaps</p>
-      </div>
-      <div class="section__row">
-        <p>The most</p>
-      </div>
-      <div class="section__row">
-        <p>Annoying</p>
-      </div>
-      <div class="section__row">
-        <p>Website</p>
-      </div>
-      <div class="section__row">
-        <p>Ever</p>
-      </div>
-    </section>
-
-    <section class="section section--two">
-      <h1 class="section__title">Here are some facts about me</h1>
-      <div class="section__pop-up">
-        <p>I'm Alexandre, 22 y.o, French ✌️</p>
-      </div>
-      <div class="section__pop-up">
-        <p>My favorite language is Javascript</p>
-      </div>
-      <div class="section__pop-up">
-        <p>Web developpement & Photography 📷 are my two passions</p>
-      </div>
-      <div class="section__pop-up">
-        <p>My favorite kind of music is original soundtracks from movies & video games 🎼</p>
-      </div>
-      <div class="section__pop-up">
-        <p> Best movie ever is Jurassic Park 🎥</p>
-      </div>
-      <div class="section__pop-up">
-        <p>I crave meringue lemon pie 🍋</p>
-      </div>
-      <div class="section__pop-up">
-        <p>Huge League of Legends player 🎮</p>
-      </div>
-      <div class="section__pop-up">
-        <p>Would love to learn to set up Arch 💻</p>
-      </div>
-      <div class="section__pop-up">
-        <p>Proud owner of a Cane Corso 🐶</p>
-      </div>
-      <div class="section__pop-up">
-        <p>Someone mentioned BMX? It used to be my drug 🚲</p>
-      </div>
-      <div class="section__pop-up">
-        <p>Despite being French, I prefer English</p>
-      </div>
-      <div class="section__pop-up">
-        <p>My dream destination would be Northen Europe (Sweden specifically) ✈️</p>
-      </div>
-      <div class="section__pop-up">
-        <p>Probably more to come!</p>
-      </div>
-      <div class="section__pop-up section__pop-up--replay">
-        <button id="replay">
-          Couldn't read everything?
-          <br> Go ahead and
-          <strong>click me</strong> to replay the animation 😋
-          <br>
-          <br> Otherwise,
-          <strong>scroll down</strong> to get back to the directory
-        </button>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <a href="https://devvit.io/ReallyAnnoyingDirectory/">
-      ⬅️ Get back to the directory
-    </a>
-  </footer>
-
-  <div class="transition transition--start"></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/animejs@2.2.0/anime.min.js"></script>
-  <script>
-    // State the contains crucial datas
-    // Could be vastly improved
-    const state = {
-      VW: window.innerWidth,
-      VH: window.innerHeight,
-      firstPart: anime.timeline({ autoplay: false }),
-      menuVisible: false
-    }
-
-    /* jQuery like function to retrieve DOM element(s)
-     * with the simple $ alias shortcut
-    **/
-    function $(search) {
-      const node = document.querySelectorAll(search);
-
-      if (node.length > 1) return node;
-
-      return document.querySelector(search);
-    }
-
-    /* Initiate the replay of the animation by:
-     * #1: removing the possibility the show the menu during the animation
-     * #2: creating a new timeline
-     * #3: hiding the menu if open
-     * #4: fading the second section out, leaving a blank canvas
-     * #5: once finished, restart the animation
-    **/
-    function handleClick(tl) {
-      $('.footer').removeEventListener('wheel', showMenu);
-
-      const out = anime.timeline();
-
-      out
-        .add({
-          targets: '.footer',
-          duration: 300,
-          translateY: 0
-        })
-        .add({
-          targets: '.section--two',
-          opacity: [1, 0],
-          duration: 600,
-        })
-
-      out.finished.then(tl.restart);
-    }
-
-    /* Function performed on scroll to show/hide
-     * the menu to come back the main directory
-    **/
-    function showMenu(e) {
-      // Height needed to show the menu
-      const footerHeight = $('.footer').offsetHeight;
-
-      // If scroll is down
-      if (e.deltaY > 0) {
-        // And menu is not already shown
-        if (state.menuVisible) return;
-
-        // Animate it
-        anime({
-          targets: '.footer',
-          duration: 300,
-          translateY: -footerHeight,
-        });
-
-        // And tell the global state that it's shown
-        state.menuVisible = true;
-      } else {
-        // else if scroll up and not already hidden
-        if (!state.menuVisible) return;
-
-        // Animate it
-        anime({
-          targets: '.footer',
-          duration: 300,
-          translateY: 0,
-        });
-
-        // And tell the global state that it's hidden
-        state.menuVisible = false;
+    <style>
+      * {
+        box-sizing: border-box;
       }
-    }
 
-    // Bootstrap of the page
-    function init() {
-      /* Description of the whole animations
-      * #1: animate the rows one by one
-      * #2: animate the circle from the middle that acts like a transition
-      * #3: fade-in the title of the second section
-      * #4: make the title blink then disappear
-      * #5: make every popup show up at random place
-      **/
-      state.firstPart
-        .add({ // #1
-          targets: '.section__row',
-          opacity: [0, 1],
-          translateX: ['100%', 0],
-          delay: (el, i, l) => i * 300,
-          duration: 1500
-        })
-        .add({ // #2
-          targets: '.transition--start',
-          opacity: [0, 1],
-          scale: [0, 1],
-          duration: 1000,
-          delay: 500,
-          easing: 'easeOutBack'
-        })
-        .add({ // #3
-          targets: '.section--two',
-          opacity: [0, 1],
-          duration: 300,
-          offset: '-=800'
-        })
-        .add({ // #4
-          targets: '.section__title',
-          easing: 'easeInOutBack',
-          opacity: [
-            { value: 0, duration: 75 },
-            { value: 1, duration: 75 },
-            { value: 0, duration: 90 },
-            { value: 1, duration: 90 },
-            { value: 0, duration: 110 },
-            { value: 1, duration: 110 },
-            { value: 0, duration: 150 },
-            { value: 1, duration: 150 },
-            { value: 0, duration: 200 },
-          ],
-          delay: 300
-        })
-        .add({ // #5
-          targets: '.section__pop-up',
-          opacity: [0, 1],
-          scale: [1.5, 1],
-          duration: 600,
-          translateX: (el) => Math.random() * ((state.VW - el.offsetWidth) - 0),
-          translateY: (el) => Math.random() * ((state.VH - el.offsetHeight) - 0),
-          delay: (el, i) => i * 800,
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu,
+          Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial,
+          sans-serif;
+        overflow: hidden;
+      }
+
+      .main {
+        height: 100vh;
+        position: relative;
+      }
+
+      .section {
+        height: 100%;
+        width: 100%;
+      }
+
+      .section--one {
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        background: #fff;
+      }
+
+      .section__row {
+        flex: 1;
+        display: flex;
+        opacity: 0;
+      }
+
+      .section__row > p {
+        font-size: 3.5rem;
+        margin: auto;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .section__row:nth-child(even) {
+        background: paleturquoise;
+      }
+
+      .section__row:nth-child(odd) {
+        background: palegoldenrod;
+      }
+
+      .section--two {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+        opacity: 0;
+        z-index: 20;
+      }
+
+      .section__title {
+        font-size: 5vw;
+        font-weight: lighter;
+        letter-spacing: 0.06em;
+      }
+
+      .section__pop-up {
+        margin: 0;
+        position: absolute;
+        max-width: 60vw;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        transform-origin: 0 0;
+        background: palevioletred;
+        color: whitesmoke;
+        border-radius: 5px;
+        padding: 10px 15px;
+        border: solid 2px white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+        transform: translate(-100%, -100%);
+      }
+
+      .section__pop-up--replay {
+        transform-origin: center center;
+      }
+
+      .section__pop-up > p {
+        margin: auto;
+        font-size: 1.5rem;
+      }
+
+      .section__pop-up:last-of-type {
+        padding: 0;
+        background: palegreen;
+      }
+
+      .section__pop-up > button {
+        padding: 10px 15px;
+        font-size: 1.5rem;
+        color: black;
+        display: block;
+        min-height: 50vh;
+        width: 50vw;
+        background: transparent;
+        border-width: 0;
+        cursor: pointer;
+      }
+
+      .transition {
+        position: absolute;
+        left: calc(50% - 60vw);
+        top: calc(50% - 60vw);
+        height: 120vw;
+        width: 120vw;
+        border-radius: 50%;
+        background: #fff;
+        z-index: 10;
+        transform: scale(0);
+      }
+
+      .footer {
+        height: 10vh;
+        background: palegreen;
+        z-index: 999;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: solid 2px white;
+      }
+
+      .footer > a {
+        font-size: 1.2rem;
+        text-decoration: none;
+        color: palevioletred;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="main">
+      <section class="section section--one">
+        <div class="section__row">
+          <p>This is</p>
+        </div>
+        <div class="section__row">
+          <p>Perhaps</p>
+        </div>
+        <div class="section__row">
+          <p>The most</p>
+        </div>
+        <div class="section__row">
+          <p>Annoying</p>
+        </div>
+        <div class="section__row">
+          <p>Website</p>
+        </div>
+        <div class="section__row">
+          <p>Ever</p>
+        </div>
+      </section>
+
+      <section class="section section--two">
+        <h1 class="section__title">Here are some facts about me</h1>
+        <div class="section__pop-up">
+          <p>I'm Alexandre, 22 y.o, French ✌️</p>
+        </div>
+        <div class="section__pop-up">
+          <p>My favorite language is Javascript</p>
+        </div>
+        <div class="section__pop-up">
+          <p>Web developpement & Photography 📷 are my two passions</p>
+        </div>
+        <div class="section__pop-up">
+          <p>
+            My favorite kind of music is original soundtracks from movies &
+            video games 🎼
+          </p>
+        </div>
+        <div class="section__pop-up">
+          <p>Best movie ever is Jurassic Park 🎥</p>
+        </div>
+        <div class="section__pop-up">
+          <p>I crave meringue lemon pie 🍋</p>
+        </div>
+        <div class="section__pop-up">
+          <p>Huge League of Legends player 🎮</p>
+        </div>
+        <div class="section__pop-up">
+          <p>Would love to learn to set up Arch 💻</p>
+        </div>
+        <div class="section__pop-up">
+          <p>Proud owner of a Cane Corso 🐶</p>
+        </div>
+        <div class="section__pop-up">
+          <p>Someone mentioned BMX? It used to be my drug 🚲</p>
+        </div>
+        <div class="section__pop-up">
+          <p>Despite being French, I prefer English</p>
+        </div>
+        <div class="section__pop-up">
+          <p>
+            My dream destination would be Northen Europe (Sweden specifically)
+            ✈️
+          </p>
+        </div>
+        <div class="section__pop-up">
+          <p>Probably more to come!</p>
+        </div>
+        <div class="section__pop-up section__pop-up--replay">
+          <button id="replay">
+            Couldn't read everything?
+            <br />
+            Go ahead and <strong>click me</strong> to replay the animation 😋
+            <br />
+            <br />
+            Otherwise, <strong>scroll down</strong> to get back to the directory
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a href="https://reallyannoyingdirectory.netlify.app/">
+        ⬅️ Get back to the directory
+      </a>
+    </footer>
+
+    <div class="transition transition--start"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/animejs@2.2.0/anime.min.js"></script>
+    <script>
+      // State the contains crucial datas
+      // Could be vastly improved
+      const state = {
+        VW: window.innerWidth,
+        VH: window.innerHeight,
+        firstPart: anime.timeline({ autoplay: false }),
+        menuVisible: false,
+      };
+
+      /* jQuery like function to retrieve DOM element(s)
+       * with the simple $ alias shortcut
+       **/
+      function $(search) {
+        const node = document.querySelectorAll(search);
+
+        if (node.length > 1) return node;
+
+        return document.querySelector(search);
+      }
+
+      /* Initiate the replay of the animation by:
+       * #1: removing the possibility the show the menu during the animation
+       * #2: creating a new timeline
+       * #3: hiding the menu if open
+       * #4: fading the second section out, leaving a blank canvas
+       * #5: once finished, restart the animation
+       **/
+      function handleClick(tl) {
+        $(".footer").removeEventListener("wheel", showMenu);
+
+        const out = anime.timeline();
+
+        out
+          .add({
+            targets: ".footer",
+            duration: 300,
+            translateY: 0,
+          })
+          .add({
+            targets: ".section--two",
+            opacity: [1, 0],
+            duration: 600,
+          });
+
+        out.finished.then(tl.restart);
+      }
+
+      /* Function performed on scroll to show/hide
+       * the menu to come back the main directory
+       **/
+      function showMenu(e) {
+        // Height needed to show the menu
+        const footerHeight = $(".footer").offsetHeight;
+
+        // If scroll is down
+        if (e.deltaY > 0) {
+          // And menu is not already shown
+          if (state.menuVisible) return;
+
+          // Animate it
+          anime({
+            targets: ".footer",
+            duration: 300,
+            translateY: -footerHeight,
+          });
+
+          // And tell the global state that it's shown
+          state.menuVisible = true;
+        } else {
+          // else if scroll up and not already hidden
+          if (!state.menuVisible) return;
+
+          // Animate it
+          anime({
+            targets: ".footer",
+            duration: 300,
+            translateY: 0,
+          });
+
+          // And tell the global state that it's hidden
+          state.menuVisible = false;
+        }
+      }
+
+      // Bootstrap of the page
+      function init() {
+        /* Description of the whole animations
+         * #1: animate the rows one by one
+         * #2: animate the circle from the middle that acts like a transition
+         * #3: fade-in the title of the second section
+         * #4: make the title blink then disappear
+         * #5: make every popup show up at random place
+         **/
+        state.firstPart
+          .add({
+            // #1
+            targets: ".section__row",
+            opacity: [0, 1],
+            translateX: ["100%", 0],
+            delay: (el, i, l) => i * 300,
+            duration: 1500,
+          })
+          .add({
+            // #2
+            targets: ".transition--start",
+            opacity: [0, 1],
+            scale: [0, 1],
+            duration: 1000,
+            delay: 500,
+            easing: "easeOutBack",
+          })
+          .add({
+            // #3
+            targets: ".section--two",
+            opacity: [0, 1],
+            duration: 300,
+            offset: "-=800",
+          })
+          .add({
+            // #4
+            targets: ".section__title",
+            easing: "easeInOutBack",
+            opacity: [
+              { value: 0, duration: 75 },
+              { value: 1, duration: 75 },
+              { value: 0, duration: 90 },
+              { value: 1, duration: 90 },
+              { value: 0, duration: 110 },
+              { value: 1, duration: 110 },
+              { value: 0, duration: 150 },
+              { value: 1, duration: 150 },
+              { value: 0, duration: 200 },
+            ],
+            delay: 300,
+          })
+          .add({
+            // #5
+            targets: ".section__pop-up",
+            opacity: [0, 1],
+            scale: [1.5, 1],
+            duration: 600,
+            translateX: (el) => Math.random() * (state.VW - el.offsetWidth - 0),
+            translateY: (el) =>
+              Math.random() * (state.VH - el.offsetHeight - 0),
+            delay: (el, i) => i * 800,
+          });
+
+        // Add the showMenu capabilities
+        window.addEventListener("wheel", showMenu);
+
+        // Add the replay capabilities
+        $("#replay").addEventListener("click", () => {
+          handleClick(state.firstPart);
         });
 
-      // Add the showMenu capabilities
-      window.addEventListener('wheel', showMenu);
+        // Delay the timeline by a few ms to produce a smooth start
+        setTimeout(() => {
+          state.firstPart.play();
+        }, 500);
+      }
 
-      // Add the replay capabilities
-      $('#replay').addEventListener('click', () => {
-        handleClick(state.firstPart);
-      });
-
-      // Delay the timeline by a few ms to produce a smooth start
-      setTimeout(() => {
-        state.firstPart.play();
-      }, 500)
-    }
-
-    // Start the init function want the DOM finished loading
-    document.addEventListener('DOMContentLoaded', init);
-  </script>
-</body>
-
+      // Start the init function want the DOM finished loading
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </body>
 </html>

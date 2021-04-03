@@ -1,125 +1,128 @@
 <!DOCTYPE html>
 <html lang="en" class="background_tint">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Landon Patmore</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
 
-<body>
+  <body>
     <div id="grid-area">
-        <main id="main-area">
-            <section id="name-section">
-                <h1>Landon Patmore</h1>
-                <h2>Software Engineer</h2>
-            </section>
-            <section id="links-area">
-                <a href="https://www.github.com/landonp1203">
-                    <i class="fa fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/landonpatmore/">
-                    <i class="fa fa-linkedin"></i>
-                </a>
-                <a href="https://devvit.io/ReallyAnnoyingDirectory/">
-                    <i class="fa fa-share"></i>
-                </a>
-            </section>
-        </main>
-        <footer id="footer">
-            <p>Made with
-                <i class="fa fa-heart"></i> in New Jersey.</p>
-        </footer>
+      <main id="main-area">
+        <section id="name-section">
+          <h1>Landon Patmore</h1>
+          <h2>Software Engineer</h2>
+        </section>
+        <section id="links-area">
+          <a href="https://www.github.com/landonp1203">
+            <i class="fa fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/landonpatmore/">
+            <i class="fa fa-linkedin"></i>
+          </a>
+          <a href="https://reallyannoyingdirectory.netlify.app/">
+            <i class="fa fa-share"></i>
+          </a>
+        </section>
+      </main>
+      <footer id="footer">
+        <p>Made with <i class="fa fa-heart"></i> in New Jersey.</p>
+      </footer>
     </div>
 
     <style>
-        @import url("https://fonts.googleapis.com/css?family=Advent+Pro|Roboto");
-        * {
-            color: white;
-        }
+      @import url("https://fonts.googleapis.com/css?family=Advent+Pro|Roboto");
+      * {
+        color: white;
+      }
 
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            background: -webkit-gradient(linear, left top, left bottom, from(white), to(#e74c3c));
-            background: linear-gradient(white, #e74c3c);
-        }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        background: -webkit-gradient(
+          linear,
+          left top,
+          left bottom,
+          from(white),
+          to(#e74c3c)
+        );
+        background: linear-gradient(white, #e74c3c);
+      }
 
-        #grid-area {
-            height: 100%;
-            width: 100%;
-            display: grid;
-            grid-template-areas: "main-area" "footer";
-            grid-template-rows: 1fr auto;
-        }
+      #grid-area {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-areas: "main-area" "footer";
+        grid-template-rows: 1fr auto;
+      }
 
-        #main-area {
-            grid-area: main-area;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            font-family: Advent Pro, sans-serif;
-        }
+      #main-area {
+        grid-area: main-area;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        font-family: Advent Pro, sans-serif;
+      }
 
-        #footer {
-            font-family: Roboto, sans-serif;
-            grid-area: footer;
-            text-align: center;
-        }
+      #footer {
+        font-family: Roboto, sans-serif;
+        grid-area: footer;
+        text-align: center;
+      }
 
-        #footer p {
-            margin-bottom: 5px;
-        }
+      #footer p {
+        margin-bottom: 5px;
+      }
 
-        #name-section {
-            text-align: center;
-        }
+      #name-section {
+        text-align: center;
+      }
 
-        #name-section h1 {
-            font-size: 4.0rem;
-            margin: 0;
-        }
+      #name-section h1 {
+        font-size: 4rem;
+        margin: 0;
+      }
 
-        #name-section h2 {
-            margin-top: 20px;
-            margin-bottom: 25px;
-        }
+      #name-section h2 {
+        margin-top: 20px;
+        margin-bottom: 25px;
+      }
 
-        #links-area {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-            flex-direction: row;
-            width: 30%;
-            -ms-flex-pack: distribute;
-            justify-content: space-around;
-        }
+      #links-area {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        width: 30%;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+      }
 
-        #links-area i {
-            font-size: 2.0rem;
-        }
+      #links-area i {
+        font-size: 2rem;
+      }
 
-        #links-area i:hover {
-            color: lightgrey;
-        }
+      #links-area i:hover {
+        color: lightgrey;
+      }
     </style>
 
     <script src="https://use.fontawesome.com/fd3fab2b7e.js"></script>
-</body>
-
+  </body>
 </html>

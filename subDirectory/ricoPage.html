@@ -1,77 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Rico page only the best page in the world.</title>
-	<style>
-		/* Styles Here */
-		body {
-			text-align: center;
-			background-image: url("https://s3.us-east-2.amazonaws.com/mrico/hehe.gif");
-			color: red;
-		}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Rico page only the best page in the world.</title>
+    <style>
+      /* Styles Here */
+      body {
+        text-align: center;
+        background-image: url("https://s3.us-east-2.amazonaws.com/mrico/hehe.gif");
+        color: red;
+      }
 
-		#directory-link {
-			text-align: left;
-		}
+      #directory-link {
+        text-align: left;
+      }
 
-		h1 {
-			background-color: black;
-		}
+      h1 {
+        background-color: black;
+      }
 
-		p {
-			font-size: 23px;
-			background-color: black;
-		}
-	</style>
-</head>
-<body>
+      p {
+        font-size: 23px;
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <a id="directory-link" href="#">Back to Directory</a>
+    <img
+      id="el-oh-el"
+      src="http://www.tiptopsigns.com/images/P/jdm_meme_lol.jpg"
+      alt="lol"
+      style="position: absolute; display: none; left: 50%"
+    />
 
-<a id="directory-link" href="#">Back to Directory</a>
-<img id="el-oh-el" src="http://www.tiptopsigns.com/images/P/jdm_meme_lol.jpg" alt="lol"
-     style="position:absolute; display: none; left: 50%;">
+    <h1>WELCOME TO MY PAGE!!!</h1>
 
-<h1>WELCOME TO MY PAGE!!!</h1>
+    <p>
+      This is part of the
+      <a
+        href="https://github.com/LearnDevelopmentPublic/ReallyAnnoyingDirectory/blob/master/README.md"
+        >LearnDevelopment Public repo</a
+      >
+      A place where we show off our amazing
+      <span style="font-weight: bold; color: yellow">design</span> skills!
+      <img
+        src="http://14544-presscdn-0-64.pagely.netdna-cdn.com/wp-content/uploads/2012/09/gun-fails-thumb.jpg"
+        alt="Best gun design ever"
+      />
+    </p>
 
-<p>This is part of the <a
-		href="https://github.com/LearnDevelopmentPublic/ReallyAnnoyingDirectory/blob/master/README.md">LearnDevelopment
-	Public repo</a> A place where we show off our amazing <span style="font-weight: bold; color: yellow;">design</span>
-	skills! <img
-			src="http://14544-presscdn-0-64.pagely.netdna-cdn.com/wp-content/uploads/2012/09/gun-fails-thumb.jpg"
-			alt="Best gun design ever"></p>
+    <br />
 
-<br>
+    <p>
+      I guess I should tell you a bit about my self..well..favorite band is
+      EVERY TIME I DIE
+      <img
+        src="https://media.giphy.com/media/l0HlBs5gOXQvHcJ1u/giphy.gif"
+        alt="best band in the whole wide world"
+      />
+    </p>
 
-<p>I guess I should tell you a bit about my self..well..favorite band is EVERY TIME I DIE <img
-		src="https://media.giphy.com/media/l0HlBs5gOXQvHcJ1u/giphy.gif" alt="best band in the whole wide world"></p>
+    <p
+      style="
+        background-image: url('http://ithelpbooks.com/wp-content/uploads/2017/01/JavascriptLogo.png');
+        height: 250px;
+      "
+    >
+      I've been using JavaScript for a bit, it's the language I've used the
+      most.
+    </p>
 
-<p style="background-image: url('http://ithelpbooks.com/wp-content/uploads/2017/01/JavascriptLogo.png'); height: 250px;">
-	I've been using JavaScript for a bit, it's the language I've used the most.</p>
+    <p>
+      I'm currently living in Upstate New York...which you might think looks
+      like this...
+      <img
+        src="https://i0.wp.com/www.society19.com/wp-content/uploads/2016/07/ny1.gif?resize=743%2C443&ssl=1"
+        alt="there is more to ny than this"
+      />
+      But it actually looks a lot more like this..
+      <img
+        src="http://cdn.abclocal.go.com/content/wabc/images/cms/1798230_1280x720.jpg"
+        alt="what upstate actually looks like"
+      />
+    </p>
 
-<p>I'm currently living in Upstate New York...which you might think looks like this... <img
-		src="https://i0.wp.com/www.society19.com/wp-content/uploads/2016/07/ny1.gif?resize=743%2C443&ssl=1"
-		alt="there is more to ny than this"> But it actually looks a lot more like this.. <img
-		src="http://cdn.abclocal.go.com/content/wabc/images/cms/1798230_1280x720.jpg"
-		alt="what upstate actually looks like"></p>
+    <p>
+      Hoping to team up with some of the people in this group to build something
+      awesome! But I've might've peaked when I built this page
+    </p>
 
-<p>Hoping to team up with some of the people in this group to build something awesome! But I've might've peaked when I
-	built this page</p>
-
-<script>
-	var clicked = false;
-	var directoryLink = document.getElementById('directory-link');
-	var lol = document.getElementById('el-oh-el');
-	directoryLink.addEventListener('click', function (e) {
-		if(!clicked){
-			e.preventDefault();
-			clicked = true;
-			lol.style.display = 'block';
-			directoryLink.setAttribute('href', "https://devvit.io/ReallyAnnoyingDirectory/");
-			directoryLink.setAttribute('style', 'position: absolute; font-size: 23px; left: 0; color: yellow;')
-		}
-	})
-</script>
-</body>
+    <script>
+      var clicked = false;
+      var directoryLink = document.getElementById("directory-link");
+      var lol = document.getElementById("el-oh-el");
+      directoryLink.addEventListener("click", function (e) {
+        if (!clicked) {
+          e.preventDefault();
+          clicked = true;
+          lol.style.display = "block";
+          directoryLink.setAttribute(
+            "href",
+            "https://reallyannoyingdirectory.netlify.app/"
+          );
+          directoryLink.setAttribute(
+            "style",
+            "position: absolute; font-size: 23px; left: 0; color: yellow;"
+          );
+        }
+      });
+    </script>
+  </body>
 </html>
