@@ -1,164 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>i like to follow you</title>
-    </head>   
-    <style type="text/css">
-        
-        body{
-            text-align: center;
-            padding: 5em;
-        }
-        #outer > div{
-            position: relative;
-            height: 200px;
-        }
-        img{
-            position: absolute; 
-            left: 40%;
-        }        
-        #words{
-            font-family: cursive;
-        }
-        #pic-male{
-            visibility: hidden;
-        }
-    a{
-        position: absolute;
-        left:10px;
-        top: 10px;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>i like to follow you</title>
+  </head>
+  <style type="text/css">
+    body {
+      text-align: center;
+      padding: 5em;
     }
+    #outer > div {
+      position: relative;
+      height: 200px;
+    }
+    img {
+      position: absolute;
+      left: 40%;
+    }
+    #words {
+      font-family: cursive;
+    }
+    #pic-male {
+      visibility: hidden;
+    }
+    a {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+  </style>
+  <body>
+    <a href="https://reallyannoyingdirectory.netlify.app/">Back to Directory</a>
 
-    </style>    
-    <body>
-        
-        <a href="https://devvit.io/ReallyAnnoyingDirectory/">Back to Directory</a>
+    <div id="outer">
+      <div>
+        <img
+          id="pic-female"
+          src="https://sean-mcdonald.com/images/pic-femaleVoice.jpg"
+          width="200px"
+          height="200px"
+        />
+        <img
+          id="pic-male"
+          src="https://sean-mcdonald.com/images/pic-maleVoice.png"
+          width="200px"
+          height="200px"
+        />
+      </div>
+    </div>
 
-        <div id="outer">
-        <div>
-        <img id="pic-female" src="https://sean-mcdonald.com/images/pic-femaleVoice.jpg" width="200px" height="200px" />
-        <img id="pic-male" src="https://sean-mcdonald.com/images/pic-maleVoice.png" width="200px" height="200px" />
-        </div>
-        </div>
-        
-        <p id="words"></p>
-        
-        <button id="start-button"> Can I talk to you?</button>        
-        <!-- Content -->
-        <script type="text/javascript">
-            
-          var maleVoice = 1, femaleVoice = 0; 
-          var synth = window.speechSynthesis;
-          var longPause = 3000, shortPause = 2000, noPause = 0;
-          
-          const mad = [.8, 1.5, 1];
-          const sad = [1.1, .7, .4];
-          const mansad = [.5, .5, .6];
-          const normal = [1,1,.5];
-          
-            
-          function getVoices(){
-            
-             
-            var voices = synth.getVoices();
-                        
-            for(var i = 0; i < voices.length; i++){ 
-                if(voices[i].name == "Vicki"){
-                    femaleVoice = i;
-                }
-            }           
-        
-            for(var i = 0; i < voices.length; i++){ 
-                if(voices[i].name == "Daniel"){
-                    maleVoice = i;
-                }
-            } 
-            
-            
+    <p id="words"></p>
+
+    <button id="start-button">Can I talk to you?</button>
+    <!-- Content -->
+    <script type="text/javascript">
+      var maleVoice = 1,
+        femaleVoice = 0;
+      var synth = window.speechSynthesis;
+      var longPause = 3000,
+        shortPause = 2000,
+        noPause = 0;
+
+      const mad = [0.8, 1.5, 1];
+      const sad = [1.1, 0.7, 0.4];
+      const mansad = [0.5, 0.5, 0.6];
+      const normal = [1, 1, 0.5];
+
+      function getVoices() {
+        var voices = synth.getVoices();
+
+        for (var i = 0; i < voices.length; i++) {
+          if (voices[i].name == "Vicki") {
+            femaleVoice = i;
           }
-        
-        
-        
-        function whatDay(d){
-            if(d == 0) return "Sunday"; 
-            if(d == 1) return "Monday"; 
-            if(d == 2) return "Tuesday"; 
-            if(d == 3) return "Wednesday"; 
-            if(d == 4) return "Thursday"; 
-            if(d == 5) return "Friday"; 
-            if(d == 6) return "Saturday"; 
-            
-        } 
-        
-        
-        
-        function say(voice, text, pause, feeling){
-            
-            return new Promise((resolve, reject) => {
-            
-                       if(voice == "male") var theVoice = maleVoice;
-                       else var theVoice = femaleVoice;
-                               
-                       var utterThis = new SpeechSynthesisUtterance(text);
-                        
-                       utterThis.voice = synth.getVoices()[theVoice];    
-                       
-                       utterThis.pitch = feeling[0];
-                       utterThis.rate = feeling[1];
-                       utterThis.volume = feeling[2];
-                       
-                       
-                       document.getElementById("pic-"+voice).style.visibility = "visible";
-                               setTimeout(() => { synth.speak(utterThis);
-                                          document.getElementById("words").innerHTML = text; 
-                                          }, pause);
-                      
-                        
-                       utterThis.addEventListener('end', function(event) { 
-                                                  document.getElementById("pic-"+voice).style.visibility = "hidden";
-                                                  document.getElementById("words").innerHTML = "";
-                                                  resolve(); });
-                
-            });
+        }
 
-        }   
-        
-        document.getElementById("start-button").addEventListener("click", function(){  
-                                                                 
-                                                                 getVoices();
-                                                                 startConversation();  
-                                                                 });
-        
-        function endConversation(){
-            
-            document.getElementById("start-button").innerHTML = "listen to this conversation again";
+        for (var i = 0; i < voices.length; i++) {
+          if (voices[i].name == "Daniel") {
+            maleVoice = i;
+          }
+        }
+      }
+
+      function whatDay(d) {
+        if (d == 0) return "Sunday";
+        if (d == 1) return "Monday";
+        if (d == 2) return "Tuesday";
+        if (d == 3) return "Wednesday";
+        if (d == 4) return "Thursday";
+        if (d == 5) return "Friday";
+        if (d == 6) return "Saturday";
+      }
+
+      function say(voice, text, pause, feeling) {
+        return new Promise((resolve, reject) => {
+          if (voice == "male") var theVoice = maleVoice;
+          else var theVoice = femaleVoice;
+
+          var utterThis = new SpeechSynthesisUtterance(text);
+
+          utterThis.voice = synth.getVoices()[theVoice];
+
+          utterThis.pitch = feeling[0];
+          utterThis.rate = feeling[1];
+          utterThis.volume = feeling[2];
+
+          document.getElementById("pic-" + voice).style.visibility = "visible";
+          setTimeout(() => {
+            synth.speak(utterThis);
+            document.getElementById("words").innerHTML = text;
+          }, pause);
+
+          utterThis.addEventListener("end", function (event) {
+            document.getElementById("pic-" + voice).style.visibility = "hidden";
             document.getElementById("words").innerHTML = "";
-            document.getElementById("start-button").style.visibility = "visible";
-            
-        }
-        
-        function startConversation(){
-            
-            document.getElementById("start-button").style.visibility = "hidden";
-            
-            say("female", "I like to follow you. Even today, "+whatDay(new Date().getDay())+", I like to follow you.", noPause, mad)
-            
-            .then((x) => { return say("male", "I like to follow you too.", shortPause, mansad); })
-            
-            .then((x) => { return say("female", "I can tell you what browser you are using, because I am watching you now. You are using a "+navigator.vendor+" browser.", shortPause, sad); })            
+            resolve();
+          });
+        });
+      }
 
-            .then((x) => { return say("male", "I feel very sad I will never be with you. Please don't leave. ", longPause, mansad); }) 
-            
-            .then((x) => { return endConversation();  })
+      document
+        .getElementById("start-button")
+        .addEventListener("click", function () {
+          getVoices();
+          startConversation();
+        });
 
-            .catch(error => console.log(error));
-                        
-        }
-        </script>
-        
-    </body>
-  </html>
+      function endConversation() {
+        document.getElementById("start-button").innerHTML =
+          "listen to this conversation again";
+        document.getElementById("words").innerHTML = "";
+        document.getElementById("start-button").style.visibility = "visible";
+      }
+
+      function startConversation() {
+        document.getElementById("start-button").style.visibility = "hidden";
+
+        say(
+          "female",
+          "I like to follow you. Even today, " +
+            whatDay(new Date().getDay()) +
+            ", I like to follow you.",
+          noPause,
+          mad
+        )
+          .then((x) => {
+            return say("male", "I like to follow you too.", shortPause, mansad);
+          })
+
+          .then((x) => {
+            return say(
+              "female",
+              "I can tell you what browser you are using, because I am watching you now. You are using a " +
+                navigator.vendor +
+                " browser.",
+              shortPause,
+              sad
+            );
+          })
+
+          .then((x) => {
+            return say(
+              "male",
+              "I feel very sad I will never be with you. Please don't leave. ",
+              longPause,
+              mansad
+            );
+          })
+
+          .then((x) => {
+            return endConversation();
+          })
+
+          .catch((error) => console.log(error));
+      }
+    </script>
+  </body>
+</html>

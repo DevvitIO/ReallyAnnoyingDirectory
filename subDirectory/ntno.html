@@ -1,110 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title></title>
-  <style>
-    *{
-      font-family:'Times New Roman', serif;
-    }
-    .navbar {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+    <style>
+      * {
+        font-family: "Times New Roman", serif;
+      }
+      .navbar {
         overflow: hidden;
         background-color: white;
-    }
-    .navbar a {
+      }
+      .navbar a {
         float: left;
         font-size: 16px;
         color: white;
         text-align: center;
         padding: 14px 16px;
         text-decoration: none;
-    }
-    .dropdown {
+      }
+      .dropdown {
         float: left;
         overflow: hidden;
-    }
-    .dropdown .dropbtn {
+      }
+      .dropdown .dropbtn {
         font-size: 16px;
         border: none;
         outline: none;
         color: black;
         padding: 14px 16px;
         background-color: inherit;
-    }
-    .navbar a:hover, .dropdown:hover .dropbtn {
+      }
+      .navbar a:hover,
+      .dropdown:hover .dropbtn {
         background-color: white;
-    }
-    .dropdown-content {
+      }
+      .dropdown-content {
         display: none;
         position: absolute;
         min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
-    }
-    .dropdown-content a {
+      }
+      .dropdown-content a {
         float: none;
         color: white;
         padding: 12px 16px;
         text-decoration: none;
         display: block;
         text-align: left;
-    }
-    .dropdown:hover .dropdown-content {
+      }
+      .dropdown:hover .dropdown-content {
         display: block;
-    }
-  </style>
-</head>
-<body>
-  <h1>my awesome website :)</h1>
-  <div class="navbar">
-    <div class="dropdown">
-      <button class="dropbtn"><p>Links!</p>
-      </button>
-      <div id="lol" class="dropdown-content">
+      }
+      .exit {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>my awesome website :)</h1>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn"><p>Links!</p></button>
+        <div id="lol" class="dropdown-content"></div>
       </div>
     </div>
-  </div>
 
-  <script>
-    var hellcount = 20 + Math.floor(Math.random()*60);
-    var dontHeckThisPartUp = 'https://devvit.io/';
-    var url = 'https://devvit.io/ReallyAnnoyingDirectory/';
+    <script>
+      var hellcount = 20 + Math.floor(Math.random() * 60);
+      var dontHeckThisPartUp = "https://devvit.io/";
+      var url = "https://reallyannoyingdirectory.netlify.app/";
 
-    for(var i=0; i< hellcount; i++){
-      //breakem
-      var linktxt = "<- go back";
-      var heckitup = url.split('').splice(0);
-      var strtHecking = Math.floor(Math.random()*(url.length - dontHeckThisPartUp.length)) + dontHeckThisPartUp.length;
-      heckitup[strtHecking] = '-';
-      heckitup = heckitup.join('');
+      for (var i = 0; i < hellcount; i++) {
+        //breakem
+        var linktxt = "<- go back";
+        var heckitup = url.split("").splice(0);
+        var strtHecking =
+          Math.floor(Math.random() * (url.length - dontHeckThisPartUp.length)) +
+          dontHeckThisPartUp.length;
+        heckitup[strtHecking] = "-";
+        heckitup = heckitup.join("");
 
-      //makem
-      var a = document.createElement('a');
-      a.setAttribute('href', heckitup);
-      a.innerHtml = linktxt;
-      a.id ="" + i;
-      var txt = document.createTextNode(linktxt);
-      a.appendChild(txt);
-      document.getElementById("lol").appendChild(a);
-    }
-
-    // colorem
-    for(var i=0; i<hellcount; i++){
-      document.getElementById("" + i).onmouseover = function(){
-          this.style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+        //makem
+        var a = document.createElement("a");
+        a.setAttribute("href", heckitup);
+        a.innerHtml = linktxt;
+        a.id = "" + i;
+        var txt = document.createTextNode(linktxt);
+        a.appendChild(txt);
+        document.getElementById("lol").appendChild(a);
       }
-      document.getElementById("" + i).onmouseout = function(){
-          this.style.backgroundColor = 'white';
+
+      // colorem
+      for (var i = 0; i < hellcount; i++) {
+        document.getElementById("" + i).onmouseover = function () {
+          this.style.backgroundColor =
+            "#" + Math.floor(Math.random() * 16777215).toString(16);
+        };
+        document.getElementById("" + i).onmouseout = function () {
+          this.style.backgroundColor = "white";
+        };
+        document.getElementById("" + i).style.color =
+          "#" + Math.floor(Math.random() * 16777215).toString(16);
       }
-      document.getElementById("" + i).style.color = "#" + Math.floor(Math.random()*16777215).toString(16);
-    }
 
-    //fix one
-    var idx = Math.floor(Math.random()*hellcount);
-    document.getElementById("" + idx).setAttribute('href', url);
-
-  </script>
-</body>
+      //fix one
+      var idx = Math.floor(Math.random() * hellcount);
+      document.getElementById("" + idx).setAttribute("href", url);
+    </script>
+    <div class="exit">
+      <a href="https://reallyannoyingdirectory.netlify.app/">exit</a>
+    </div>
+  </body>
 </html>

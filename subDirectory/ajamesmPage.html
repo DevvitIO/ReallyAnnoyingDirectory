@@ -1,187 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
 
-  <title>BEST WEBSITE EVER</title>
+    <title>BEST WEBSITE EVER</title>
 
-  <style>
-    html {
-      border-box: border;
-      font-size: 15px;
-    }
-    body {
-      background: red; /* not working, let's see some red */
-     background: -moz-linear-gradient( top ,
-         rgba(255, 0, 0, 1) 0%,
-         rgba(255, 255, 0, 1) 15%,
-         rgba(0, 255, 0, 1) 30%,
-         rgba(0, 255, 255, 1) 50%,
-         rgba(0, 0, 255, 1) 65%,
-         rgba(255, 0, 255, 1) 80%,
-         rgba(255, 0, 0, 1) 100%);
-     background: -webkit-gradient(linear,  left top,  left bottom,
-         color-stop(0%, rgba(255, 0, 0, 1)),
-         color-stop(15%, rgba(255, 255, 0, 1)),
-         color-stop(30%, rgba(0, 255, 0, 1)),
-         color-stop(50%, rgba(0, 255, 255, 1)),
-         color-stop(65%, rgba(0, 0, 255, 1)),
-         color-stop(80%, rgba(255, 0, 255, 1)),
-         color-stop(100%, rgba(255, 0, 0, 1)));
-         height: 90%;
-         width: 90%;
-         margin: 5%;
-    }
+    <style>
+      html {
+        border-box: border;
+        font-size: 15px;
+      }
+      body {
+        background: red; /* not working, let's see some red */
+        background: -moz-linear-gradient(
+          top,
+          rgba(255, 0, 0, 1) 0%,
+          rgba(255, 255, 0, 1) 15%,
+          rgba(0, 255, 0, 1) 30%,
+          rgba(0, 255, 255, 1) 50%,
+          rgba(0, 0, 255, 1) 65%,
+          rgba(255, 0, 255, 1) 80%,
+          rgba(255, 0, 0, 1) 100%
+        );
+        background: -webkit-gradient(
+          linear,
+          left top,
+          left bottom,
+          color-stop(0%, rgba(255, 0, 0, 1)),
+          color-stop(15%, rgba(255, 255, 0, 1)),
+          color-stop(30%, rgba(0, 255, 0, 1)),
+          color-stop(50%, rgba(0, 255, 255, 1)),
+          color-stop(65%, rgba(0, 0, 255, 1)),
+          color-stop(80%, rgba(255, 0, 255, 1)),
+          color-stop(100%, rgba(255, 0, 0, 1))
+        );
+        height: 90%;
+        width: 90%;
+        margin: 5%;
+      }
 
-    i {
-      display: inline-block;
-      margin: 0 25px;
-      color: yellow;
-      border: 1px solid black;
-    }
+      i {
+        display: inline-block;
+        margin: 0 25px;
+        color: yellow;
+        border: 1px solid black;
+      }
 
-    h1 {
-      text-align: center;
-      font-family: "Faster One", sans-serif;
-      font-size: 5rem;
-      color: red;
-      transform: scaleY(1.5);
+      h1 {
+        text-align: center;
+        font-family: "Faster One", sans-serif;
+        font-size: 5rem;
+        color: red;
+        transform: scaleY(1.5);
         -ms-transform: scaleY(1.5); /* IE 9 */
         -webkit-transform: scaleY(1.5); /* Safari */
-      transition: all 1s;
-      display: inline-block;
-    }
+        transition: all 1s;
+        display: inline-block;
+      }
 
-    h2 {
-      text-align: center;
-      font-family: "Libre Barcode 39 Extended Text", serif;
-      font-size: 5rem;
-    }
+      h2 {
+        text-align: center;
+        font-family: "Libre Barcode 39 Extended Text", serif;
+        font-size: 5rem;
+      }
 
-    .header {
-      margin-top: 100px;
-      position: relative;
-      text-align: center;
-    }
-    .skew-left {
-      transform: skewX(30deg); /* Standard syntax */
+      .header {
+        margin-top: 100px;
+        position: relative;
+        text-align: center;
+      }
+      .skew-left {
+        transform: skewX(30deg); /* Standard syntax */
         -ms-transform: skewX(30deg); /* IE 9 */
         -webkit-transform: skewX(30deg); /* Safari */
-      transition: all 1s;
-    }
-    .skew-right {
-      transform: skewX(-30deg); /* Standard syntax */
+        transition: all 1s;
+      }
+      .skew-right {
+        transform: skewX(-30deg); /* Standard syntax */
         -ms-transform: skewX(-30deg); /* IE 9 */
         -webkit-transform: skewX(-30deg); /* Safari */
-      transition: all 1s;
-    }
-    .center {
-      transition: all 2s;
-      display: block;
-      margin: 0 auto;
-      z-index: 999;
-      overflow: hidden;
-    }
-    .sloth-scale {
-      transition: all 2s;
-      transform: scale(1.5) rotate(30deg);
-      overflow: hidden;
-    }
-    .sloth-image {
-      overflow: hidden;
-    }
-
-    @media only screen and (max-width: 1252px) {
-      i {
-        position: absolute;
-        left: 45%;
+        transition: all 1s;
       }
-      i:nth-of-type(1){
-        top: -75px;
-      }
-      i:nth-of-type(2){
-        top: 75px;
-      }
-      h1 {
+      .center {
+        transition: all 2s;
         display: block;
-        margin: 2rem auto;
-        font-size: 4rem;
+        margin: 0 auto;
+        z-index: 999;
+        overflow: hidden;
       }
-    }
-
-    @media only screen and (max-width: 810px) {
-      i:nth-of-type(1){
-        left: 15%;
-        top: 100px;
+      .sloth-scale {
+        transition: all 2s;
+        transform: scale(1.5) rotate(30deg);
+        overflow: hidden;
       }
-      i:nth-of-type(2){
-        left: 75%;
-        top: 100px;
+      .sloth-image {
+        overflow: hidden;
       }
-    }
 
-    @media only screen and (max-width: 613px) {
-      i:nth-of-type(1){
-        left: 40%;
-        top: -75px;
+      @media only screen and (max-width: 1252px) {
+        i {
+          position: absolute;
+          left: 45%;
+        }
+        i:nth-of-type(1) {
+          top: -75px;
+        }
+        i:nth-of-type(2) {
+          top: 75px;
+        }
+        h1 {
+          display: block;
+          margin: 2rem auto;
+          font-size: 4rem;
+        }
       }
-      i:nth-of-type(2){
-        left: 40%;
-        top: 125px;
+
+      @media only screen and (max-width: 810px) {
+        i:nth-of-type(1) {
+          left: 15%;
+          top: 100px;
+        }
+        i:nth-of-type(2) {
+          left: 75%;
+          top: 100px;
+        }
       }
-    }
 
-    @media only screen and (max-width: 434px) {
-      i:nth-of-type(1){
-        left: 25%;
-        top: 200px;
+      @media only screen and (max-width: 613px) {
+        i:nth-of-type(1) {
+          left: 40%;
+          top: -75px;
+        }
+        i:nth-of-type(2) {
+          left: 40%;
+          top: 125px;
+        }
       }
-      i:nth-of-type(2){
-        left: 50%;
-        top: 200px;
+
+      @media only screen and (max-width: 434px) {
+        i:nth-of-type(1) {
+          left: 25%;
+          top: 200px;
+        }
+        i:nth-of-type(2) {
+          left: 50%;
+          top: 200px;
+        }
+        img {
+          width: 350px;
+        }
       }
-      img {
-        width: 350px;
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css?family=Faster+One|Libre+Barcode+39+Extended+Text"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <i class="fa fa-star fa-4x fa-spin" aria-hidden="true"></i>
+      <h1 id="main-title" class="skew-left">WELCOME TO MY SITE</h1>
+      <i class="fa fa-star fa-4x fa-spin" aria-hidden="true"></i>
+    </div>
+
+    <div class="sloth-image">
+      <img
+        src="http://i.imgur.com/IdjyvLq.png"
+        alt=""
+        class="center"
+        id="sloth"
+      />
+    </div>
+
+    <h2>SLOTHS ARE MY SPIRIT ANIMAL</h2>
+
+    <a href="https://reallyannoyingdirectory.netlify.app/">Back to Directory</a>
+
+    <script>
+      function skewer() {
+        nIntervalId = setInterval(skew, 1000);
       }
-    }
 
-  </style>
-  <link href="https://fonts.googleapis.com/css?family=Faster+One|Libre+Barcode+39+Extended+Text" rel="stylesheet">
-</head>
-<body>
+      function skew() {
+        var title = document.getElementById("main-title");
+        var slothPic = document.getElementById("sloth");
+        title.classList.toggle("skew-left");
+        title.classList.toggle("skew-right");
+        slothPic.classList.toggle("sloth-scale");
+      }
 
-  <div class="header">
-  <i class="fa fa-star fa-4x fa-spin" aria-hidden="true"></i><h1 id="main-title" class="skew-left"> WELCOME TO MY SITE </h1><i class="fa fa-star fa-4x fa-spin" aria-hidden="true"></i>
-  </div>
-
-  <div class="sloth-image">
-    <img src="http://i.imgur.com/IdjyvLq.png" alt="" class="center" id="sloth">
-  </div>
-
-  <h2> SLOTHS ARE MY SPIRIT ANIMAL </h2>
-
-  <a href="https://devvit.io/ReallyAnnoyingDirectory/">Back to Directory</a>
-
-
-  <script>
-
-
-    function skewer() {
-      nIntervalId = setInterval(skew, 1000);
-    }
-
-    function skew(){
-      var title = document.getElementById("main-title");
-      var slothPic = document.getElementById("sloth");
-      title.classList.toggle("skew-left");
-      title.classList.toggle("skew-right");
-      slothPic.classList.toggle("sloth-scale");
-    }
-
-    skewer();
-  </script>
-</body>
+      skewer();
+    </script>
+  </body>
 </html>
