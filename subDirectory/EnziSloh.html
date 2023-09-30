@@ -1,0 +1,3282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Dungeon</title>
+  <style>body {
+    background: radial-gradient(#211e2f, #211e2f, #1c1927, #000);
+  }
+  #camera {
+    position: fixed;
+    top: 200px;
+    left: 600px;
+    height: 275px;
+    width: 275px;
+    overflow: hidden;
+    /*   background: #211e2f; */
+  }
+  #wrap {
+    position: absolute;
+    top: -402.5px;
+    left: 102.5px;
+  }
+  /*Tile Types  */
+  .floor {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #8799a9, 5px 0px #8799a9, 7.5px 0px #8799a9,
+      10px 0px #8799a9, 12.5px 0px #8799a9, 15px 0px #8799a9, 17.5px 0px #8799a9,
+      20px 0px #8799a9, 22.5px 0px #8799a9, 25px 0px #8799a9, 27.5px 0px #8799a9,
+      30px 0px #8799a9, 32.5px 0px #8799a9, 35px 0px #717e9e, 37.5px 0px #3f456a,
+      /*Second Row*/ 0px 2.5px #8799a9, 2.5px 2.5px #8799a9, 5px 2.5px #8799a9,
+      7.5px 2.5px #8799a9, 10px 2.5px #8799a9, 12.5px 2.5px #8799a9,
+      15px 2.5px #8799a9, 17.5px 2.5px #8799a9, 20px 2.5px #8799a9,
+      22.5px 2.5px #8799a9, 25px 2.5px #8799a9, 27.5px 2.5px #8799a9,
+      30px 2.5px #8799a9, 32.5px 2.5px #8799a9, 35px 2.5px #98a8ba,
+      37.5px 2.5px #3f456a, /*Third Row*/ 0px 5px #8799a9, 2.5px 5px #8799a9,
+      5px 5px #8799a9, 7.5px 5px #8799a9, 10px 5px #8799a9, 12.5px 5px #8799a9,
+      15px 5px #8799a9, 17.5px 5px #8799a9, 20px 5px #8799a9, 22.5px 5px #8799a9,
+      25px 5px #8799a9, 27.5px 5px #8799a9, 30px 5px #8799a9, 32.5px 5px #8799a9,
+      35px 5px #98a8ba, 37.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #8799a9,
+      2.5px 7.5px #8799a9, 5px 7.5px #8799a9, 7.5px 7.5px #8799a9,
+      10px 7.5px #8799a9, 12.5px 7.5px #8799a9, 15px 7.5px #8799a9,
+      17.5px 7.5px #8799a9, 20px 7.5px #8799a9, 22.5px 7.5px #8799a9,
+      25px 7.5px #8799a9, 27.5px 7.5px #8799a9, 30px 7.5px #8799a9,
+      32.5px 7.5px #8799a9, 35px 7.5px #98a8ba, 37.5px 7.5px #3f456a,
+      /*Fifth Row*/ 0px 10px #8799a9, 2.5px 10px #8799a9, 5px 10px #8799a9,
+      7.5px 10px #8799a9, 10px 10px #8799a9, 12.5px 10px #8799a9,
+      15px 10px #8799a9, 17.5px 10px #8799a9, 20px 10px #8799a9,
+      22.5px 10px #8799a9, 25px 10px #8799a9, 27.5px 10px #8799a9,
+      30px 10px #8799a9, 32.5px 10px #8799a9, 35px 10px #98a8ba,
+      37.5px 10px #3f456a, /*Sixth Row*/ 0px 12.5px #8799a9, 2.5px 12.5px #8799a9,
+      5px 12.5px #8799a9, 7.5px 12.5px #8799a9, 10px 12.5px #8799a9,
+      12.5px 12.5px #8799a9, 15px 12.5px #8799a9, 17.5px 12.5px #8799a9,
+      20px 12.5px #8799a9, 22.5px 12.5px #8799a9, 25px 12.5px #8799a9,
+      27.5px 12.5px #8799a9, 30px 12.5px #8799a9, 32.5px 12.5px #8799a9,
+      35px 12.5px #98a8ba, 37.5px 12.5px #3f456a, /*Seventh Row*/ 0px 15px #8799a9,
+      2.5px 15px #8799a9, 5px 15px #8799a9, 7.5px 15px #8799a9, 10px 15px #8799a9,
+      12.5px 15px #8799a9, 15px 15px #8799a9, 17.5px 15px #8799a9,
+      20px 15px #8799a9, 22.5px 15px #8799a9, 25px 15px #8799a9,
+      27.5px 15px #8799a9, 30px 15px #8799a9, 32.5px 15px #8799a9,
+      35px 15px #98a8ba, 37.5px 15px #3f456a, /*Eighth Row*/ 0px 17.5px #8799a9,
+      2.5px 17.5px #8799a9, 5px 17.5px #8799a9, 7.5px 17.5px #8799a9,
+      10px 17.5px #8799a9, 12.5px 17.5px #8799a9, 15px 17.5px #8799a9,
+      17.5px 17.5px #8799a9, 20px 17.5px #8799a9, 22.5px 17.5px #8799a9,
+      25px 17.5px #8799a9, 27.5px 17.5px #8799a9, 30px 17.5px #8799a9,
+      32.5px 17.5px #8799a9, 35px 17.5px #98a8ba, 37.5px 17.5px #3f456a,
+      /*Ninth Row*/ 0px 20px #8799a9, 2.5px 20px #8799a9, 5px 20px #8799a9,
+      7.5px 20px #8799a9, 10px 20px #8799a9, 12.5px 20px #8799a9,
+      15px 20px #8799a9, 17.5px 20px #8799a9, 20px 20px #8799a9,
+      22.5px 20px #8799a9, 25px 20px #8799a9, 27.5px 20px #8799a9,
+      30px 20px #8799a9, 32.5px 20px #8799a9, 35px 20px #98a8ba,
+      37.5px 20px #3f456a, /*Tenth Row*/ 0px 22.5px #8799a9, 2.5px 22.5px #8799a9,
+      5px 22.5px #8799a9, 7.5px 22.5px #8799a9, 10px 22.5px #8799a9,
+      12.5px 22.5px #8799a9, 15px 22.5px #8799a9, 17.5px 22.5px #8799a9,
+      20px 22.5px #8799a9, 22.5px 22.5px #8799a9, 25px 22.5px #8799a9,
+      27.5px 22.5px #8799a9, 30px 22.5px #8799a9, 32.5px 22.5px #8799a9,
+      35px 22.5px #98a8ba, 37.5px 22.5px #3f456a,
+      /*Eleventh Row*/ 0px 25px #8799a9, 2.5px 25px #8799a9, 5px 25px #8799a9,
+      7.5px 25px #8799a9, 10px 25px #8799a9, 12.5px 25px #8799a9,
+      15px 25px #8799a9, 17.5px 25px #8799a9, 20px 25px #8799a9,
+      22.5px 25px #8799a9, 25px 25px #8799a9, 27.5px 25px #8799a9,
+      30px 25px #8799a9, 32.5px 25px #8799a9, 35px 25px #98a8ba,
+      37.5px 25px #3f456a, /*Twelfth Row*/ 0px 27.5px #8799a9,
+      2.5px 27.5px #8799a9, 5px 27.5px #8799a9, 7.5px 27.5px #8799a9,
+      10px 27.5px #8799a9, 12.5px 27.5px #8799a9, 15px 27.5px #8799a9,
+      17.5px 27.5px #8799a9, 20px 27.5px #8799a9, 22.5px 27.5px #8799a9,
+      25px 27.5px #8799a9, 27.5px 27.5px #8799a9, 30px 27.5px #8799a9,
+      32.5px 27.5px #8799a9, 35px 27.5px #98a8ba, 37.5px 27.5px #3f456a,
+      /*Thirteenth Row*/ 0px 30px #8799a9, 2.5px 30px #8799a9, 5px 30px #8799a9,
+      7.5px 30px #8799a9, 10px 30px #8799a9, 12.5px 30px #8799a9,
+      15px 30px #8799a9, 17.5px 30px #8799a9, 20px 30px #8799a9,
+      22.5px 30px #8799a9, 25px 30px #8799a9, 27.5px 30px #8799a9,
+      30px 30px #8799a9, 32.5px 30px #8799a9, 35px 30px #98a8ba,
+      37.5px 30px #3f456a, /*Fourteenth Row*/ 0px 32.5px #8799a9,
+      2.5px 32.5px #8799a9, 5px 32.5px #8799a9, 7.5px 32.5px #8799a9,
+      10px 32.5px #8799a9, 12.5px 32.5px #8799a9, 15px 32.5px #8799a9,
+      17.5px 32.5px #8799a9, 20px 32.5px #8799a9, 22.5px 32.5px #8799a9,
+      25px 32.5px #8799a9, 27.5px 32.5px #8799a9, 30px 32.5px #8799a9,
+      32.5px 32.5px #8799a9, 35px 32.5px #98a8ba, 37.5px 32.5px #3f456a,
+      /*Fifteenth Row*/ 0px 35px #717e9e, 2.5px 35px #98a8ba, 5px 35px #98a8ba,
+      7.5px 35px #98a8ba, 10px 35px #98a8ba, 12.5px 35px #98a8ba,
+      15px 35px #98a8ba, 17.5px 35px #98a8ba, 20px 35px #98a8ba,
+      22.5px 35px #98a8ba, 25px 35px #98a8ba, 27.5px 35px #98a8ba,
+      30px 35px #98a8ba, 32.5px 35px #98a8ba, 35px 35px #717e9e,
+      37.5px 35px #3f456a, /*Sixteenth Row*/ 0px 37.5px #3f456a,
+      2.5px 37.5px #3f456a, 5px 37.5px #3f456a, 7.5px 37.5px #3f456a,
+      10px 37.5px #3f456a, 12.5px 37.5px #3f456a, 15px 37.5px #3f456a,
+      17.5px 37.5px #3f456a, 20px 37.5px #3f456a, 22.5px 37.5px #3f456a,
+      25px 37.5px #3f456a, 27.5px 37.5px #3f456a, 30px 37.5px #3f456a,
+      32.5px 37.5px #3f456a, 35px 37.5px #3f456a, 37.5px 37.5px #3f456a;
+  }
+  .floorTiled {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #8799a9, 5px 0px #8799a9, 7.5px 0px #8799a9,
+      10px 0px #8799a9, 12.5px 0px #8799a9, 15px 0px #98a8ba, 17.5px 0px #717e9e,
+      20px 0px #8799a9, 22.5px 0px #8799a9, 25px 0px #8799a9, 27.5px 0px #8799a9,
+      30px 0px #8799a9, 32.5px 0px #8799a9, 35px 0px #717e9e, 37.5px 0px #3f456a,
+      /*Second Row*/ 0px 2.5px #8799a9, 2.5px 2.5px #8799a9, 5px 2.5px #8799a9,
+      7.5px 2.5px #8799a9, 10px 2.5px #8799a9, 12.5px 2.5px #8799a9,
+      15px 2.5px #98a8ba, 17.5px 2.5px #717e9e, 20px 2.5px #8799a9,
+      22.5px 2.5px #8799a9, 25px 2.5px #8799a9, 27.5px 2.5px #8799a9,
+      30px 2.5px #8799a9, 32.5px 2.5px #8799a9, 35px 2.5px #98a8ba,
+      37.5px 2.5px #3f456a, /*Third Row*/ 0px 5px #8799a9, 2.5px 5px #8799a9,
+      5px 5px #8799a9, 7.5px 5px #8799a9, 10px 5px #8799a9, 12.5px 5px #8799a9,
+      15px 5px #98a8ba, 17.5px 5px #717e9e, 20px 5px #8799a9, 22.5px 5px #8799a9,
+      25px 5px #8799a9, 27.5px 5px #8799a9, 30px 5px #8799a9, 32.5px 5px #8799a9,
+      35px 5px #98a8ba, 37.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #8799a9,
+      2.5px 7.5px #8799a9, 5px 7.5px #8799a9, 7.5px 7.5px #8799a9,
+      10px 7.5px #8799a9, 12.5px 7.5px #8799a9, 15px 7.5px #98a8ba,
+      17.5px 7.5px #717e9e, 20px 7.5px #8799a9, 22.5px 7.5px #8799a9,
+      25px 7.5px #8799a9, 27.5px 7.5px #8799a9, 30px 7.5px #8799a9,
+      32.5px 7.5px #8799a9, 35px 7.5px #98a8ba, 37.5px 7.5px #3f456a,
+      /*Fifth Row*/ 0px 10px #8799a9, 2.5px 10px #8799a9, 5px 10px #8799a9,
+      7.5px 10px #8799a9, 10px 10px #8799a9, 12.5px 10px #8799a9,
+      15px 10px #98a8ba, 17.5px 10px #717e9e, 20px 10px #8799a9,
+      22.5px 10px #8799a9, 25px 10px #8799a9, 27.5px 10px #8799a9,
+      30px 10px #8799a9, 32.5px 10px #8799a9, 35px 10px #98a8ba,
+      37.5px 10px #3f456a, /*Sixth Row*/ 0px 12.5px #8799a9, 2.5px 12.5px #8799a9,
+      5px 12.5px #8799a9, 7.5px 12.5px #8799a9, 10px 12.5px #8799a9,
+      12.5px 12.5px #8799a9, 15px 12.5px #98a8ba, 17.5px 12.5px #717e9e,
+      20px 12.5px #8799a9, 22.5px 12.5px #8799a9, 25px 12.5px #8799a9,
+      27.5px 12.5px #8799a9, 30px 12.5px #8799a9, 32.5px 12.5px #8799a9,
+      35px 12.5px #98a8ba, 37.5px 12.5px #3f456a, /*Seventh Row*/ 0px 15px #98a8ba,
+      2.5px 15px #98a8ba, 5px 15px #98a8ba, 7.5px 15px #98a8ba, 10px 15px #98a8ba,
+      12.5px 15px #98a8ba, 15px 15px #98a8ba, 17.5px 15px #717e9e,
+      20px 15px #98a8ba, 22.5px 15px #98a8ba, 25px 15px #98a8ba,
+      27.5px 15px #98a8ba, 30px 15px #98a8ba, 32.5px 15px #98a8ba,
+      35px 15px #98a8ba, 37.5px 15px #3f456a, /*Eighth Row*/ 0px 17.5px #717e9e,
+      2.5px 17.5px #717e9e, 5px 17.5px #717e9e, 7.5px 17.5px #717e9e,
+      10px 17.5px #717e9e, 12.5px 17.5px #717e9e, 15px 17.5px #717e9e,
+      17.5px 17.5px #717e9e, 20px 17.5px #717e9e, 22.5px 17.5px #717e9e,
+      25px 17.5px #717e9e, 27.5px 17.5px #717e9e, 30px 17.5px #717e9e,
+      32.5px 17.5px #717e9e, 35px 17.5px #717e9e, 37.5px 17.5px #3f456a,
+      /*Ninth Row*/ 0px 20px #8799a9, 2.5px 20px #8799a9, 5px 20px #8799a9,
+      7.5px 20px #8799a9, 10px 20px #8799a9, 12.5px 20px #8799a9,
+      15px 20px #98a8ba, 17.5px 20px #717e9e, 20px 20px #8799a9,
+      22.5px 20px #8799a9, 25px 20px #8799a9, 27.5px 20px #8799a9,
+      30px 20px #8799a9, 32.5px 20px #8799a9, 35px 20px #98a8ba,
+      37.5px 20px #3f456a, /*Tenth Row*/ 0px 22.5px #8799a9, 2.5px 22.5px #8799a9,
+      5px 22.5px #8799a9, 7.5px 22.5px #8799a9, 10px 22.5px #8799a9,
+      12.5px 22.5px #8799a9, 15px 22.5px #98a8ba, 17.5px 22.5px #717e9e,
+      20px 22.5px #8799a9, 22.5px 22.5px #8799a9, 25px 22.5px #8799a9,
+      27.5px 22.5px #8799a9, 30px 22.5px #8799a9, 32.5px 22.5px #8799a9,
+      35px 22.5px #98a8ba, 37.5px 22.5px #3f456a,
+      /*Eleventh Row*/ 0px 25px #8799a9, 2.5px 25px #8799a9, 5px 25px #8799a9,
+      7.5px 25px #8799a9, 10px 25px #8799a9, 12.5px 25px #8799a9,
+      15px 25px #98a8ba, 17.5px 25px #717e9e, 20px 25px #8799a9,
+      22.5px 25px #8799a9, 25px 25px #8799a9, 27.5px 25px #8799a9,
+      30px 25px #8799a9, 32.5px 25px #8799a9, 35px 25px #98a8ba,
+      37.5px 25px #3f456a, /*Twelfth Row*/ 0px 27.5px #8799a9,
+      2.5px 27.5px #8799a9, 5px 27.5px #8799a9, 7.5px 27.5px #8799a9,
+      10px 27.5px #8799a9, 12.5px 27.5px #8799a9, 15px 27.5px #98a8ba,
+      17.5px 27.5px #717e9e, 20px 27.5px #8799a9, 22.5px 27.5px #8799a9,
+      25px 27.5px #8799a9, 27.5px 27.5px #8799a9, 30px 27.5px #8799a9,
+      32.5px 27.5px #8799a9, 35px 27.5px #98a8ba, 37.5px 27.5px #3f456a,
+      /*Thirteenth Row*/ 0px 30px #8799a9, 2.5px 30px #8799a9, 5px 30px #8799a9,
+      7.5px 30px #8799a9, 10px 30px #8799a9, 12.5px 30px #8799a9,
+      15px 30px #98a8ba, 17.5px 30px #717e9e, 20px 30px #8799a9,
+      22.5px 30px #8799a9, 25px 30px #8799a9, 27.5px 30px #8799a9,
+      30px 30px #8799a9, 32.5px 30px #8799a9, 35px 30px #98a8ba,
+      37.5px 30px #3f456a, /*Fourteenth Row*/ 0px 32.5px #8799a9,
+      2.5px 32.5px #8799a9, 5px 32.5px #8799a9, 7.5px 32.5px #8799a9,
+      10px 32.5px #8799a9, 12.5px 32.5px #8799a9, 15px 32.5px #98a8ba,
+      17.5px 32.5px #717e9e, 20px 32.5px #8799a9, 22.5px 32.5px #8799a9,
+      25px 32.5px #8799a9, 27.5px 32.5px #8799a9, 30px 32.5px #8799a9,
+      32.5px 32.5px #8799a9, 35px 32.5px #98a8ba, 37.5px 32.5px #3f456a,
+      /*Fifteenth Row*/ 0px 35px #717e9e, 2.5px 35px #98a8ba, 5px 35px #98a8ba,
+      7.5px 35px #98a8ba, 10px 35px #98a8ba, 12.5px 35px #98a8ba,
+      15px 35px #98a8ba, 17.5px 35px #717e9e, 20px 35px #98a8ba,
+      22.5px 35px #98a8ba, 25px 35px #98a8ba, 27.5px 35px #98a8ba,
+      30px 35px #98a8ba, 32.5px 35px #98a8ba, 35px 35px #717e9e,
+      37.5px 35px #3f456a, /*Sixteenth Row*/ 0px 37.5px #3f456a,
+      2.5px 37.5px #3f456a, 5px 37.5px #3f456a, 7.5px 37.5px #3f456a,
+      10px 37.5px #3f456a, 12.5px 37.5px #3f456a, 15px 37.5px #3f456a,
+      17.5px 37.5px #3f456a, 20px 37.5px #3f456a, 22.5px 37.5px #3f456a,
+      25px 37.5px #3f456a, 27.5px 37.5px #3f456a, 30px 37.5px #3f456a,
+      32.5px 37.5px #3f456a, 35px 37.5px #3f456a, 37.5px 37.5px #3f456a;
+  }
+  .floorWarp {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #717e9e, 5px 0px #8799a9, 7.5px 0px #8799a9,
+      10px 0px #8799a9, 12.5px 0px #8799a9, 15px 0px #8799a9, 17.5px 0px #8799a9,
+      20px 0px #8799a9, 22.5px 0px #8799a9, 25px 0px #8799a9, 27.5px 0px #8799a9,
+      30px 0px #8799a9, 32.5px 0px #717e9e, 35px 0px #717e9e, 37.5px 0px #3f456a,
+      /*Second Row*/ 0px 2.5px #717e9e, 2.5px 2.5px #8799a9, 5px 2.5px #8799a9,
+      7.5px 2.5px #8799a9, 10px 2.5px #8799a9, 12.5px 2.5px #8799a9,
+      15px 2.5px #8799a9, 17.5px 2.5px #8799a9, 20px 2.5px #8799a9,
+      22.5px 2.5px #8799a9, 25px 2.5px #8799a9, 27.5px 2.5px #8799a9,
+      30px 2.5px #8799a9, 32.5px 2.5px #8799a9, 35px 2.5px #717e9e,
+      37.5px 2.5px #3f456a, /*Third Row*/ 0px 5px #8799a9, 2.5px 5px #8799a9,
+      5px 5px #8799a9, 7.5px 5px #8799a9, 10px 5px #8799a9, 12.5px 5px #8799a9,
+      15px 5px #8799a9, 17.5px 5px #bac6d1, 20px 5px #8799a9, 22.5px 5px #8799a9,
+      25px 5px #8799a9, 27.5px 5px #8799a9, 30px 5px #8799a9, 32.5px 5px #8799a9,
+      35px 5px #98a8ba, 37.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #8799a9,
+      2.5px 7.5px #8799a9, 5px 7.5px #8799a9, 7.5px 7.5px #8799a9,
+      10px 7.5px #8799a9, 12.5px 7.5px #8799a9, 15px 7.5px #bac6d1,
+      17.5px 7.5px #bac6d1, 20px 7.5px #bac6d1, 22.5px 7.5px #8799a9,
+      25px 7.5px #8799a9, 27.5px 7.5px #8799a9, 30px 7.5px #8799a9,
+      32.5px 7.5px #8799a9, 35px 7.5px #98a8ba, 37.5px 7.5px #3f456a,
+      /*Fifth Row*/ 0px 10px #8799a9, 2.5px 10px #8799a9, 5px 10px #8799a9,
+      7.5px 10px #8799a9, 10px 10px #8799a9, 12.5px 10px #bac6d1,
+      15px 10px #bac6d1, 17.5px 10px #bac6d1, 20px 10px #bac6d1,
+      22.5px 10px #bac6d1, 25px 10px #8799a9, 27.5px 10px #8799a9,
+      30px 10px #8799a9, 32.5px 10px #8799a9, 35px 10px #98a8ba,
+      37.5px 10px #3f456a, /*Sixth Row*/ 0px 12.5px #8799a9, 2.5px 12.5px #8799a9,
+      5px 12.5px #8799a9, 7.5px 12.5px #8799a9, 10px 12.5px #bac6d1,
+      12.5px 12.5px #bac6d1, 15px 12.5px #bac6d1, 17.5px 12.5px #bac6d1,
+      20px 12.5px #bac6d1, 22.5px 12.5px #bac6d1, 25px 12.5px #bac6d1,
+      27.5px 12.5px #8799a9, 30px 12.5px #8799a9, 32.5px 12.5px #8799a9,
+      35px 12.5px #98a8ba, 37.5px 12.5px #3f456a, /*Seventh Row*/ 0px 15px #8799a9,
+      2.5px 15px #8799a9, 5px 15px #8799a9, 7.5px 15px #bac6d1, 10px 15px #bac6d1,
+      12.5px 15px #bac6d1, 15px 15px #3f456a, 17.5px 15px #3f456a,
+      20px 15px #3f456a, 22.5px 15px #bac6d1, 25px 15px #bac6d1,
+      27.5px 15px #bac6d1, 30px 15px #8799a9, 32.5px 15px #8799a9,
+      35px 15px #98a8ba, 37.5px 15px #3f456a, /*Eighth Row*/ 0px 17.5px #8799a9,
+      2.5px 17.5px #8799a9, 5px 17.5px #bac6d1, 7.5px 17.5px #bac6d1,
+      10px 17.5px #bac6d1, 12.5px 17.5px #bac6d1, 15px 17.5px #3f456a,
+      17.5px 17.5px #3f456a, 20px 17.5px #3f456a, 22.5px 17.5px #bac6d1,
+      25px 17.5px #bac6d1, 27.5px 17.5px #bac6d1, 30px 17.5px #bac6d1,
+      32.5px 17.5px #8799a9, 35px 17.5px #98a8ba, 37.5px 17.5px #3f456a,
+      /*Ninth Row*/ 0px 20px #8799a9, 2.5px 20px #8799a9, 5px 20px #8799a9,
+      7.5px 20px #bac6d1, 10px 20px #bac6d1, 12.5px 20px #bac6d1,
+      15px 20px #3f456a, 17.5px 20px #3f456a, 20px 20px #3f456a,
+      22.5px 20px #bac6d1, 25px 20px #bac6d1, 27.5px 20px #bac6d1,
+      30px 20px #8799a9, 32.5px 20px #8799a9, 35px 20px #98a8ba,
+      37.5px 20px #3f456a, /*Tenth Row*/ 0px 22.5px #8799a9, 2.5px 22.5px #8799a9,
+      5px 22.5px #8799a9, 7.5px 22.5px #8799a9, 10px 22.5px #bac6d1,
+      12.5px 22.5px #bac6d1, 15px 22.5px #bac6d1, 17.5px 22.5px #bac6d1,
+      20px 22.5px #bac6d1, 22.5px 22.5px #bac6d1, 25px 22.5px #bac6d1,
+      27.5px 22.5px #8799a9, 30px 22.5px #8799a9, 32.5px 22.5px #8799a9,
+      35px 22.5px #98a8ba, 37.5px 22.5px #3f456a,
+      /*Eleventh Row*/ 0px 25px #8799a9, 2.5px 25px #8799a9, 5px 25px #8799a9,
+      7.5px 25px #8799a9, 10px 25px #8799a9, 12.5px 25px #bac6d1,
+      15px 25px #bac6d1, 17.5px 25px #bac6d1, 20px 25px #bac6d1,
+      22.5px 25px #bac6d1, 25px 25px #8799a9, 27.5px 25px #8799a9,
+      30px 25px #8799a9, 32.5px 25px #8799a9, 35px 25px #98a8ba,
+      37.5px 25px #3f456a, /*Twelfth Row*/ 0px 27.5px #8799a9,
+      2.5px 27.5px #8799a9, 5px 27.5px #8799a9, 7.5px 27.5px #8799a9,
+      10px 27.5px #8799a9, 12.5px 27.5px #8799a9, 15px 27.5px #bac6d1,
+      17.5px 27.5px #bac6d1, 20px 27.5px #bac6d1, 22.5px 27.5px #8799a9,
+      25px 27.5px #8799a9, 27.5px 27.5px #8799a9, 30px 27.5px #8799a9,
+      32.5px 27.5px #8799a9, 35px 27.5px #98a8ba, 37.5px 27.5px #3f456a,
+      /*Thirteenth Row*/ 0px 30px #8799a9, 2.5px 30px #8799a9, 5px 30px #8799a9,
+      7.5px 30px #8799a9, 10px 30px #8799a9, 12.5px 30px #8799a9,
+      15px 30px #8799a9, 17.5px 30px #bac6d1, 20px 30px #8799a9,
+      22.5px 30px #8799a9, 25px 30px #8799a9, 27.5px 30px #8799a9,
+      30px 30px #8799a9, 32.5px 30px #8799a9, 35px 30px #98a8ba,
+      37.5px 30px #3f456a, /*Fourteenth Row*/ 0px 32.5px #717e9e,
+      2.5px 32.5px #8799a9, 5px 32.5px #8799a9, 7.5px 32.5px #8799a9,
+      10px 32.5px #8799a9, 12.5px 32.5px #8799a9, 15px 32.5px #8799a9,
+      17.5px 32.5px #8799a9, 20px 32.5px #8799a9, 22.5px 32.5px #8799a9,
+      25px 32.5px #8799a9, 27.5px 32.5px #8799a9, 30px 32.5px #8799a9,
+      32.5px 32.5px #8799a9, 35px 32.5px #717e9e, 37.5px 32.5px #3f456a,
+      /*Fifteenth Row*/ 0px 35px #717e9e, 2.5px 35px #717e9e, 5px 35px #98a8ba,
+      7.5px 35px #98a8ba, 10px 35px #98a8ba, 12.5px 35px #98a8ba,
+      15px 35px #98a8ba, 17.5px 35px #98a8ba, 20px 35px #98a8ba,
+      22.5px 35px #98a8ba, 25px 35px #98a8ba, 27.5px 35px #98a8ba,
+      30px 35px #98a8ba, 32.5px 35px #717e9e, 35px 35px #717e9e,
+      37.5px 35px #3f456a, /*Sixteenth Row*/ 0px 37.5px #3f456a,
+      2.5px 37.5px #3f456a, 5px 37.5px #3f456a, 7.5px 37.5px #3f456a,
+      10px 37.5px #3f456a, 12.5px 37.5px #3f456a, 15px 37.5px #3f456a,
+      17.5px 37.5px #3f456a, 20px 37.5px #3f456a, 22.5px 37.5px #3f456a,
+      25px 37.5px #3f456a, 27.5px 37.5px #3f456a, 30px 37.5px #3f456a,
+      32.5px 37.5px #3f456a, 35px 37.5px #3f456a, 37.5px 37.5px #3f456a;
+  }
+  .floorCracked {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #8799a9, 5px 0px #8799a9, 7.5px 0px #8799a9,
+      10px 0px #8799a9, 12.5px 0px #8799a9, 15px 0px #8799a9, 17.5px 0px #98a8ba,
+      20px 0px #3f456a, 22.5px 0px #98a8ba, 25px 0px #98a8ba, 27.5px 0px #8799a9,
+      30px 0px #8799a9, 32.5px 0px #8799a9, 35px 0px #717e9e, 37.5px 0px #3f456a,
+      /*Second Row*/ 0px 2.5px #8799a9, 2.5px 2.5px #8799a9, 5px 2.5px #8799a9,
+      7.5px 2.5px #8799a9, 10px 2.5px #8799a9, 12.5px 2.5px #8799a9,
+      15px 2.5px #8799a9, 17.5px 2.5px #98a8ba, 20px 2.5px #3f456a,
+      22.5px 2.5px #717e9e, 25px 2.5px #717e9e, 27.5px 2.5px #98a8ba,
+      30px 2.5px #8799a9, 32.5px 2.5px #8799a9, 35px 2.5px #98a8ba,
+      37.5px 2.5px #3f456a, /*Third Row*/ 0px 5px #98a8ba, 2.5px 5px #8799a9,
+      5px 5px #8799a9, 7.5px 5px #8799a9, 10px 5px #8799a9, 12.5px 5px #8799a9,
+      15px 5px #8799a9, 17.5px 5px #98a8ba, 20px 5px #3f456a, 22.5px 5px #8799a9,
+      25px 5px #8799a9, 27.5px 5px #717e9e, 30px 5px #8799a9, 32.5px 5px #8799a9,
+      35px 5px #98a8ba, 37.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #3f456a,
+      2.5px 7.5px #98a8ba, 5px 7.5px #8799a9, 7.5px 7.5px #8799a9,
+      10px 7.5px #8799a9, 12.5px 7.5px #8799a9, 15px 7.5px #98a8ba,
+      17.5px 7.5px #98a8ba, 20px 7.5px #717e9e, 22.5px 7.5px #8799a9,
+      25px 7.5px #8799a9, 27.5px 7.5px #8799a9, 30px 7.5px #8799a9,
+      32.5px 7.5px #8799a9, 35px 7.5px #98a8ba, 37.5px 7.5px #3f456a,
+      /*Fifth Row*/ 0px 10px #98a8ba, 2.5px 10px #717e9e, 5px 10px #98a8ba,
+      7.5px 10px #98a8ba, 10px 10px #98a8ba, 12.5px 10px #98a8ba,
+      15px 10px #717e9e, 17.5px 10px #717e9e, 20px 10px #8799a9,
+      22.5px 10px #8799a9, 25px 10px #8799a9, 27.5px 10px #8799a9,
+      30px 10px #8799a9, 32.5px 10px #8799a9, 35px 10px #98a8ba,
+      37.5px 10px #3f456a, /*Sixth Row*/ 0px 12.5px #8799a9, 2.5px 12.5px #98a8ba,
+      5px 12.5px #717e9e, 7.5px 12.5px #717e9e, 10px 12.5px #717e9e,
+      12.5px 12.5px #717e9e, 15px 12.5px #8799a9, 17.5px 12.5px #8799a9,
+      20px 12.5px #8799a9, 22.5px 12.5px #8799a9, 25px 12.5px #8799a9,
+      27.5px 12.5px #8799a9, 30px 12.5px #8799a9, 32.5px 12.5px #8799a9,
+      35px 12.5px #98a8ba, 37.5px 12.5px #3f456a, /*Seventh Row*/ 0px 15px #8799a9,
+      2.5px 15px #8799a9, 5px 15px #98a8ba, 7.5px 15px #717e9e, 10px 15px #8799a9,
+      12.5px 15px #8799a9, 15px 15px #8799a9, 17.5px 15px #8799a9,
+      20px 15px #8799a9, 22.5px 15px #8799a9, 25px 15px #8799a9,
+      27.5px 15px #8799a9, 30px 15px #8799a9, 32.5px 15px #8799a9,
+      35px 15px #98a8ba, 37.5px 15px #3f456a, /*Eighth Row*/ 0px 17.5px #8799a9,
+      2.5px 17.5px #8799a9, 5px 17.5px #98a8ba, 7.5px 17.5px #717e9e,
+      10px 17.5px #8799a9, 12.5px 17.5px #8799a9, 15px 17.5px #8799a9,
+      17.5px 17.5px #8799a9, 20px 17.5px #8799a9, 22.5px 17.5px #8799a9,
+      25px 17.5px #8799a9, 27.5px 17.5px #8799a9, 30px 17.5px #8799a9,
+      32.5px 17.5px #8799a9, 35px 17.5px #98a8ba, 37.5px 17.5px #3f456a,
+      /*Ninth Row*/ 0px 20px #8799a9, 2.5px 20px #8799a9, 5px 20px #8799a9,
+      7.5px 20px #98a8ba, 10px 20px #717e9e, 12.5px 20px #8799a9,
+      15px 20px #8799a9, 17.5px 20px #8799a9, 20px 20px #8799a9,
+      22.5px 20px #8799a9, 25px 20px #8799a9, 27.5px 20px #8799a9,
+      30px 20px #8799a9, 32.5px 20px #8799a9, 35px 20px #98a8ba,
+      37.5px 20px #3f456a, /*Tenth Row*/ 0px 22.5px #8799a9, 2.5px 22.5px #8799a9,
+      5px 22.5px #8799a9, 7.5px 22.5px #8799a9, 10px 22.5px #8799a9,
+      12.5px 22.5px #8799a9, 15px 22.5px #8799a9, 17.5px 22.5px #8799a9,
+      20px 22.5px #8799a9, 22.5px 22.5px #8799a9, 25px 22.5px #8799a9,
+      27.5px 22.5px #8799a9, 30px 22.5px #8799a9, 32.5px 22.5px #8799a9,
+      35px 22.5px #98a8ba, 37.5px 22.5px #3f456a,
+      /*Eleventh Row*/ 0px 25px #8799a9, 2.5px 25px #8799a9, 5px 25px #8799a9,
+      7.5px 25px #8799a9, 10px 25px #8799a9, 12.5px 25px #8799a9,
+      15px 25px #8799a9, 17.5px 25px #8799a9, 20px 25px #8799a9,
+      22.5px 25px #98a8ba, 25px 25px #8799a9, 27.5px 25px #8799a9,
+      30px 25px #8799a9, 32.5px 25px #8799a9, 35px 25px #98a8ba,
+      37.5px 25px #3f456a, /*Twelfth Row*/ 0px 27.5px #8799a9,
+      2.5px 27.5px #8799a9, 5px 27.5px #8799a9, 7.5px 27.5px #8799a9,
+      10px 27.5px #8799a9, 12.5px 27.5px #8799a9, 15px 27.5px #8799a9,
+      17.5px 27.5px #8799a9, 20px 27.5px #98a8ba, 22.5px 27.5px #717e9e,
+      25px 27.5px #8799a9, 27.5px 27.5px #8799a9, 30px 27.5px #8799a9,
+      32.5px 27.5px #8799a9, 35px 27.5px #98a8ba, 37.5px 27.5px #3f456a,
+      /*Thirteenth Row*/ 0px 30px #8799a9, 2.5px 30px #8799a9, 5px 30px #8799a9,
+      7.5px 30px #8799a9, 10px 30px #8799a9, 12.5px 30px #8799a9,
+      15px 30px #8799a9, 17.5px 30px #98a8ba, 20px 30px #717e9e,
+      22.5px 30px #8799a9, 25px 30px #8799a9, 27.5px 30px #8799a9,
+      30px 30px #8799a9, 32.5px 30px #8799a9, 35px 30px #98a8ba,
+      37.5px 30px #3f456a, /*Fourteenth Row*/ 0px 32.5px #8799a9,
+      2.5px 32.5px #8799a9, 5px 32.5px #8799a9, 7.5px 32.5px #8799a9,
+      10px 32.5px #8799a9, 12.5px 32.5px #8799a9, 15px 32.5px #8799a9,
+      17.5px 32.5px #98a8ba, 20px 32.5px #717e9e, 22.5px 32.5px #8799a9,
+      25px 32.5px #8799a9, 27.5px 32.5px #8799a9, 30px 32.5px #8799a9,
+      32.5px 32.5px #8799a9, 35px 32.5px #98a8ba, 37.5px 32.5px #3f456a,
+      /*Fifteenth Row*/ 0px 35px #717e9e, 2.5px 35px #98a8ba, 5px 35px #98a8ba,
+      7.5px 35px #98a8ba, 10px 35px #98a8ba, 12.5px 35px #98a8ba,
+      15px 35px #98a8ba, 17.5px 35px #98a8ba, 20px 35px #3f456a,
+      22.5px 35px #98a8ba, 25px 35px #98a8ba, 27.5px 35px #98a8ba,
+      30px 35px #98a8ba, 32.5px 35px #98a8ba, 35px 35px #717e9e,
+      37.5px 35px #3f456a, /*Sixteenth Row*/ 0px 37.5px #3f456a,
+      2.5px 37.5px #3f456a, 5px 37.5px #3f456a, 7.5px 37.5px #3f456a,
+      10px 37.5px #3f456a, 12.5px 37.5px #3f456a, 15px 37.5px #3f456a,
+      17.5px 37.5px #3f456a, 20px 37.5px #3f456a, 22.5px 37.5px #3f456a,
+      25px 37.5px #3f456a, 27.5px 37.5px #3f456a, 30px 37.5px #3f456a,
+      32.5px 37.5px #3f456a, 35px 37.5px #3f456a, 37.5px 37.5px #3f456a;
+  }
+  .bricksV1 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #717e9e, 5px 0px #717e9e, 7.5px 0px #717e9e,
+      10px 0px #717e9e, 12.5px 0px #717e9e, 15px 0px #211e2f, 17.5px 0px #717e9e,
+      20px 0px #717e9e, 22.5px 0px #717e9e, 25px 0px #717e9e, 27.5px 0px #717e9e,
+      30px 0px #717e9e, 32.5px 0px #211e2f, 35px 0px #717e9e, 37.5px 0px #717e9e,
+      /*Second Row*/ 0px 2.5px #3f456a, 2.5px 2.5px #3f456a, 5px 2.5px #3f456a,
+      7.5px 2.5px #3f456a, 10px 2.5px #3f456a, 12.5px 2.5px #717e9e,
+      15px 2.5px #211e2f, 17.5px 2.5px #3f456a, 20px 2.5px #3f456a,
+      22.5px 2.5px #3f456a, 25px 2.5px #3f456a, 27.5px 2.5px #3f456a,
+      30px 2.5px #717e9e, 32.5px 2.5px #211e2f, 35px 2.5px #3f456a,
+      37.5px 2.5px #3f456a, /*Third Row*/ 0px 5px #3f456a, 2.5px 5px #3f456a,
+      5px 5px #3f456a, 7.5px 5px #3f456a, 10px 5px #3f456a, 12.5px 5px #717e9e,
+      15px 5px #211e2f, 17.5px 5px #3f456a, 20px 5px #3f456a, 22.5px 5px #3f456a,
+      25px 5px #3f456a, 27.5px 5px #3f456a, 30px 5px #717e9e, 32.5px 5px #211e2f,
+      35px 5px #3f456a, 37.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #211e2f,
+      2.5px 7.5px #211e2f, 5px 7.5px #211e2f, 7.5px 7.5px #211e2f,
+      10px 7.5px #211e2f, 12.5px 7.5px #211e2f, 15px 7.5px #211e2f,
+      17.5px 7.5px #211e2f, 20px 7.5px #211e2f, 22.5px 7.5px #211e2f,
+      25px 7.5px #211e2f, 27.5px 7.5px #211e2f, 30px 7.5px #211e2f,
+      32.5px 7.5px #211e2f, 35px 7.5px #211e2f, 37.5px 7.5px #211e2f,
+      /*Fifth Row*/ 0px 10px #3f456a, 2.5px 10px #3f456a, 5px 10px #3f456a,
+      7.5px 10px #3f456a, 10px 10px #211e2f, 12.5px 10px #717e9e,
+      15px 10px #717e9e, 17.5px 10px #717e9e, 20px 10px #717e9e,
+      22.5px 10px #717e9e, 25px 10px #717e9e, 27.5px 10px #211e2f,
+      30px 10px #3f456a, 32.5px 10px #3f456a, 35px 10px #3f456a,
+      37.5px 10px #3f456a, /*Sixth Row*/ 0px 12.5px #3f456a, 2.5px 12.5px #3f456a,
+      5px 12.5px #3f456a, 7.5px 12.5px #3f456a, 10px 12.5px #211e2f,
+      12.5px 12.5px #3f456a, 15px 12.5px #3f456a, 17.5px 12.5px #3f456a,
+      20px 12.5px #3f456a, 22.5px 12.5px #3f456a, 25px 12.5px #3f456a,
+      27.5px 12.5px #211e2f, 30px 12.5px #3f456a, 32.5px 12.5px #3f456a,
+      35px 12.5px #3f456a, 37.5px 12.5px #3f456a, /*Seventh Row*/ 0px 15px #3f456a,
+      2.5px 15px #3f456a, 5px 15px #3f456a, 7.5px 15px #3f456a, 10px 15px #211e2f,
+      12.5px 15px #3f456a, 15px 15px #3f456a, 17.5px 15px #3f456a,
+      20px 15px #3f456a, 22.5px 15px #3f456a, 25px 15px #3f456a,
+      27.5px 15px #211e2f, 30px 15px #3f456a, 32.5px 15px #3f456a,
+      35px 15px #3f456a, 37.5px 15px #3f456a, /*Eighth Row*/ 0px 17.5px #211e2f,
+      2.5px 17.5px #211e2f, 5px 17.5px #211e2f, 7.5px 17.5px #211e2f,
+      10px 17.5px #211e2f, 12.5px 17.5px #211e2f, 15px 17.5px #211e2f,
+      17.5px 17.5px #211e2f, 20px 17.5px #211e2f, 22.5px 17.5px #211e2f,
+      25px 17.5px #211e2f, 27.5px 17.5px #211e2f, 30px 17.5px #211e2f,
+      32.5px 17.5px #211e2f, 35px 17.5px #211e2f, 37.5px 17.5px #211e2f,
+      /*Ninth Row*/ 0px 20px #3f456a, 2.5px 20px #3f456a, 5px 20px #3f456a,
+      7.5px 20px #3f456a, 10px 20px #3f456a, 12.5px 20px #3f456a,
+      15px 20px #211e2f, 17.5px 20px #3f456a, 20px 20px #3f456a,
+      22.5px 20px #3f456a, 25px 20px #3f456a, 27.5px 20px #3f456a,
+      30px 20px #3f456a, 32.5px 20px #211e2f, 35px 20px #3f456a,
+      37.5px 20px #3f456a, /*Tenth Row*/ 0px 22.5px #3f456a, 2.5px 22.5px #3f456a,
+      5px 22.5px #3f456a, 7.5px 22.5px #3f456a, 10px 22.5px #3f456a,
+      12.5px 22.5px #3f456a, 15px 22.5px #211e2f, 17.5px 22.5px #3f456a,
+      20px 22.5px #3f456a, 22.5px 22.5px #3f456a, 25px 22.5px #3f456a,
+      27.5px 22.5px #3f456a, 30px 22.5px #3f456a, 32.5px 22.5px #211e2f,
+      35px 22.5px #3f456a, 37.5px 22.5px #3f456a,
+      /*Eleventh Row*/ 0px 25px #3f456a, 2.5px 25px #3f456a, 5px 25px #3f456a,
+      7.5px 25px #3f456a, 10px 25px #3f456a, 12.5px 25px #3f456a,
+      15px 25px #211e2f, 17.5px 25px #3f456a, 20px 25px #3f456a,
+      22.5px 25px #3f456a, 25px 25px #3f456a, 27.5px 25px #3f456a,
+      30px 25px #3f456a, 32.5px 25px #211e2f, 35px 25px #3f456a,
+      37.5px 25px #3f456a, /*Twelfth Row*/ 0px 27.5px #211e2f,
+      2.5px 27.5px #211e2f, 5px 27.5px #211e2f, 7.5px 27.5px #211e2f,
+      10px 27.5px #211e2f, 12.5px 27.5px #211e2f, 15px 27.5px #211e2f,
+      17.5px 27.5px #211e2f, 20px 27.5px #211e2f, 22.5px 27.5px #211e2f,
+      25px 27.5px #211e2f, 27.5px 27.5px #211e2f, 30px 27.5px #211e2f,
+      32.5px 27.5px #211e2f, 35px 27.5px #211e2f, 37.5px 27.5px #211e2f,
+      /*Thirteenth Row*/ 0px 30px #3f456a, 2.5px 30px #3f456a, 5px 30px #3f456a,
+      7.5px 30px #3f456a, 10px 30px #211e2f, 12.5px 30px #3f456a,
+      15px 30px #3f456a, 17.5px 30px #3f456a, 20px 30px #3f456a,
+      22.5px 30px #3f456a, 25px 30px #3f456a, 27.5px 30px #211e2f,
+      30px 30px #3f456a, 32.5px 30px #3f456a, 35px 30px #3f456a,
+      37.5px 30px #3f456a, /*Fourteenth Row*/ 0px 32.5px #3f456a,
+      2.5px 32.5px #3f456a, 5px 32.5px #3f456a, 7.5px 32.5px #3f456a,
+      10px 32.5px #211e2f, 12.5px 32.5px #3f456a, 15px 32.5px #3f456a,
+      17.5px 32.5px #3f456a, 20px 32.5px #3f456a, 22.5px 32.5px #3f456a,
+      25px 32.5px #3f456a, 27.5px 32.5px #211e2f, 30px 32.5px #3f456a,
+      32.5px 32.5px #3f456a, 35px 32.5px #3f456a, 37.5px 32.5px #3f456a,
+      /*Fifteenth Row*/ 0px 35px #3f456a, 2.5px 35px #3f456a, 5px 35px #3f456a,
+      7.5px 35px #3f456a, 10px 35px #211e2f, 12.5px 35px #3f456a,
+      15px 35px #3f456a, 17.5px 35px #3f456a, 20px 35px #3f456a,
+      22.5px 35px #3f456a, 25px 35px #3f456a, 27.5px 35px #211e2f,
+      30px 35px #3f456a, 32.5px 35px #3f456a, 35px 35px #3f456a,
+      37.5px 35px #3f456a, /*Sixteenth Row*/ 0px 37.5px #211e2f,
+      2.5px 37.5px #211e2f, 5px 37.5px #211e2f, 7.5px 37.5px #211e2f,
+      10px 37.5px #211e2f, 12.5px 37.5px #211e2f, 15px 37.5px #211e2f,
+      17.5px 37.5px #211e2f, 20px 37.5px #211e2f, 22.5px 37.5px #211e2f,
+      25px 37.5px #211e2f, 27.5px 37.5px #211e2f, 30px 37.5px #211e2f,
+      32.5px 37.5px #211e2f, 35px 37.5px #211e2f, 37.5px 37.5px #211e2f;
+  }
+  .bricksV2 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #717e9e, 5px 0px #717e9e, 7.5px 0px #717e9e,
+      10px 0px #717e9e, 12.5px 0px #717e9e, 15px 0px #211e2f, 17.5px 0px #717e9e,
+      20px 0px #717e9e, 22.5px 0px #717e9e, 25px 0px #717e9e, 27.5px 0px #717e9e,
+      30px 0px #717e9e, 32.5px 0px #211e2f, 35px 0px #717e9e, 37.5px 0px #717e9e,
+      /*Second Row*/ 0px 2.5px #3f456a, 2.5px 2.5px #3f456a, 5px 2.5px #3f456a,
+      7.5px 2.5px #3f456a, 10px 2.5px #3f456a, 12.5px 2.5px #717e9e,
+      15px 2.5px #211e2f, 17.5px 2.5px #3f456a, 20px 2.5px #3f456a,
+      22.5px 2.5px #3f456a, 25px 2.5px #3f456a, 27.5px 2.5px #3f456a,
+      30px 2.5px #717e9e, 32.5px 2.5px #211e2f, 35px 2.5px #3f456a,
+      37.5px 2.5px #3f456a, /*Third Row*/ 0px 5px #3f456a, 2.5px 5px #3f456a,
+      5px 5px #3f456a, 7.5px 5px #3f456a, 10px 5px #3f456a, 12.5px 5px #717e9e,
+      15px 5px #211e2f, 17.5px 5px #3f456a, 20px 5px #3f456a, 22.5px 5px #3f456a,
+      25px 5px #3f456a, 27.5px 5px #3f456a, 30px 5px #717e9e, 32.5px 5px #211e2f,
+      35px 5px #3f456a, 37.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #211e2f,
+      2.5px 7.5px #211e2f, 5px 7.5px #211e2f, 7.5px 7.5px #211e2f,
+      10px 7.5px #211e2f, 12.5px 7.5px #211e2f, 15px 7.5px #211e2f,
+      17.5px 7.5px #211e2f, 20px 7.5px #211e2f, 22.5px 7.5px #211e2f,
+      25px 7.5px #211e2f, 27.5px 7.5px #211e2f, 30px 7.5px #211e2f,
+      32.5px 7.5px #211e2f, 35px 7.5px #211e2f, 37.5px 7.5px #211e2f,
+      /*Fifth Row*/ 0px 10px #3f456a, 2.5px 10px #3f456a, 5px 10px #3f456a,
+      7.5px 10px #3f456a, 10px 10px #211e2f, 12.5px 10px #3f456a,
+      15px 10px #3f456a, 17.5px 10px #3f456a, 20px 10px #3f456a,
+      22.5px 10px #3f456a, 25px 10px #3f456a, 27.5px 10px #211e2f,
+      30px 10px #3f456a, 32.5px 10px #3f456a, 35px 10px #3f456a,
+      37.5px 10px #3f456a, /*Sixth Row*/ 0px 12.5px #3f456a, 2.5px 12.5px #3f456a,
+      5px 12.5px #3f456a, 7.5px 12.5px #3f456a, 10px 12.5px #211e2f,
+      12.5px 12.5px #3f456a, 15px 12.5px #3f456a, 17.5px 12.5px #3f456a,
+      20px 12.5px #3f456a, 22.5px 12.5px #3f456a, 25px 12.5px #3f456a,
+      27.5px 12.5px #211e2f, 30px 12.5px #3f456a, 32.5px 12.5px #3f456a,
+      35px 12.5px #3f456a, 37.5px 12.5px #3f456a, /*Seventh Row*/ 0px 15px #3f456a,
+      2.5px 15px #3f456a, 5px 15px #3f456a, 7.5px 15px #3f456a, 10px 15px #211e2f,
+      12.5px 15px #3f456a, 15px 15px #3f456a, 17.5px 15px #3f456a,
+      20px 15px #3f456a, 22.5px 15px #3f456a, 25px 15px #3f456a,
+      27.5px 15px #211e2f, 30px 15px #3f456a, 32.5px 15px #3f456a,
+      35px 15px #3f456a, 37.5px 15px #3f456a, /*Eighth Row*/ 0px 17.5px #211e2f,
+      2.5px 17.5px #211e2f, 5px 17.5px #211e2f, 7.5px 17.5px #211e2f,
+      10px 17.5px #211e2f, 12.5px 17.5px #211e2f, 15px 17.5px #211e2f,
+      17.5px 17.5px #211e2f, 20px 17.5px #211e2f, 22.5px 17.5px #211e2f,
+      25px 17.5px #211e2f, 27.5px 17.5px #211e2f, 30px 17.5px #211e2f,
+      32.5px 17.5px #211e2f, 35px 17.5px #211e2f, 37.5px 17.5px #211e2f,
+      /*Ninth Row*/ 0px 20px #3f456a, 2.5px 20px #3f456a, 5px 20px #3f456a,
+      7.5px 20px #3f456a, 10px 20px #3f456a, 12.5px 20px #3f456a,
+      15px 20px #211e2f, 17.5px 20px #717e9e, 20px 20px #717e9e,
+      22.5px 20px #717e9e, 25px 20px #717e9e, 27.5px 20px #717e9e,
+      30px 20px #717e9e, 32.5px 20px #211e2f, 35px 20px #3f456a,
+      37.5px 20px #3f456a, /*Tenth Row*/ 0px 22.5px #3f456a, 2.5px 22.5px #3f456a,
+      5px 22.5px #3f456a, 7.5px 22.5px #3f456a, 10px 22.5px #3f456a,
+      12.5px 22.5px #3f456a, 15px 22.5px #211e2f, 17.5px 22.5px #3f456a,
+      20px 22.5px #3f456a, 22.5px 22.5px #3f456a, 25px 22.5px #3f456a,
+      27.5px 22.5px #3f456a, 30px 22.5px #3f456a, 32.5px 22.5px #211e2f,
+      35px 22.5px #3f456a, 37.5px 22.5px #3f456a,
+      /*Eleventh Row*/ 0px 25px #3f456a, 2.5px 25px #3f456a, 5px 25px #3f456a,
+      7.5px 25px #3f456a, 10px 25px #3f456a, 12.5px 25px #3f456a,
+      15px 25px #211e2f, 17.5px 25px #3f456a, 20px 25px #3f456a,
+      22.5px 25px #3f456a, 25px 25px #3f456a, 27.5px 25px #3f456a,
+      30px 25px #3f456a, 32.5px 25px #211e2f, 35px 25px #3f456a,
+      37.5px 25px #3f456a, /*Twelfth Row*/ 0px 27.5px #211e2f,
+      2.5px 27.5px #211e2f, 5px 27.5px #211e2f, 7.5px 27.5px #211e2f,
+      10px 27.5px #211e2f, 12.5px 27.5px #211e2f, 15px 27.5px #211e2f,
+      17.5px 27.5px #211e2f, 20px 27.5px #211e2f, 22.5px 27.5px #211e2f,
+      25px 27.5px #211e2f, 27.5px 27.5px #211e2f, 30px 27.5px #211e2f,
+      32.5px 27.5px #211e2f, 35px 27.5px #211e2f, 37.5px 27.5px #211e2f,
+      /*Thirteenth Row*/ 0px 30px #3f456a, 2.5px 30px #3f456a, 5px 30px #3f456a,
+      7.5px 30px #3f456a, 10px 30px #211e2f, 12.5px 30px #3f456a,
+      15px 30px #3f456a, 17.5px 30px #3f456a, 20px 30px #3f456a,
+      22.5px 30px #3f456a, 25px 30px #3f456a, 27.5px 30px #211e2f,
+      30px 30px #3f456a, 32.5px 30px #3f456a, 35px 30px #3f456a,
+      37.5px 30px #3f456a, /*Fourteenth Row*/ 0px 32.5px #3f456a,
+      2.5px 32.5px #3f456a, 5px 32.5px #3f456a, 7.5px 32.5px #3f456a,
+      10px 32.5px #211e2f, 12.5px 32.5px #3f456a, 15px 32.5px #3f456a,
+      17.5px 32.5px #3f456a, 20px 32.5px #3f456a, 22.5px 32.5px #3f456a,
+      25px 32.5px #3f456a, 27.5px 32.5px #211e2f, 30px 32.5px #3f456a,
+      32.5px 32.5px #3f456a, 35px 32.5px #3f456a, 37.5px 32.5px #3f456a,
+      /*Fifteenth Row*/ 0px 35px #3f456a, 2.5px 35px #3f456a, 5px 35px #3f456a,
+      7.5px 35px #3f456a, 10px 35px #211e2f, 12.5px 35px #3f456a,
+      15px 35px #3f456a, 17.5px 35px #3f456a, 20px 35px #3f456a,
+      22.5px 35px #3f456a, 25px 35px #3f456a, 27.5px 35px #211e2f,
+      30px 35px #3f456a, 32.5px 35px #3f456a, 35px 35px #3f456a,
+      37.5px 35px #3f456a, /*Sixteenth Row*/ 0px 37.5px #211e2f,
+      2.5px 37.5px #211e2f, 5px 37.5px #211e2f, 7.5px 37.5px #211e2f,
+      10px 37.5px #211e2f, 12.5px 37.5px #211e2f, 15px 37.5px #211e2f,
+      17.5px 37.5px #211e2f, 20px 37.5px #211e2f, 22.5px 37.5px #211e2f,
+      25px 37.5px #211e2f, 27.5px 37.5px #211e2f, 30px 37.5px #211e2f,
+      32.5px 37.5px #211e2f, 35px 37.5px #211e2f, 37.5px 37.5px #211e2f;
+  }
+  .topLeft {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #211e2f;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #717e9e, 5px 0px #717e9e, 7.5px 0px #8799a9,
+      10px 0px #3f456a, /*Second Row*/ 0px 2.5px #717e9e, 2.5px 2.5px #717e9e,
+      5px 2.5px #717e9e, 7.5px 2.5px #8799a9, 10px 2.5px #3f456a,
+      /*Third Row*/ 0px 5px #717e9e, 2.5px 5px #717e9e, 5px 5px #717e9e,
+      7.5px 5px #8799a9, 10px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #717e9e,
+      2.5px 7.5px #717e9e, 5px 7.5px #717e9e, 7.5px 7.5px #8799a9,
+      10px 7.5px #3f456a, /*Fifth Row*/ 0px 10px #717e9e, 2.5px 10px #717e9e,
+      5px 10px #717e9e, 7.5px 10px #8799a9, 10px 10px #211e2f;
+  }
+  .topRight {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #717e9e, 5px 0px #717e9e, 7.5px 0px #717e9e,
+      10px 0px #211e2f, 12.5px 0px #211e2f, /*Second Row*/ 0px 2.5px #717e9e,
+      2.5px 2.5px #717e9e, 5px 2.5px #717e9e, 7.5px 2.5px #717e9e,
+      10px 2.5px #8799a9, 12.5px 2.5px #211e2f, /*Third Row*/ 0px 5px #717e9e,
+      2.5px 5px #717e9e, 5px 5px #717e9e, 7.5px 5px #717e9e, 10px 5px #8799a9,
+      12.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #717e9e, 2.5px 7.5px #717e9e,
+      5px 7.5px #717e9e, 7.5px 7.5px #717e9e, 10px 7.5px #8799a9,
+      12.5px 7.55px #3f456a, /*Fifth Row*/ 0px 10px #717e9e, 2.5px 10px #717e9e,
+      5px 10px #717e9e, 7.5px 10px #717e9e, 10px 10px #8799a9, 12.5px 10px #3f456a;
+  }
+  .botLeft {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #717e9e, 5px 0px #717e9e, 7.5px 0px #8799a9,
+      10px 0px #211e2f, /*Second Row*/ 0px 2.5px #717e9e, 2.5px 2.5px #717e9e,
+      5px 2.5px #717e9e, 7.5px 2.5px #8799a9, 10px 2.5px #3f456a,
+      /*Third Row*/ 0px 5px #717e9e, 2.5px 5px #717e9e, 5px 5px #717e9e,
+      7.5px 5px #8799a9, 10px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #717e9e,
+      2.5px 7.5px #717e9e, 5px 7.5px #717e9e, 7.5px 7.5px #8799a9,
+      10px 7.5px #3f456a, /*Fifth Row*/ 0px 10px #3f456a, 2.5px 10px #8799a9,
+      5px 10px #8799a9, 7.5px 10px #717e9e, 10px 10px #3f456a,
+      /*Sixth Row*/ 0px 12.5px #211e2f, 2.5px 12.5px #3f456a, 5px 12.5px #3f456a,
+      7.5px 12.5px #3f456a, 10px 12.5px #3f456a;
+  }
+  .botRight {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #717e9e;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #717e9e, 5px 0px #717e9e, 7.5px 0px #717e9e,
+      10px 0px #8799a9, 12.5px 0px #3f456a, /*Second Row*/ 0px 2.5px #717e9e,
+      2.5px 2.5px #717e9e, 5px 2.5px #717e9e, 7.5px 2.5px #717e9e,
+      10px 2.5px #8799a9, 12.5px 2.5px #3f456a, /*Third Row*/ 0px 5px #717e9e,
+      2.5px 5px #717e9e, 5px 5px #717e9e, 7.5px 5px #717e9e, 10px 5px #8799a9,
+      12.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #717e9e, 2.5px 7.5px #717e9e,
+      5px 7.5px #717e9e, 7.5px 7.5px #717e9e, 10px 7.5px #8799a9,
+      12.5px 7.5px #3f456a, /*Fifth Row*/ 0px 10px #8799a9, 2.5px 10px #8799a9,
+      5px 10px #8799a9, 7.5px 10px #3f456a, 10px 10px #211e2f,
+      /*Sixth Row*/ 0px 12.5px #3f456a, 2.5px 12.5px #3f456a, 5px 12.5px #3f456a,
+      7.5px 12.5px #211e2f, 10px 12.5px #211e2f;
+  }
+  .edgeLeft {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #8799a9;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #8799a9, 5px 0px #8799a9, 7.5px 0px #717e9e,
+      10px 0px #211e2f, /*Second Row*/ 0px 2.5px #3f456a, 2.5px 2.5px #3f456a,
+      5px 2.5px #3f456a, 7.5px 2.5px #3f456a, 10px 2.5px #211e2f,
+      /*Third Row*/ 0px 5px #717e9e, 2.5px 5px #717e9e, 5px 5px #717e9e,
+      7.5px 5px #8799a9, 10px 5px #211e2f, /*Fourth Row*/ 0px 7.5px #717e9e,
+      2.5px 7.5px #717e9e, 5px 7.5px #717e9e, 7.5px 7.5px #8799a9,
+      10px 7.5px #211e2f, /*Fifth Row*/ 0px 10px #8799a9, 2.5px 10px #8799a9,
+      5px 10px #8799a9, 7.5px 10px #717e9e, 10px 10px #211e2f,
+      /*Sixth Row*/ 0px 12.5px #3f456a, 2.5px 12.5px #3f456a, 5px 12.5px #3f456a,
+      7.5px 12.5px #3f456a, 10px 12.5px #211e2f, /*Seventh Row*/ 0px 15px #717e9e,
+      2.5px 15px #717e9e, 5px 15px #717e9e, 7.5px 15px #8799a9, 10px 15px #211e2f,
+      /*Eighth Row*/ 0px 17.5px #717e9e, 2.5px 17.5px #717e9e, 5px 17.5px #717e9e,
+      7.5px 17.5px #8799a9, 10px 17.5px #211e2f, /*Ninth Row*/ 0px 20px #8799a9,
+      2.5px 20px #8799a9, 5px 20px #8799a9, 7.5px 20px #717e9e, 10px 20px #211e2f,
+      /*Tenth Row*/ 0px 22.5px #3f456a, 2.5px 22.5px #3f456a, 5px 22.5px #3f456a,
+      7.5px 22.5px #3f456a, 10px 22.5px #211e2f, /*Eleventh Row*/ 0px 25px #717e9e,
+      2.5px 25px #717e9e, 5px 25px #717e9e, 7.5px 25px #8799a9, 10px 25px #211e2f,
+      /*Twelfth Row*/ 0px 27.5px #717e9e, 2.5px 27.5px #717e9e, 5px 27.5px #717e9e,
+      7.5px 27.5px #8799a9, 10px 27.5px #211e2f,
+      /*Thirteenth Row*/ 0px 30px #8799a9, 2.5px 30px #8799a9, 5px 30px #8799a9,
+      7.5px 30px #717e9e, 10px 30px #211e2f, /*Fourteenth Row*/ 0px 32.5px #3f456a,
+      2.5px 32.5px #3f456a, 5px 32.5px #3f456a, 7.5px 32.5px #3f456a,
+      10px 32.5px #211e2f, /*Fifteenth Row*/ 0px 35px #717e9e, 2.5px 35px #717e9e,
+      5px 35px #717e9e, 7.5px 35px #98a8ba, 10px 35px #211e2f,
+      /*Sixteenth Row*/ 0px 37.5px #717e9e, 2.5px 37.5px #717e9e,
+      5px 37.5px #717e9e, 7.5px 37.5px #8799a9, 10px 37.5px #211e2f;
+  }
+  .edgeRight {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #211e2f;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #8799a9, 5px 0px #8799a9, 7.5px 0px #8799a9,
+      10px 0px #8799a9, 12.5px 0px #3f456a, /*Second Row*/ 0px 2.5px #211e2f,
+      2.5px 2.5px #3f456a, 5px 2.5px #3f456a, 7.5px 2.5px #3f456a,
+      10px 2.5px #3f456a, 12.5px 2.5px #3f456a, /*Third Row*/ 0px 5px #211e2f,
+      2.5px 5px #717e9e, 5px 5px #717e9e, 7.5px 5px #717e9e, 10px 5px #8799a9,
+      12.5px 5px #3f456a, /*Fourth Row*/ 0px 7.5px #211e2f, 2.5px 7.5px #717e9e,
+      5px 7.5px #717e9e, 7.5px 7.5px #717e9e, 10px 7.5px #8799a9,
+      12.5px 7.5px #3f456a, /*Fifth Row*/ 0px 10px #211e2f, 2.5px 10px #8799a9,
+      5px 10px #8799a9, 7.5px 10px #8799a9, 10px 10px #717e9e, 12.5px 10px #3f456a,
+      /*Sixth Row*/ 0px 12.5px #211e2f, 2.5px 12.5px #3f456a, 5px 12.5px #3f456a,
+      7.5px 12.5px #3f456a, 10px 12.5px #3f456a, 12.5px 12.5px #3f456a,
+      /*Seventh Row*/ 0px 15px #211e2f, 2.5px 15px #717e9e, 5px 15px #717e9e,
+      7.5px 15px #717e9e, 10px 15px #8799a9, 12.5px 15px #3f456a,
+      /*Eighth Row*/ 0px 17.5px #211e2f, 2.5px 17.5px #717e9e, 5px 17.5px #717e9e,
+      7.5px 17.5px #717e9e, 10px 17.5px #8799a9, 12.5px 17.5px #3f456a,
+      /*Ninth Row*/ 0px 20px #211e2f, 2.5px 20px #8799a9, 5px 20px #8799a9,
+      7.5px 20px #8799a9, 10px 20px #717e9e, 12.5px 20px #3f456a,
+      /*Tenth Row*/ 0px 22.5px #211e2f, 2.5px 22.5px #3f456a, 5px 22.5px #3f456a,
+      7.5px 22.5px #3f456a, 10px 22.5px #3f456a, 12.5px 22.5px #3f456a,
+      /*Eleventh Row*/ 0px 25px #211e2f, 2.5px 25px #717e9e, 5px 25px #717e9e,
+      7.5px 25px #717e9e, 10px 25px #8799a9, 12.5px 25px #3f456a,
+      /*Twelfth Row*/ 0px 27.5px #211e2f, 2.5px 27.5px #717e9e, 5px 27.5px #717e9e,
+      7.5px 27.5px #717e9e, 10px 27.5px #8799a9, 12.5px 27.5px #3f456a,
+      /*Thirteenth Row*/ 0px 30px #211e2f, 2.5px 30px #8799a9, 5px 30px #8799a9,
+      7.5px 30px #8799a9, 10px 30px #717e9e, 12.5px 30px #3f456a,
+      /*Fourteenth Row*/ 0px 32.5px #211e2f, 2.5px 32.5px #3f456a,
+      5px 32.5px #3f456a, 7.5px 32.5px #3f456a, 10px 32.5px #3f456a,
+      12.5px 32.5px #3f456a, /*Fifteenth Row*/ 0px 35px #211e2f,
+      2.5px 35px #717e9e, 5px 35px #717e9e, 7.5px 35px #717e9e, 10px 35px #8799a9,
+      12.5px 35px #3f456a, /*Sixteenth Row*/ 0px 37.5px #211e2f,
+      2.5px 37.5px #717e9e, 5px 37.5px #717e9e, 7.5px 37.5px #717e9e,
+      10px 37.5px #8799a9, 12.5px 37.5px #3f456a;
+  }
+  .edgeTop {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #3f456a;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #717e9e, 5px 0px #717e9e, 7.5px 0px #717e9e,
+      10px 0px #717e9e, 12.5px 0px #717e9e, 15px 0px #717e9e, 17.5px 0px #8799a9,
+      20px 0px #3f456a, 22.5px 0px #717e9e, 25px 0px #717e9e, 27.5px 0px #717e9e,
+      30px 0px #717e9e, 32.5px 0px #717e9e, 35px 0px #717e9e, 37.5px 0px #8799a9,
+      /*Second Row*/ 0px 2.5px #3f456a, 2.5px 2.5px #717e9e, 5px 2.5px #717e9e,
+      7.5px 2.5px #717e9e, 10px 2.5px #717e9e, 12.5px 2.5px #717e9e,
+      15px 2.5px #717e9e, 17.5px 2.5px #8799a9, 20px 2.5px #3f456a,
+      22.5px 2.5px #717e9e, 25px 2.5px #717e9e, 27.5px 2.5px #717e9e,
+      30px 2.5px #717e9e, 32.5px 2.5px #717e9e, 35px 2.5px #717e9e,
+      37.5px 2.5px #8799a9, /*Third Row*/ 0px 5px #3f456a, 2.5px 5px #717e9e,
+      5px 5px #717e9e, 7.5px 5px #717e9e, 10px 5px #717e9e, 12.5px 5px #717e9e,
+      15px 5px #717e9e, 17.5px 5px #8799a9, 20px 5px #3f456a, 22.5px 5px #717e9e,
+      25px 5px #717e9e, 27.5px 5px #717e9e, 30px 5px #717e9e, 32.5px 5px #717e9e,
+      35px 5px #717e9e, 37.5px 5px #8799a9, /*Fourth Row*/ 0px 7.5px #3f456a,
+      2.5px 7.5px #8799a9, 5px 7.5px #8799a9, 7.5px 7.5px #8799a9,
+      10px 7.5px #8799a9, 12.5px 7.5px #8799a9, 15px 7.5px #8799a9,
+      17.5px 7.5px #717e9e, 20px 7.5px #3f456a, 22.5px 7.5px #8799a9,
+      25px 7.5px #8799a9, 27.5px 7.5px #8799a9, 30px 7.5px #8799a9,
+      32.5px 7.5px #8799a9, 35px 7.5px #8799a9, 37.5px 7.5px #717e9e,
+      /*Fifth Row*/ 0px 10px #211e2f, 2.5px 10px #211e2f, 5px 10px #211e2f,
+      7.5px 10px #211e2f, 10px 10px #211e2f, 12.5px 10px #211e2f,
+      15px 10px #211e2f, 17.5px 10px #211e2f, 20px 10px #211e2f,
+      22.5px 10px #211e2f, 25px 10px #211e2f, 27.5px 10px #211e2f,
+      30px 10px #211e2f, 32.5px 10px #211e2f, 35px 10px #211e2f,
+      37.5px 10px #211e2f;
+  }
+  .edgeBot {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: #211e2f;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 2.5px 0px #211e2f, 5px 0px #211e2f, 7.5px 0px #211e2f,
+      10px 0px #211e2f, 12.5px 0px #211e2f, 15px 0px #211e2f, 17.5px 0px #211e2f,
+      20px 0px #211e2f, 22.5px 0px #211e2f, 25px 0px #211e2f, 27.5px 0px #211e2f,
+      30px 0px #211e2f, 32.5px 0px #211e2f, 35px 0px #211e2f, 37.5px 0px #211e2f,
+      /*Second Row*/ 0px 2.5px #3f456a, 2.5px 2.5px #717e9e, 5px 2.5px #717e9e,
+      7.5px 2.5px #717e9e, 10px 2.5px #717e9e, 12.5px 2.5px #717e9e,
+      15px 2.5px #717e9e, 17.5px 2.5px #8799a9, 20px 2.5px #3f456a,
+      22.5px 2.5px #717e9e, 25px 2.5px #717e9e, 27.5px 2.5px #717e9e,
+      30px 2.5px #717e9e, 32.5px 2.5px #717e9e, 35px 2.5px #717e9e,
+      37.5px 2.5px #8799a9, /*Third Row*/ 0px 5px #3f456a, 2.5px 5px #717e9e,
+      5px 5px #717e9e, 7.5px 5px #717e9e, 10px 5px #717e9e, 12.5px 5px #717e9e,
+      15px 5px #717e9e, 17.5px 5px #8799a9, 20px 5px #3f456a, 22.5px 5px #717e9e,
+      25px 5px #717e9e, 27.5px 5px #717e9e, 30px 5px #717e9e, 32.5px 5px #717e9e,
+      35px 5px #717e9e, 37.5px 5px #8799a9, /*Fourth Row*/ 0px 7.5px #3f456a,
+      2.5px 7.5px #717e9e, 5px 7.5px #717e9e, 7.5px 7.5px #717e9e,
+      10px 7.5px #717e9e, 12.5px 7.5px #717e9e, 15px 7.5px #717e9e,
+      17.5px 7.5px #8799a9, 20px 7.5px #3f456a, 22.5px 7.5px #717e9e,
+      25px 7.5px #717e9e, 27.5px 7.5px #717e9e, 30px 7.5px #717e9e,
+      32.5px 7.5px #717e9e, 35px 7.5px #717e9e, 37.5px 7.5px #8799a9,
+      /*Fifth Row*/ 0px 10px #3f456a, 2.5px 10px #8799a9, 5px 10px #8799a9,
+      7.5px 10px #8799a9, 10px 10px #8799a9, 12.5px 10px #8799a9,
+      15px 10px #8799a9, 17.5px 10px #717e9e, 20px 10px #3f456a,
+      22.5px 10px #8799a9, 25px 10px #8799a9, 27.5px 10px #8799a9,
+      30px 10px #8799a9, 32.5px 10px #8799a9, 35px 10px #8799a9,
+      37.5px 10px #717e9e, /*Sixth Row*/ 0px 12.5px #3f456a, 2.5px 12.5px #3f456a,
+      5px 12.5px #3f456a, 7.5px 12.5px #3f456a, 10px 12.5px #3f456a,
+      12.5px 12.5px #3f456a, 15px 12.5px #3f456a, 17.5px 12.5px #3f456a,
+      20px 12.5px #3f456a, 22.5px 12.5px #3f456a, 25px 12.5px #3f456a,
+      27.5px 12.5px #3f456a, 30px 12.5px #3f456a, 32.5px 12.5px #3f456a,
+      35px 12.5px #3f456a, 37.5px 12.5px #3f456a;
+  }
+  .npc1 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 15px 0px black, 17.5px 0px black, 20px 0px black, 22.5px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px black, 15px 2.5px #b99de8,
+      17.5px 2.5px #b99de8, 20px 2.5px #b99de8, 22.5px 2.5px #b99de8,
+      25px 2.5px black, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8, 17.5px 5px #b99de8,
+      20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8, 27.5px 5px #b99de8,
+      30px 5px black, /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #b99de8,
+      10px 7.5px #b99de8, 12.5px 7.5px #b99de8, 15px 7.5px #b99de8,
+      17.5px 7.5px #b99de8, 20px 7.5px #b99de8, 22.5px 7.5px #b99de8,
+      25px 7.5px #b99de8, 27.5px 7.5px #b99de8, 30px 7.5px black,
+      /*Fifth Row*/ 2.5px 10px black, 5px 10px #f6ddd9, 7.5px 10px #f6ddd9,
+      10px 10px #b99de8, 12.5px 10px #b99de8, 15px 10px #b99de8,
+      17.5px 10px #b99de8, 20px 10px #b99de8, 22.5px 10px #b99de8,
+      25px 10px #b99de8, 27.5px 10px #b99de8, 30px 10px black,
+      /*Sixth Row*/ 5px 12.5px black, 7.5px 12.5px #f6ddd9, 10px 12.5px #f6ddd9,
+      12.5px 12.5px #b99de8, 15px 12.5px #b99de8, 17.5px 12.5px #b99de8,
+      20px 12.5px #b99de8, 22.5px 12.5px #b99de8, 25px 12.5px #b99de8,
+      27.5px 12.5px #b99de8, 30px 12.5px black, /*Seventh Row*/ 7.5px 15px black,
+      10px 15px black, 12.5px 15px black, 15px 15px black, 17.5px 15px black,
+      20px 15px black, 22.5px 15px black, 25px 15px black, 27.5px 15px black,
+      30px 15px black, /*Eighth Row*/ 7.5px 17.5px black, 10px 17.5px #f6ddd9,
+      12.5px 17.5px black, 15px 17.5px #f6ddd9, 17.5px 17.5px #f6ddd9,
+      20px 17.5px #4a1e79, 22.5px 17.5px #f6ddd9, 25px 17.5px #f6ddd9,
+      27.5px 17.5px #4a1e79, 30px 17.5px black, /*Ninth Row*/ 7.5px 20px black,
+      10px 20px #f1c3c3, 12.5px 20px #f6ddd9, 15px 20px #f6ddd9,
+      17.5px 20px #f6ddd9, 20px 20px #4a1e79, 22.5px 20px #4a1e79,
+      25px 20px #4a1e79, 27.5px 20px #4a1e79, 30px 20px black,
+      /*Tenth Row*/ 10px 22.5px black, 12.5px 22.5px #f1c3c3, 15px 22.5px #f6ddd9,
+      17.5px 22.5px #f6ddd9, 20px 22.5px #f6ddd9, 22.5px 22.5px #f6ddd9,
+      25px 22.5px #4a1e79, 27.5px 22.5px #4a1e79, 30px 22.5px black,
+      /*Eleventh Row*/ 10px 25px black, 12.5px 25px black, 15px 25px black,
+      17.5px 25px black, 20px 25px black, 22.5px 25px black, 25px 25px black,
+      27.5px 25px #4a1e79, 30px 25px black, /*Twelfth Row*/ 7.5px 27.5px black,
+      10px 27.5px #b99de8, 12.5px 27.5px black, 15px 27.5px #b99de8,
+      17.5px 27.5px #b99de8, 20px 27.5px black, 22.5px 27.5px #b99de8,
+      25px 27.5px black, 27.5px 27.5px black, /*Thirteenth Row*/ 7.5px 30px black,
+      10px 30px #b99de8, 12.5px 30px #b99de8, 15px 30px black, 17.5px 30px black,
+      20px 30px #f6ddd9, 22.5px 30px #f6ddd9, 25px 30px black,
+      /*Fourteenth Row*/ 10px 32.5px black, 12.5px 32.5px black, 15px 32.5px black,
+      17.5px 32.5px black, 20px 32.5px black, 22.5px 32.5px black;
+  }
+  .npc2 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.5px;
+    height: 2.5px;
+    transform: scaleX(-1);
+  
+    box-shadow: 15px 0px black, 17.5px 0px black, 20px 0px black, 22.5px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px black, 15px 2.5px #b99de8,
+      17.5px 2.5px #b99de8, 20px 2.5px #b99de8, 22.5px 2.5px #b99de8,
+      25px 2.5px black, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8, 17.5px 5px #b99de8,
+      20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8, 27.5px 5px #b99de8,
+      30px 5px black, /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #b99de8,
+      10px 7.5px #b99de8, 12.5px 7.5px #b99de8, 15px 7.5px #b99de8,
+      17.5px 7.5px #b99de8, 20px 7.5px #b99de8, 22.5px 7.5px #b99de8,
+      25px 7.5px #b99de8, 27.5px 7.5px #b99de8, 30px 7.5px black,
+      /*Fifth Row*/ 2.5px 10px black, 5px 10px #f6ddd9, 7.5px 10px #f6ddd9,
+      10px 10px #b99de8, 12.5px 10px #b99de8, 15px 10px #b99de8,
+      17.5px 10px #b99de8, 20px 10px #b99de8, 22.5px 10px #b99de8,
+      25px 10px #b99de8, 27.5px 10px #b99de8, 30px 10px black,
+      /*Sixth Row*/ 5px 12.5px black, 7.5px 12.5px #f6ddd9, 10px 12.5px #f6ddd9,
+      12.5px 12.5px #b99de8, 15px 12.5px #b99de8, 17.5px 12.5px #b99de8,
+      20px 12.5px #b99de8, 22.5px 12.5px #b99de8, 25px 12.5px #b99de8,
+      27.5px 12.5px #b99de8, 30px 12.5px black, /*Seventh Row*/ 7.5px 15px black,
+      10px 15px black, 12.5px 15px black, 15px 15px black, 17.5px 15px black,
+      20px 15px black, 22.5px 15px black, 25px 15px black, 27.5px 15px black,
+      30px 15px black, /*Eighth Row*/ 7.5px 17.5px black, 10px 17.5px #f6ddd9,
+      12.5px 17.5px black, 15px 17.5px #f6ddd9, 17.5px 17.5px #f6ddd9,
+      20px 17.5px #4a1e79, 22.5px 17.5px #f6ddd9, 25px 17.5px #f6ddd9,
+      27.5px 17.5px #4a1e79, 30px 17.5px black, /*Ninth Row*/ 7.5px 20px black,
+      10px 20px #f1c3c3, 12.5px 20px #f6ddd9, 15px 20px #f6ddd9,
+      17.5px 20px #f6ddd9, 20px 20px #4a1e79, 22.5px 20px #4a1e79,
+      25px 20px #4a1e79, 27.5px 20px #4a1e79, 30px 20px black,
+      /*Tenth Row*/ 10px 22.5px black, 12.5px 22.5px #f1c3c3, 15px 22.5px #f6ddd9,
+      17.5px 22.5px #f6ddd9, 20px 22.5px #f6ddd9, 22.5px 22.5px #f6ddd9,
+      25px 22.5px #4a1e79, 27.5px 22.5px #4a1e79, 30px 22.5px black,
+      /*Eleventh Row*/ 10px 25px black, 12.5px 25px black, 15px 25px black,
+      17.5px 25px black, 20px 25px black, 22.5px 25px black, 25px 25px black,
+      27.5px 25px #4a1e79, 30px 25px black, /*Twelfth Row*/ 7.5px 27.5px black,
+      10px 27.5px #b99de8, 12.5px 27.5px black, 15px 27.5px #b99de8,
+      17.5px 27.5px #b99de8, 20px 27.5px black, 22.5px 27.5px #b99de8,
+      25px 27.5px black, 27.5px 27.5px black, /*Thirteenth Row*/ 7.5px 30px black,
+      10px 30px #b99de8, 12.5px 30px #b99de8, 15px 30px black, 17.5px 30px black,
+      20px 30px #f6ddd9, 22.5px 30px #f6ddd9, 25px 30px black,
+      /*Fourteenth Row*/ 10px 32.5px black, 12.5px 32.5px black, 15px 32.5px black,
+      17.5px 32.5px black, 20px 32.5px black, 22.5px 32.5px black;
+  }
+  .npc3 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.5px;
+    height: 2.5px;
+  
+    box-shadow: 15px 0px black, 17.5px 0px black, 20px 0px black, 22.5px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px black, 15px 2.5px #4a1e79,
+      17.5px 2.5px #4a1e79, 20px 2.5px #4a1e79, 22.5px 2.5px #4a1e79,
+      25px 2.5px black, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #4a1e79, 12.5px 5px #4a1e79, 15px 5px #4a1e79, 17.5px 5px #4a1e79,
+      20px 5px #4a1e79, 22.5px 5px #4a1e79, 25px 5px #4a1e79, 27.5px 5px #4a1e79,
+      30px 5px black, /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #4a1e79,
+      10px 7.5px #4a1e79, 12.5px 7.5px black, 15px 7.5px #4a1e79,
+      17.5px 7.5px black, 20px 7.5px black, 22.5px 7.5px #4a1e79, 25px 7.5px black,
+      27.5px 7.5px #4a1e79, 30px 7.5px #4a1e79, 32.5px 7.5px black,
+      /*Fifth Row*/ 2.5px 10px black, 5px 10px #4a1e79, 7.5px 10px #4a1e79,
+      10px 10px black, 12.5px 10px #4a1e79, 15px 10px black, 17.5px 10px #f6ddd9,
+      20px 10px #f6ddd9, 22.5px 10px black, 25px 10px #4a1e79, 27.5px 10px black,
+      30px 10px #4a1e79, 32.5px 10px #4a1e79, 35px 10px black,
+      /*Sixth Row*/ 2.5px 12.5px black, 5px 12.5px #4a1e79, 7.5px 12.5px black,
+      10px 12.5px #4a1e79, 12.5px 12.5px black, 15px 12.5px #f6ddd9,
+      17.5px 12.5px #f6ddd9, 20px 12.5px #f6ddd9, 22.5px 12.5px #f6ddd9,
+      25px 12.5px black, 27.5px 12.5px #4a1e79, 30px 12.5px black,
+      32.5px 12.5px #4a1e79, 35px 12.5px black, /*Seventh Row*/ 2.5px 15px black,
+      5px 15px #4a1e79, 7.5px 15px #f6ddd9, 10px 15px black, 12.5px 15px #f6ddd9,
+      15px 15px black, 17.5px 15px #f6ddd9, 20px 15px #f6ddd9, 22.5px 15px black,
+      25px 15px #f6ddd9, 27.5px 15px black, 30px 15px #f6ddd9, 32.5px 15px #4a1e79,
+      35px 15px black, /*Eighth Row*/ 2.5px 17.5px black, 5px 17.5px #4a1e79,
+      7.5px 17.5px black, 10px 17.5px #f1c3c3, 12.5px 17.5px #f6ddd9,
+      15px 17.5px black, 17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9,
+      22.5px 17.5px black, 25px 17.5px #f6ddd9, 27.5px 17.5px #f1c3c3,
+      30px 17.5px black, 32.5px 17.5px #4a1e79, 35px 17.5px black,
+      /*Ninth Row*/ 2.5px 20px black, 5px 20px #4a1e79, 7.5px 20px black,
+      10px 20px black, 12.5px 20px #f1c3c3, 15px 20px #f6ddd9, 17.5px 20px #f6ddd9,
+      20px 20px #f6ddd9, 22.5px 20px #f6ddd9, 25px 20px #f1c3c3, 27.5px 20px black,
+      30px 20px black, 32.5px 20px #4a1e79, 35px 20px black,
+      /*Tenth Row*/ 5px 22.5px black, 7.5px 22.5px #4a1e79, 10px 22.5px black,
+      12.5px 22.5px black, 15px 22.5px black, 17.5px 22.5px black,
+      20px 22.5px black, 22.5px 22.5px black, 25px 22.5px black,
+      27.5px 22.5px black, 30px 22.5px #4a1e79, 32.5px 22.5px black,
+      /*Eleventh Row*/ 7.5px 25px black, 10px 25px #b99de8, 12.5px 25px black,
+      15px 25px black, 17.5px 25px #b99de8, 20px 25px #b99de8, 22.5px 25px black,
+      25px 25px black, 27.5px 25px #b99de8, 30px 25px black,
+      /*Twelfth Row*/ 10px 27.5px black, 12.5px 27.5px #b99de8,
+      15px 27.5px #f6ddd9, 17.5px 27.5px black, 20px 27.5px black,
+      22.5px 27.5px #f6ddd9, 25px 27.5px #b99de8, 27.5px 27.5px black,
+      /*Thirteenth Row*/ 12.5px 30px black, 15px 30px black, 17.5px 30px black,
+      20px 30px black, 22.5px 30px black, 25px 30px black,
+      /*Fourteenth Row*/ 10px 32.5px black, 12.5px 32.5px #b99de8,
+      15px 32.5px #b99de8, 17.5px 32.5px black, 20px 32.5px black,
+      22.5px 32.5px #b99de8, 25px 32.5px #b99de8, 27.5px 32.5px black,
+      /*Fifteenth Row*/ 12.5px 35px black, 15px 35px black, 22.5px 35px black,
+      25px 35px black;
+  }
+  .playerDown1 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 17.5px -2.5px
+        black,
+      20px -2.5px black, /* first row  */ 12.5px 0px black, 15px 0px black,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px black, 25px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px #b99de8, 15px 2.5px #b99de8,
+      17.5px 2.5px #b99de8, 20px 2.5px #b99de8, 22.5px 2.5px #b99de8,
+      25px 2.5px #b99de8, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8, 17.5px 5px #b99de8,
+      20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8, 27.5px 5px #b99de8,
+      30px 5px black, /*Fourth Row*/ 7.5px 7.5px black, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #f6ddd9, 17.5px 7.5px #f6ddd9,
+      20px 7.5px #f6ddd9, 22.5px 7.5px #f6ddd9, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px black, /*Fifth Row*/ 5px 10px black,
+      7.5px 10px #4a1e79, 10px 10px black, 12.5px 10px black, 15px 10px black,
+      17.5px 10px black, 20px 10px black, 22.5px 10px black, 25px 10px black,
+      27.5px 10px black, 30px 10px #4a1e79, 32.5px 10px black,
+      /*Sixth Row*/ 5px 12.5px black, 7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79,
+      12.5px 12.5px #f6ddd9, 15px 12.5px #f6ddd9, 17.5px 12.5px #f6ddd9,
+      20px 12.5px #f6ddd9, 22.5px 12.5px #f6ddd9, 25px 12.5px #f6ddd9,
+      27.5px 12.5px #4a1e79, 30px 12.5px #4a1e79, 32.5px 12.5px black,
+      /*Seventh Row*/ 2.5px 15px black, 5px 15px #4a1e79, 7.5px 15px #f6ddd9,
+      10px 15px #f1c3c3, 12.5px 15px #f6ddd9, 15px 15px black, 17.5px 15px #f6ddd9,
+      20px 15px #f6ddd9, 22.5px 15px black, 25px 15px #f6ddd9, 27.5px 15px #f1c3c3,
+      30px 15px #f6ddd9, 32.5px 15px #4a1e79, 35px 15px black,
+      /*Eighth Row*/ 2.5px 17.5px black, 5px 17.5px #4a1e79, 7.5px 17.5px #4a1e79,
+      10px 17.5px #f1c3c3, 12.5px 17.5px #f6ddd9, 15px 17.5px black,
+      17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9, 22.5px 17.5px black,
+      25px 17.5px #f6ddd9, 27.5px 17.5px #f1c3c3, 30px 17.5px #4a1e79,
+      32.5px 17.5px #4a1e79, 35px 17.5px black, /*Ninth Row*/ 2.5px 20px black,
+      5px 20px #4a1e79, 7.5px 20px #4a1e79, 10px 20px black, 12.5px 20px #f1c3c3,
+      15px 20px #f6ddd9, 17.5px 20px #f6ddd9, 20px 20px #f6ddd9,
+      22.5px 20px #f6ddd9, 25px 20px #f1c3c3, 27.5px 20px black, 30px 20px #4a1e79,
+      32.5px 20px #4a1e79, 35px 20px black, /*Tenth Row*/ 5px 22.5px black,
+      7.5px 22.5px #4a1e79, 10px 22.5px black, 12.5px 22.5px black,
+      15px 22.5px black, 17.5px 22.5px black, 20px 22.5px black,
+      22.5px 22.5px black, 25px 22.5px black, 27.5px 22.5px black,
+      30px 22.5px #4a1e79, 32.5px 22.5px black, /*Eleventh Row*/ 7.5px 25px black,
+      10px 25px #b99de8, 12.5px 25px black, 15px 25px #b99de8, 17.5px 25px #b99de8,
+      20px 25px #b99de8, 22.5px 25px #b99de8, 25px 25px black, 27.5px 25px #b99de8,
+      30px 25px black, /*Twelfth Row*/ 5px 27.5px black, 7.5px 27.5px #f6ddd9,
+      10px 27.5px black, 12.5px 27.5px #b99de8, 15px 27.5px #b99de8,
+      17.5px 27.5px #b99de8, 20px 27.5px #b99de8, 22.5px 27.5px #b99de8,
+      25px 27.5px #b99de8, 27.5px 27.5px black, 30px 27.5px #f6ddd9,
+      32.5px 27.5px black, /*Thirteenth Row*/ 5px 30px black, 7.5px 30px black,
+      10px 30px black, 12.5px 30px black, 15px 30px black, 17.5px 30px black,
+      20px 30px black, 22.5px 30px black, 25px 30px black, 27.5px 30px black,
+      30px 30px black, 32.5px 30px black, /*Fourteenth Row*/ 10px 32.5px black,
+      12.5px 32.5px #b99de8, 15px 32.5px #b99de8, 17.5px 32.5px black,
+      20px 32.5px black, 22.5px 32.5px #b99de8, 25px 32.5px #b99de8,
+      27.5px 32.5px black, /*Fifteenth Row*/ 12.5px 35px black, 15px 35px black,
+      22.5px 35px black, 25px 35px black;
+  }
+  .playerDown2 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 17.5px -2.5px
+        black,
+      20px -2.5px black, /* first row  */ 12.5px 0px black, 15px 0px black,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px black, 25px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px #b99de8, 15px 2.5px #b99de8,
+      17.5px 2.5px #b99de8, 20px 2.5px #b99de8, 22.5px 2.5px #b99de8,
+      25px 2.5px #b99de8, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8, 17.5px 5px #b99de8,
+      20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8, 27.5px 5px #b99de8,
+      30px 5px black, /*Fourth Row*/ 7.5px 7.5px black, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #f6ddd9, 17.5px 7.5px #f6ddd9,
+      20px 7.5px #f6ddd9, 22.5px 7.5px #f6ddd9, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px black, /*Fifth Row*/ 5px 10px black,
+      7.5px 10px #4a1e79, 10px 10px black, 12.5px 10px black, 15px 10px black,
+      17.5px 10px black, 20px 10px black, 22.5px 10px black, 25px 10px black,
+      27.5px 10px black, 30px 10px #4a1e79, 32.5px 10px black,
+      /*Sixth Row*/ 5px 12.5px black, 7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79,
+      12.5px 12.5px #f6ddd9, 15px 12.5px #f6ddd9, 17.5px 12.5px #f6ddd9,
+      20px 12.5px #f6ddd9, 22.5px 12.5px #f6ddd9, 25px 12.5px #f6ddd9,
+      27.5px 12.5px #4a1e79, 30px 12.5px #4a1e79, 32.5px 12.5px black,
+      /*Seventh Row*/ 2.5px 15px black, 5px 15px #4a1e79, 7.5px 15px #f6ddd9,
+      10px 15px #f1c3c3, 12.5px 15px #f6ddd9, 15px 15px black, 17.5px 15px #f6ddd9,
+      20px 15px #f6ddd9, 22.5px 15px black, 25px 15px #f6ddd9, 27.5px 15px #f1c3c3,
+      30px 15px #f6ddd9, 32.5px 15px #4a1e79, 35px 15px black,
+      /*Eighth Row*/ 2.5px 17.5px black, 5px 17.5px #4a1e79, 7.5px 17.5px #4a1e79,
+      10px 17.5px #f1c3c3, 12.5px 17.5px #f6ddd9, 15px 17.5px black,
+      17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9, 22.5px 17.5px black,
+      25px 17.5px #f6ddd9, 27.5px 17.5px #f1c3c3, 30px 17.5px #4a1e79,
+      32.5px 17.5px #4a1e79, 35px 17.5px black, /*Ninth Row*/ 2.5px 20px black,
+      5px 20px #4a1e79, 7.5px 20px #4a1e79, 10px 20px black, 12.5px 20px #f1c3c3,
+      15px 20px #f6ddd9, 17.5px 20px #f6ddd9, 20px 20px #f6ddd9,
+      22.5px 20px #f6ddd9, 25px 20px #f1c3c3, 27.5px 20px black, 30px 20px #4a1e79,
+      32.5px 20px #4a1e79, 35px 20px black, /*Tenth Row*/ 5px 22.5px black,
+      7.5px 22.5px #4a1e79, 10px 22.5px black, 12.5px 22.5px black,
+      15px 22.5px black, 17.5px 22.5px black, 20px 22.5px black,
+      22.5px 22.5px black, 25px 22.5px black, 27.5px 22.5px black,
+      30px 22.5px #4a1e79, 32.5px 22.5px black, /*Eleventh Row*/ 7.5px 25px black,
+      10px 25px #b99de8, 12.5px 25px black, 15px 25px black, 17.5px 25px #b99de8,
+      20px 25px #b99de8, 22.5px 25px #b99de8, 25px 25px black, 27.5px 25px #b99de8,
+      30px 25px black, /*Twelfth Row*/ 10px 27.5px black, 12.5px 27.5px #f6ddd9,
+      15px 27.5px #f6ddd9, 17.5px 27.5px black, 20px 27.5px #b99de8,
+      22.5px 27.5px #b99de8, 25px 27.5px #b99de8, 27.5px 27.5px black,
+      /*Thirteenth Row*/ 10px 30px black, 12.5px 30px #f6ddd9, 15px 30px #f6ddd9,
+      17.5px 30px black, 20px 30px black, 22.5px 30px black, 25px 30px black,
+      27.5px 30px black, /*Fourteenth Row*/ 12.5px 32.5px black, 15px 32.5px black,
+      20px 32.5px black, 22.5px 32.5px #b99de8, 25px 32.5px #b99de8,
+      27.5px 32.5px black, /*Fifteenth Row*/ 22.5px 35px black, 25px 35px black;
+  }
+  .playerDown3 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 17.5px -2.5px
+        black,
+      20px -2.5px black, /* first row  */ 12.5px 0px black, 15px 0px black,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px black, 25px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px #b99de8, 15px 2.5px #b99de8,
+      17.5px 2.5px #b99de8, 20px 2.5px #b99de8, 22.5px 2.5px #b99de8,
+      25px 2.5px #b99de8, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8, 17.5px 5px #b99de8,
+      20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8, 27.5px 5px #b99de8,
+      30px 5px black, /*Fourth Row*/ 7.5px 7.5px black, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #f6ddd9, 17.5px 7.5px #f6ddd9,
+      20px 7.5px #f6ddd9, 22.5px 7.5px #f6ddd9, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px black, /*Fifth Row*/ 5px 10px black,
+      7.5px 10px #4a1e79, 10px 10px black, 12.5px 10px black, 15px 10px black,
+      17.5px 10px black, 20px 10px black, 22.5px 10px black, 25px 10px black,
+      27.5px 10px black, 30px 10px #4a1e79, 32.5px 10px black,
+      /*Sixth Row*/ 5px 12.5px black, 7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79,
+      12.5px 12.5px #f6ddd9, 15px 12.5px #f6ddd9, 17.5px 12.5px #f6ddd9,
+      20px 12.5px #f6ddd9, 22.5px 12.5px #f6ddd9, 25px 12.5px #f6ddd9,
+      27.5px 12.5px #4a1e79, 30px 12.5px #4a1e79, 32.5px 12.5px black,
+      /*Seventh Row*/ 2.5px 15px black, 5px 15px #4a1e79, 7.5px 15px #f6ddd9,
+      10px 15px #f1c3c3, 12.5px 15px #f6ddd9, 15px 15px black, 17.5px 15px #f6ddd9,
+      20px 15px #f6ddd9, 22.5px 15px black, 25px 15px #f6ddd9, 27.5px 15px #f1c3c3,
+      30px 15px #f6ddd9, 32.5px 15px #4a1e79, 35px 15px black,
+      /*Eighth Row*/ 2.5px 17.5px black, 5px 17.5px #4a1e79, 7.5px 17.5px #4a1e79,
+      10px 17.5px #f1c3c3, 12.5px 17.5px #f6ddd9, 15px 17.5px black,
+      17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9, 22.5px 17.5px black,
+      25px 17.5px #f6ddd9, 27.5px 17.5px #f1c3c3, 30px 17.5px #4a1e79,
+      32.5px 17.5px #4a1e79, 35px 17.5px black, /*Ninth Row*/ 2.5px 20px black,
+      5px 20px #4a1e79, 7.5px 20px #4a1e79, 10px 20px black, 12.5px 20px #f1c3c3,
+      15px 20px #f6ddd9, 17.5px 20px #f6ddd9, 20px 20px #f6ddd9,
+      22.5px 20px #f6ddd9, 25px 20px #f1c3c3, 27.5px 20px black, 30px 20px #4a1e79,
+      32.5px 20px #4a1e79, 35px 20px black, /*Tenth Row*/ 5px 22.5px black,
+      7.5px 22.5px #4a1e79, 10px 22.5px black, 12.5px 22.5px black,
+      15px 22.5px black, 17.5px 22.5px black, 20px 22.5px black,
+      22.5px 22.5px black, 25px 22.5px black, 27.5px 22.5px black,
+      30px 22.5px #4a1e79, 32.5px 22.5px black, /*Eleventh Row*/ 7.5px 25px black,
+      10px 25px #b99de8, 12.5px 25px black, 15px 25px #b99de8, 17.5px 25px #b99de8,
+      20px 25px #b99de8, 22.5px 25px black, 25px 25px black, 27.5px 25px #b99de8,
+      30px 25px black, /*Twelfth Row*/ 10px 27.5px black, 12.5px 27.5px #b99de8,
+      15px 27.5px #b99de8, 17.5px 27.5px #b99de8, 20px 27.5px black,
+      22.5px 27.5px #f6ddd9, 25px 27.5px #f6ddd9, 27.5px 27.5px black,
+      /*Thirteenth Row*/ 10px 30px black, 12.5px 30px black, 15px 30px black,
+      17.5px 30px black, 20px 30px black, 22.5px 30px #f6ddd9, 25px 30px #f6ddd9,
+      27.5px 30px black, /*Fourteenth Row*/ 10px 32.5px black,
+      12.5px 32.5px #b99de8, 15px 32.5px #b99de8, 17.5px 32.5px black,
+      22.5px 32.5px black, 25px 32.5px black, /*Fifteenth Row*/ 12.5px 35px black,
+      15px 35px black;
+  }
+  .playerUp1 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 17.5px -2.5px
+        black,
+      20px -2.5px black, /* first row  */ 12.5px 0px black, 15px 0px black,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px black, 25px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px #b99de8, 15px 2.5px #b99de8,
+      17.5px 2.5px #b99de8, 20px 2.5px #b99de8, 22.5px 2.5px #b99de8,
+      25px 2.5px #b99de8, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8, 17.5px 5px #b99de8,
+      20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8, 27.5px 5px #b99de8,
+      30px 5px black, /*Fourth Row*/ 7.5px 7.5px black, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px black,
+      20px 7.5px black, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px black, /*Fifth Row*/ 5px 10px black,
+      7.5px 10px #4a1e79, 10px 10px black, 12.5px 10px black, 15px 10px black,
+      17.5px 10px black, 20px 10px black, 22.5px 10px black, 25px 10px black,
+      27.5px 10px black, 30px 10px #4a1e79, 32.5px 10px black,
+      /*Sixth Row*/ 5px 12.5px black, 7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79,
+      12.5px 12.5px #4a1e79, 15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79,
+      20px 12.5px #4a1e79, 22.5px 12.5px #4a1e79, 25px 12.5px #4a1e79,
+      27.5px 12.5px #4a1e79, 30px 12.5px #4a1e79, 32.5px 12.5px black,
+      /*Seventh Row*/ 2.5px 15px black, 5px 15px #4a1e79, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #4a1e79, 15px 15px #4a1e79,
+      17.5px 15px #4a1e79, 20px 15px #4a1e79, 22.5px 15px #4a1e79,
+      25px 15px #4a1e79, 27.5px 15px #4a1e79, 30px 15px #4a1e79,
+      32.5px 15px #4a1e79, 35px 15px black, /*Eighth Row*/ 2.5px 17.5px black,
+      5px 17.5px #4a1e79, 7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79,
+      12.5px 17.5px #4a1e79, 15px 17.5px #4a1e79, 17.5px 17.5px #4a1e79,
+      20px 17.5px #4a1e79, 22.5px 17.5px #4a1e79, 25px 17.5px #4a1e79,
+      27.5px 17.5px #4a1e79, 30px 17.5px #4a1e79, 32.5px 17.5px #4a1e79,
+      35px 17.5px black, /*Ninth Row*/ 2.5px 20px black, 5px 20px #4a1e79,
+      7.5px 20px #4a1e79, 10px 20px #4a1e79, 12.5px 20px #4a1e79,
+      15px 20px #4a1e79, 17.5px 20px #4a1e79, 20px 20px #4a1e79,
+      22.5px 20px #4a1e79, 25px 20px #4a1e79, 27.5px 20px #4a1e79,
+      30px 20px #4a1e79, 32.5px 20px #4a1e79, 35px 20px black,
+      /*Tenth Row*/ 5px 22.5px black, 7.5px 22.5px #4a1e79, 10px 22.5px #4a1e79,
+      12.5px 22.5px #4a1e79, 15px 22.5px #4a1e79, 17.5px 22.5px #4a1e79,
+      20px 22.5px #4a1e79, 22.5px 22.5px #4a1e79, 25px 22.5px #4a1e79,
+      27.5px 22.5px #4a1e79, 30px 22.5px #4a1e79, 32.5px 22.5px black,
+      /*Eleventh Row*/ 7.5px 25px black, 10px 25px #b99de8, 12.5px 25px #4a1e79,
+      15px 25px #4a1e79, 17.5px 25px #4a1e79, 20px 25px #4a1e79,
+      22.5px 25px #4a1e79, 25px 25px #4a1e79, 27.5px 25px #b99de8, 30px 25px black,
+      /*Twelfth Row*/ 5px 27.5px black, 7.5px 27.5px #f6ddd9, 10px 27.5px black,
+      12.5px 27.5px #b99de8, 15px 27.5px #b99de8, 17.5px 27.5px #b99de8,
+      20px 27.5px #b99de8, 22.5px 27.5px #b99de8, 25px 27.5px #b99de8,
+      27.5px 27.5px black, 30px 27.5px #f6ddd9, 32.5px 27.5px black,
+      /*Thirteenth Row*/ 5px 30px black, 7.5px 30px black, 10px 30px black,
+      12.5px 30px black, 15px 30px black, 17.5px 30px black, 20px 30px black,
+      22.5px 30px black, 25px 30px black, 27.5px 30px black, 30px 30px black,
+      32.5px 30px black, /*Fourteenth Row*/ 10px 32.5px black,
+      12.5px 32.5px #b99de8, 15px 32.5px #b99de8, 17.5px 32.5px black,
+      20px 32.5px black, 22.5px 32.5px #b99de8, 25px 32.5px #b99de8,
+      27.5px 32.5px black, /*Fifteenth Row*/ 12.5px 35px black, 15px 35px black,
+      22.5px 35px black, 25px 35px black;
+  }
+  .playerUp2 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 17.5px -2.5px
+        black,
+      20px -2.5px black, /* first row  */ 12.5px 0px black, 15px 0px black,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px black, 25px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px #b99de8, 15px 2.5px #b99de8,
+      17.5px 2.5px #b99de8, 20px 2.5px #b99de8, 22.5px 2.5px #b99de8,
+      25px 2.5px #b99de8, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8, 17.5px 5px #b99de8,
+      20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8, 27.5px 5px #b99de8,
+      30px 5px black, /*Fourth Row*/ 7.5px 7.5px black, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px black,
+      20px 7.5px black, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px black, /*Fifth Row*/ 5px 10px black,
+      7.5px 10px #4a1e79, 10px 10px black, 12.5px 10px black, 15px 10px black,
+      17.5px 10px black, 20px 10px black, 22.5px 10px black, 25px 10px black,
+      27.5px 10px black, 30px 10px #4a1e79, 32.5px 10px black,
+      /*Sixth Row*/ 5px 12.5px black, 7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79,
+      12.5px 12.5px #4a1e79, 15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79,
+      20px 12.5px #4a1e79, 22.5px 12.5px #4a1e79, 25px 12.5px #4a1e79,
+      27.5px 12.5px #4a1e79, 30px 12.5px #4a1e79, 32.5px 12.5px black,
+      /*Seventh Row*/ 2.5px 15px black, 5px 15px #4a1e79, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #4a1e79, 15px 15px #4a1e79,
+      17.5px 15px #4a1e79, 20px 15px #4a1e79, 22.5px 15px #4a1e79,
+      25px 15px #4a1e79, 27.5px 15px #4a1e79, 30px 15px #4a1e79,
+      32.5px 15px #4a1e79, 35px 15px black, /*Eighth Row*/ 2.5px 17.5px black,
+      5px 17.5px #4a1e79, 7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79,
+      12.5px 17.5px #4a1e79, 15px 17.5px #4a1e79, 17.5px 17.5px #4a1e79,
+      20px 17.5px #4a1e79, 22.5px 17.5px #4a1e79, 25px 17.5px #4a1e79,
+      27.5px 17.5px #4a1e79, 30px 17.5px #4a1e79, 32.5px 17.5px #4a1e79,
+      35px 17.5px black, /*Ninth Row*/ 2.5px 20px black, 5px 20px #4a1e79,
+      7.5px 20px #4a1e79, 10px 20px #4a1e79, 12.5px 20px #4a1e79,
+      15px 20px #4a1e79, 17.5px 20px #4a1e79, 20px 20px #4a1e79,
+      22.5px 20px #4a1e79, 25px 20px #4a1e79, 27.5px 20px #4a1e79,
+      30px 20px #4a1e79, 32.5px 20px #4a1e79, 35px 20px black,
+      /*Tenth Row*/ 5px 22.5px black, 7.5px 22.5px #4a1e79, 10px 22.5px #4a1e79,
+      12.5px 22.5px #4a1e79, 15px 22.5px #4a1e79, 17.5px 22.5px #4a1e79,
+      20px 22.5px #4a1e79, 22.5px 22.5px #4a1e79, 25px 22.5px #4a1e79,
+      27.5px 22.5px #4a1e79, 30px 22.5px #4a1e79, 32.5px 22.5px black,
+      /*Eleventh Row*/ 2.5px 25px black, 5px 25px #f6ddd9, 7.5px 25px #f6ddd9,
+      10px 25px black, 12.5px 25px #4a1e79, 15px 25px #4a1e79, 17.5px 25px #4a1e79,
+      20px 25px #4a1e79, 22.5px 25px #4a1e79, 25px 25px #4a1e79,
+      27.5px 25px #b99de8, 30px 25px black, /*Twelfth Row*/ 2.5px 27.5px black,
+      5px 27.5px #f6ddd9, 7.5px 27.5px #f6ddd9, 10px 27.5px black,
+      12.5px 27.5px #b99de8, 15px 27.5px #b99de8, 17.5px 27.5px #b99de8,
+      20px 27.5px #b99de8, 22.5px 27.5px #b99de8, 25px 27.5px #b99de8,
+      27.5px 27.5px black, /*Thirteenth Row*/ 5px 30px black, 7.5px 30px black,
+      10px 30px black, 12.5px 30px black, 15px 30px black, 17.5px 30px black,
+      20px 30px black, 22.5px 30px black, 25px 30px black, 27.5px 30px black,
+      /*Fourteenth Row*/ 20px 32.5px black, 22.5px 32.5px #b99de8,
+      25px 32.5px #b99de8, 27.5px 32.5px black,
+      /*Fifteenth Row*/ 22.5px 35px black, 25px 35px black;
+  }
+  .playerUp3 {
+    /*Starting at the top left pixel, I'm making the plain floor tile with this*/
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 17.5px -2.5px
+        black,
+      20px -2.5px black, /* first row  */ 12.5px 0px black, 15px 0px black,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px black, 25px 0px black,
+      /*Second Row*/ 10px 2.5px black, 12.5px 2.5px #b99de8, 15px 2.5px #b99de8,
+      17.5px 2.5px #b99de8, 20px 2.5px #b99de8, 22.5px 2.5px #b99de8,
+      25px 2.5px #b99de8, 27.5px 2.5px black, /*Third Row*/ 7.5px 5px black,
+      10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8, 17.5px 5px #b99de8,
+      20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8, 27.5px 5px #b99de8,
+      30px 5px black, /*Fourth Row*/ 7.5px 7.5px black, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px black,
+      20px 7.5px black, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px black, /*Fifth Row*/ 5px 10px black,
+      7.5px 10px #4a1e79, 10px 10px black, 12.5px 10px black, 15px 10px black,
+      17.5px 10px black, 20px 10px black, 22.5px 10px black, 25px 10px black,
+      27.5px 10px black, 30px 10px #4a1e79, 32.5px 10px black,
+      /*Sixth Row*/ 5px 12.5px black, 7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79,
+      12.5px 12.5px #4a1e79, 15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79,
+      20px 12.5px #4a1e79, 22.5px 12.5px #4a1e79, 25px 12.5px #4a1e79,
+      27.5px 12.5px #4a1e79, 30px 12.5px #4a1e79, 32.5px 12.5px black,
+      /*Seventh Row*/ 2.5px 15px black, 5px 15px #4a1e79, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #4a1e79, 15px 15px #4a1e79,
+      17.5px 15px #4a1e79, 20px 15px #4a1e79, 22.5px 15px #4a1e79,
+      25px 15px #4a1e79, 27.5px 15px #4a1e79, 30px 15px #4a1e79,
+      32.5px 15px #4a1e79, 35px 15px black, /*Eighth Row*/ 2.5px 17.5px black,
+      5px 17.5px #4a1e79, 7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79,
+      12.5px 17.5px #4a1e79, 15px 17.5px #4a1e79, 17.5px 17.5px #4a1e79,
+      20px 17.5px #4a1e79, 22.5px 17.5px #4a1e79, 25px 17.5px #4a1e79,
+      27.5px 17.5px #4a1e79, 30px 17.5px #4a1e79, 32.5px 17.5px #4a1e79,
+      35px 17.5px black, /*Ninth Row*/ 2.5px 20px black, 5px 20px #4a1e79,
+      7.5px 20px #4a1e79, 10px 20px #4a1e79, 12.5px 20px #4a1e79,
+      15px 20px #4a1e79, 17.5px 20px #4a1e79, 20px 20px #4a1e79,
+      22.5px 20px #4a1e79, 25px 20px #4a1e79, 27.5px 20px #4a1e79,
+      30px 20px #4a1e79, 32.5px 20px #4a1e79, 35px 20px black,
+      /*Tenth Row*/ 5px 22.5px black, 7.5px 22.5px #4a1e79, 10px 22.5px #4a1e79,
+      12.5px 22.5px #4a1e79, 15px 22.5px #4a1e79, 17.5px 22.5px #4a1e79,
+      20px 22.5px #4a1e79, 22.5px 22.5px #4a1e79, 25px 22.5px #4a1e79,
+      27.5px 22.5px #4a1e79, 30px 22.5px #4a1e79, 32.5px 22.5px black,
+      /*Eleventh Row*/ 7.5px 25px black, 10px 25px #b99de8, 12.5px 25px #4a1e79,
+      15px 25px #4a1e79, 17.5px 25px #4a1e79, 20px 25px #4a1e79,
+      22.5px 25px #4a1e79, 25px 25px #4a1e79, 27.5px 25px black, 30px 25px #f6ddd9,
+      32.5px 25px #f6ddd9, 35px 25px black, /*Twelfth Row*/ 10px 27.5px black,
+      12.5px 27.5px #b99de8, 15px 27.5px #b99de8, 17.5px 27.5px #b99de8,
+      20px 27.5px #b99de8, 22.5px 27.5px #b99de8, 25px 27.5px #b99de8,
+      27.5px 27.5px black, 30px 27.5px #f6ddd9, 32.5px 27.5px #f6ddd9,
+      35px 27.5px black, /*Thirteenth Row*/ 10px 30px black, 12.5px 30px black,
+      15px 30px black, 17.5px 30px black, 20px 30px black, 22.5px 30px black,
+      25px 30px black, 27.5px 30px black, 30px 30px black, 32.5px 30px black,
+      /*Fourteenth Row*/ 10px 32.5px black, 12.5px 32.5px #b99de8,
+      15px 32.5px #b99de8, 17.5px 32.5px black,
+      /*Fifteenth Row*/ 12.5px 35px black, 15px 35px black;
+  }
+  .playerRight1 {
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 15px -2.5px
+        black,
+      17.5px -2.5px black, 20px -2.5px black, 22.5px -2.5px black,
+      /* first row  */ 10px 0px black, 12.5px 0px black, 15px 0px #b99de8,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px #b99de8, 25px 0px black,
+      27.5px 0px black, /*Second Row*/ 7.5px 2.5px black, 10px 2.5px #b99de8,
+      12.5px 2.5px #b99de8, 15px 2.5px #b99de8, 17.5px 2.5px #b99de8,
+      20px 2.5px #b99de8, 22.5px 2.5px #b99de8, 25px 2.5px #b99de8,
+      27.5px 2.5px #b99de8, 30px 2.5px black, /*Third Row*/ 5px 5px black,
+      7.5px 5px #b99de8, 10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8,
+      17.5px 5px #b99de8, 20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8,
+      27.5px 5px #f6ddd9, 30px 5px black, 32.5px 5px black,
+      /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #b99de8, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px #b99de8,
+      20px 7.5px #b99de8, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px #f6ddd9, 32.5px 7.5px #f6ddd9,
+      35px 7.5px black, /*Fifth Row*/ 5px 10px black, 7.5px 10px black,
+      10px 10px black, 12.5px 10px black, 15px 10px black, 17.5px 10px black,
+      20px 10px black, 22.5px 10px black, 25px 10px black, 27.5px 10px black,
+      30px 10px black, 32.5px 10px black, /*Sixth Row*/ 5px 12.5px black,
+      7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79, 12.5px 12.5px #f6ddd9,
+      15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79, 20px 12.5px #4a1e79,
+      22.5px 12.5px #f6ddd9, 25px 12.5px black, 27.5px 12.5px #f6ddd9,
+      30px 12.5px black, /*Seventh Row*/ 5px 15px black, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #f6ddd9, 15px 15px #f6ddd9,
+      17.5px 15px #4a1e79, 20px 15px #f6ddd9, 22.5px 15px #f6ddd9, 25px 15px black,
+      27.5px 15px #f6ddd9, 30px 15px black, /*Eighth Row*/ 5px 17.5px black,
+      7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79, 12.5px 17.5px #4a1e79,
+      15px 17.5px #4a1e79, 17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9,
+      22.5px 17.5px #f6ddd9, 25px 17.5px #f6ddd9, 27.5px 17.5px #f6ddd9,
+      30px 17.5px black, /*Ninth Row*/ 5px 20px black, 7.5px 20px #4a1e79,
+      10px 20px #4a1e79, 12.5px 20px #4a1e79, 15px 20px #f6ddd9,
+      17.5px 20px #f6ddd9, 20px 20px #f6ddd9, 22.5px 20px #f6ddd9,
+      25px 20px #f1c3c3, 27.5px 20px black, /*Tenth Row*/ 7.5px 22.5px black,
+      10px 22.5px #4a1e79, 12.5px 22.5px black, 15px 22.5px black,
+      17.5px 22.5px black, 20px 22.5px black, 22.5px 22.5px black,
+      25px 22.5px black, 27.5px 22.5px black, /*Eleventh Row*/ 10px 25px black,
+      12.5px 25px black, 15px 25px #b99de8, 17.5px 25px black, 20px 25px #b99de8,
+      22.5px 25px black, /*Twelfth Row*/ 12.5px 27.5px black, 15px 27.5px #f6ddd9,
+      17.5px 27.5px #f6ddd9, 20px 27.5px black, 22.5px 27.5px black,
+      /*Thirteenth Row*/ 12.5px 30px black, 15px 30px #f6ddd9, 17.5px 30px #f6ddd9,
+      20px 30px black, 22.5px 30px #b99de8, 25px 30px black,
+      /*Fourteenth Row*/ 12.5px 32.5px black, 15px 32.5px black,
+      17.5px 32.5px black, 20px 32.5px #b99de8, 22.5px 32.5px #b99de8,
+      25px 32.5px black, /*Fifteenth Row*/ 15px 35px black, 17.5px 35px black,
+      20px 35px black, 22.5px 35px black;
+  }
+  .playerRight2 {
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 15px -2.5px
+        black,
+      17.5px -2.5px black, 20px -2.5px black, 22.5px -2.5px black,
+      /* first row  */ 10px 0px black, 12.5px 0px black, 15px 0px #b99de8,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px #b99de8, 25px 0px black,
+      27.5px 0px black, /*Second Row*/ 7.5px 2.5px black, 10px 2.5px #b99de8,
+      12.5px 2.5px #b99de8, 15px 2.5px #b99de8, 17.5px 2.5px #b99de8,
+      20px 2.5px #b99de8, 22.5px 2.5px #b99de8, 25px 2.5px #b99de8,
+      27.5px 2.5px #b99de8, 30px 2.5px black, /*Third Row*/ 5px 5px black,
+      7.5px 5px #b99de8, 10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8,
+      17.5px 5px #b99de8, 20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8,
+      27.5px 5px #f6ddd9, 30px 5px black, 32.5px 5px black,
+      /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #b99de8, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px #b99de8,
+      20px 7.5px #b99de8, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px #f6ddd9, 32.5px 7.5px #f6ddd9,
+      35px 7.5px black, /*Fifth Row*/ 5px 10px black, 7.5px 10px black,
+      10px 10px black, 12.5px 10px black, 15px 10px black, 17.5px 10px black,
+      20px 10px black, 22.5px 10px black, 25px 10px black, 27.5px 10px black,
+      30px 10px black, 32.5px 10px black, /*Sixth Row*/ 5px 12.5px black,
+      7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79, 12.5px 12.5px #f6ddd9,
+      15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79, 20px 12.5px #4a1e79,
+      22.5px 12.5px #f6ddd9, 25px 12.5px black, 27.5px 12.5px #f6ddd9,
+      30px 12.5px black, /*Seventh Row*/ 5px 15px black, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #f6ddd9, 15px 15px #f6ddd9,
+      17.5px 15px #4a1e79, 20px 15px #f6ddd9, 22.5px 15px #f6ddd9, 25px 15px black,
+      27.5px 15px #f6ddd9, 30px 15px black, /*Eighth Row*/ 5px 17.5px black,
+      7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79, 12.5px 17.5px #4a1e79,
+      15px 17.5px #4a1e79, 17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9,
+      22.5px 17.5px #f6ddd9, 25px 17.5px #f6ddd9, 27.5px 17.5px #f6ddd9,
+      30px 17.5px black, /*Ninth Row*/ 5px 20px black, 7.5px 20px #4a1e79,
+      10px 20px #4a1e79, 12.5px 20px #4a1e79, 15px 20px #f6ddd9,
+      17.5px 20px #f6ddd9, 20px 20px #f6ddd9, 22.5px 20px #f6ddd9,
+      25px 20px #f1c3c3, 27.5px 20px black, /*Tenth Row*/ 7.5px 22.5px black,
+      10px 22.5px #4a1e79, 12.5px 22.5px black, 15px 22.5px black,
+      17.5px 22.5px black, 20px 22.5px black, 22.5px 22.5px black,
+      25px 22.5px black, 27.5px 22.5px black, /*Eleventh Row*/ 7.5px 25px black,
+      10px 25px black, 12.5px 25px #b99de8, 15px 25px #b99de8, 17.5px 25px #b99de8,
+      20px 25px black, 22.5px 25px #f6ddd9, 25px 25px #f6ddd9, 27.5px 25px black,
+      30px 25px black, /*Twelfth Row*/ 5px 27.5px black, 7.5px 27.5px #b99de8,
+      10px 27.5px black, 12.5px 27.5px #b99de8, 15px 27.5px #b99de8,
+      17.5px 27.5px #b99de8, 20px 27.5px black, 22.5px 27.5px #f6ddd9,
+      25px 27.5px #f6ddd9, 27.5px 27.5px black, 30px 27.5px #b99de8,
+      32.5px 27.5px black, /*Thirteenth Row*/ 5px 30px black, 7.5px 30px #b99de8,
+      10px 30px #b99de8, 12.5px 30px black, 15px 30px black, 17.5px 30px black,
+      20px 30px black, 22.5px 30px black, 25px 30px black, 27.5px 30px #b99de8,
+      30px 30px black, /*Fourteenth Row*/ 7.5px 32.5px black, 10px 32.5px black,
+      25px 32.5px black, 27.5px 32.5px black;
+  }
+  .playerRight3 {
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 15px -2.5px
+        black,
+      17.5px -2.5px black, 20px -2.5px black, 22.5px -2.5px black,
+      /* first row  */ 10px 0px black, 12.5px 0px black, 15px 0px #b99de8,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px #b99de8, 25px 0px black,
+      27.5px 0px black, /*Second Row*/ 7.5px 2.5px black, 10px 2.5px #b99de8,
+      12.5px 2.5px #b99de8, 15px 2.5px #b99de8, 17.5px 2.5px #b99de8,
+      20px 2.5px #b99de8, 22.5px 2.5px #b99de8, 25px 2.5px #b99de8,
+      27.5px 2.5px #b99de8, 30px 2.5px black, /*Third Row*/ 5px 5px black,
+      7.5px 5px #b99de8, 10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8,
+      17.5px 5px #b99de8, 20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8,
+      27.5px 5px #f6ddd9, 30px 5px black, 32.5px 5px black,
+      /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #b99de8, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px #b99de8,
+      20px 7.5px #b99de8, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px #f6ddd9, 32.5px 7.5px #f6ddd9,
+      35px 7.5px black, /*Fifth Row*/ 5px 10px black, 7.5px 10px black,
+      10px 10px black, 12.5px 10px black, 15px 10px black, 17.5px 10px black,
+      20px 10px black, 22.5px 10px black, 25px 10px black, 27.5px 10px black,
+      30px 10px black, 32.5px 10px black, /*Sixth Row*/ 5px 12.5px black,
+      7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79, 12.5px 12.5px #f6ddd9,
+      15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79, 20px 12.5px #4a1e79,
+      22.5px 12.5px #f6ddd9, 25px 12.5px black, 27.5px 12.5px #f6ddd9,
+      30px 12.5px black, /*Seventh Row*/ 5px 15px black, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #f6ddd9, 15px 15px #f6ddd9,
+      17.5px 15px #4a1e79, 20px 15px #f6ddd9, 22.5px 15px #f6ddd9, 25px 15px black,
+      27.5px 15px #f6ddd9, 30px 15px black, /*Eighth Row*/ 5px 17.5px black,
+      7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79, 12.5px 17.5px #4a1e79,
+      15px 17.5px #4a1e79, 17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9,
+      22.5px 17.5px #f6ddd9, 25px 17.5px #f6ddd9, 27.5px 17.5px #f6ddd9,
+      30px 17.5px black, /*Ninth Row*/ 5px 20px black, 7.5px 20px #4a1e79,
+      10px 20px #4a1e79, 12.5px 20px #4a1e79, 15px 20px #f6ddd9,
+      17.5px 20px #f6ddd9, 20px 20px #f6ddd9, 22.5px 20px #f6ddd9,
+      25px 20px #f1c3c3, 27.5px 20px black, /*Tenth Row*/ 7.5px 22.5px black,
+      10px 22.5px #4a1e79, 12.5px 22.5px black, 15px 22.5px black,
+      17.5px 22.5px black, 20px 22.5px black, 22.5px 22.5px black,
+      25px 22.5px black, 27.5px 22.5px black, /*Eleventh Row*/ 7.5px 25px black,
+      10px 25px black, 12.5px 25px #f6ddd9, 15px 25px #f6ddd9, 17.5px 25px black,
+      20px 25px #b99de8, 22.5px 25px #b99de8, 25px 25px #b99de8, 27.5px 25px black,
+      30px 25px black, 32.5px 25px black, /*Twelfth Row*/ 5px 27.5px black,
+      7.5px 27.5px #b99de8, 10px 27.5px black, 12.5px 27.5px #f6ddd9,
+      15px 27.5px #f6ddd9, 17.5px 27.5px black, 20px 27.5px #b99de8,
+      22.5px 27.5px #b99de8, 25px 27.5px #b99de8, 27.5px 27.5px black,
+      30px 27.5px #b99de8, 32.5px 27.5px #b99de8, 35px 27.5px black,
+      /*Thirteenth Row*/ 5px 30px black, 7.5px 30px #b99de8, 10px 30px #b99de8,
+      12.5px 30px black, 15px 30px black, 17.5px 30px black, 20px 30px black,
+      22.5px 30px black, 25px 30px black, 27.5px 30px #b99de8, 30px 30px #b99de8,
+      32.5px 30px black, /*Fourteenth Row*/ 7.5px 32.5px black, 10px 32.5px black,
+      25px 32.5px black, 27.5px 32.5px black, 30px 32.5px black;
+  }
+  .playerLeft1 {
+    transform: scaleX(-1) translate(-35px);
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 15px -2.5px
+        black,
+      17.5px -2.5px black, 20px -2.5px black, 22.5px -2.5px black,
+      /* first row  */ 10px 0px black, 12.5px 0px black, 15px 0px #b99de8,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px #b99de8, 25px 0px black,
+      27.5px 0px black, /*Second Row*/ 7.5px 2.5px black, 10px 2.5px #b99de8,
+      12.5px 2.5px #b99de8, 15px 2.5px #b99de8, 17.5px 2.5px #b99de8,
+      20px 2.5px #b99de8, 22.5px 2.5px #b99de8, 25px 2.5px #b99de8,
+      27.5px 2.5px #b99de8, 30px 2.5px black, /*Third Row*/ 5px 5px black,
+      7.5px 5px #b99de8, 10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8,
+      17.5px 5px #b99de8, 20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8,
+      27.5px 5px #f6ddd9, 30px 5px black, 32.5px 5px black,
+      /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #b99de8, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px #b99de8,
+      20px 7.5px #b99de8, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px #f6ddd9, 32.5px 7.5px #f6ddd9,
+      35px 7.5px black, /*Fifth Row*/ 5px 10px black, 7.5px 10px black,
+      10px 10px black, 12.5px 10px black, 15px 10px black, 17.5px 10px black,
+      20px 10px black, 22.5px 10px black, 25px 10px black, 27.5px 10px black,
+      30px 10px black, 32.5px 10px black, /*Sixth Row*/ 5px 12.5px black,
+      7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79, 12.5px 12.5px #f6ddd9,
+      15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79, 20px 12.5px #4a1e79,
+      22.5px 12.5px #f6ddd9, 25px 12.5px black, 27.5px 12.5px #f6ddd9,
+      30px 12.5px black, /*Seventh Row*/ 5px 15px black, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #f6ddd9, 15px 15px #f6ddd9,
+      17.5px 15px #4a1e79, 20px 15px #f6ddd9, 22.5px 15px #f6ddd9, 25px 15px black,
+      27.5px 15px #f6ddd9, 30px 15px black, /*Eighth Row*/ 5px 17.5px black,
+      7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79, 12.5px 17.5px #4a1e79,
+      15px 17.5px #4a1e79, 17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9,
+      22.5px 17.5px #f6ddd9, 25px 17.5px #f6ddd9, 27.5px 17.5px #f6ddd9,
+      30px 17.5px black, /*Ninth Row*/ 5px 20px black, 7.5px 20px #4a1e79,
+      10px 20px #4a1e79, 12.5px 20px #4a1e79, 15px 20px #f6ddd9,
+      17.5px 20px #f6ddd9, 20px 20px #f6ddd9, 22.5px 20px #f6ddd9,
+      25px 20px #f1c3c3, 27.5px 20px black, /*Tenth Row*/ 7.5px 22.5px black,
+      10px 22.5px #4a1e79, 12.5px 22.5px black, 15px 22.5px black,
+      17.5px 22.5px black, 20px 22.5px black, 22.5px 22.5px black,
+      25px 22.5px black, 27.5px 22.5px black, /*Eleventh Row*/ 10px 25px black,
+      12.5px 25px black, 15px 25px #b99de8, 17.5px 25px black, 20px 25px #b99de8,
+      22.5px 25px black, /*Twelfth Row*/ 12.5px 27.5px black, 15px 27.5px #f6ddd9,
+      17.5px 27.5px #f6ddd9, 20px 27.5px black, 22.5px 27.5px black,
+      /*Thirteenth Row*/ 12.5px 30px black, 15px 30px #f6ddd9, 17.5px 30px #f6ddd9,
+      20px 30px black, 22.5px 30px #b99de8, 25px 30px black,
+      /*Fourteenth Row*/ 12.5px 32.5px black, 15px 32.5px black,
+      17.5px 32.5px black, 20px 32.5px #b99de8, 22.5px 32.5px #b99de8,
+      25px 32.5px black, /*Fifteenth Row*/ 15px 35px black, 17.5px 35px black,
+      20px 35px black, 22.5px 35px black;
+  }
+  .playerLeft2 {
+    transform: scaleX(-1) translate(-35px);
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 15px -2.5px
+        black,
+      17.5px -2.5px black, 20px -2.5px black, 22.5px -2.5px black,
+      /* first row  */ 10px 0px black, 12.5px 0px black, 15px 0px #b99de8,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px #b99de8, 25px 0px black,
+      27.5px 0px black, /*Second Row*/ 7.5px 2.5px black, 10px 2.5px #b99de8,
+      12.5px 2.5px #b99de8, 15px 2.5px #b99de8, 17.5px 2.5px #b99de8,
+      20px 2.5px #b99de8, 22.5px 2.5px #b99de8, 25px 2.5px #b99de8,
+      27.5px 2.5px #b99de8, 30px 2.5px black, /*Third Row*/ 5px 5px black,
+      7.5px 5px #b99de8, 10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8,
+      17.5px 5px #b99de8, 20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8,
+      27.5px 5px #f6ddd9, 30px 5px black, 32.5px 5px black,
+      /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #b99de8, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px #b99de8,
+      20px 7.5px #b99de8, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px #f6ddd9, 32.5px 7.5px #f6ddd9,
+      35px 7.5px black, /*Fifth Row*/ 5px 10px black, 7.5px 10px black,
+      10px 10px black, 12.5px 10px black, 15px 10px black, 17.5px 10px black,
+      20px 10px black, 22.5px 10px black, 25px 10px black, 27.5px 10px black,
+      30px 10px black, 32.5px 10px black, /*Sixth Row*/ 5px 12.5px black,
+      7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79, 12.5px 12.5px #f6ddd9,
+      15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79, 20px 12.5px #4a1e79,
+      22.5px 12.5px #f6ddd9, 25px 12.5px black, 27.5px 12.5px #f6ddd9,
+      30px 12.5px black, /*Seventh Row*/ 5px 15px black, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #f6ddd9, 15px 15px #f6ddd9,
+      17.5px 15px #4a1e79, 20px 15px #f6ddd9, 22.5px 15px #f6ddd9, 25px 15px black,
+      27.5px 15px #f6ddd9, 30px 15px black, /*Eighth Row*/ 5px 17.5px black,
+      7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79, 12.5px 17.5px #4a1e79,
+      15px 17.5px #4a1e79, 17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9,
+      22.5px 17.5px #f6ddd9, 25px 17.5px #f6ddd9, 27.5px 17.5px #f6ddd9,
+      30px 17.5px black, /*Ninth Row*/ 5px 20px black, 7.5px 20px #4a1e79,
+      10px 20px #4a1e79, 12.5px 20px #4a1e79, 15px 20px #f6ddd9,
+      17.5px 20px #f6ddd9, 20px 20px #f6ddd9, 22.5px 20px #f6ddd9,
+      25px 20px #f1c3c3, 27.5px 20px black, /*Tenth Row*/ 7.5px 22.5px black,
+      10px 22.5px #4a1e79, 12.5px 22.5px black, 15px 22.5px black,
+      17.5px 22.5px black, 20px 22.5px black, 22.5px 22.5px black,
+      25px 22.5px black, 27.5px 22.5px black, /*Eleventh Row*/ 7.5px 25px black,
+      10px 25px black, 12.5px 25px #b99de8, 15px 25px #b99de8, 17.5px 25px #b99de8,
+      20px 25px black, 22.5px 25px #f6ddd9, 25px 25px #f6ddd9, 27.5px 25px black,
+      30px 25px black, /*Twelfth Row*/ 5px 27.5px black, 7.5px 27.5px #b99de8,
+      10px 27.5px black, 12.5px 27.5px #b99de8, 15px 27.5px #b99de8,
+      17.5px 27.5px #b99de8, 20px 27.5px black, 22.5px 27.5px #f6ddd9,
+      25px 27.5px #f6ddd9, 27.5px 27.5px black, 30px 27.5px #b99de8,
+      32.5px 27.5px black, /*Thirteenth Row*/ 5px 30px black, 7.5px 30px #b99de8,
+      10px 30px #b99de8, 12.5px 30px black, 15px 30px black, 17.5px 30px black,
+      20px 30px black, 22.5px 30px black, 25px 30px black, 27.5px 30px #b99de8,
+      30px 30px black, /*Fourteenth Row*/ 7.5px 32.5px black, 10px 32.5px black,
+      25px 32.5px black, 27.5px 32.5px black;
+  }
+  .playerLeft3 {
+    transform: scaleX(-1) translate(-35px);
+    background: transparent;
+    width: 2.6px;
+    height: 2.6px;
+  
+    box-shadow:
+  /* had to add a before first row on player classes only*/ 15px -2.5px
+        black,
+      17.5px -2.5px black, 20px -2.5px black, 22.5px -2.5px black,
+      /* first row  */ 10px 0px black, 12.5px 0px black, 15px 0px #b99de8,
+      17.5px 0px #b99de8, 20px 0px #b99de8, 22.5px 0px #b99de8, 25px 0px black,
+      27.5px 0px black, /*Second Row*/ 7.5px 2.5px black, 10px 2.5px #b99de8,
+      12.5px 2.5px #b99de8, 15px 2.5px #b99de8, 17.5px 2.5px #b99de8,
+      20px 2.5px #b99de8, 22.5px 2.5px #b99de8, 25px 2.5px #b99de8,
+      27.5px 2.5px #b99de8, 30px 2.5px black, /*Third Row*/ 5px 5px black,
+      7.5px 5px #b99de8, 10px 5px #b99de8, 12.5px 5px #b99de8, 15px 5px #b99de8,
+      17.5px 5px #b99de8, 20px 5px #b99de8, 22.5px 5px #b99de8, 25px 5px #b99de8,
+      27.5px 5px #f6ddd9, 30px 5px black, 32.5px 5px black,
+      /*Fourth Row*/ 5px 7.5px black, 7.5px 7.5px #b99de8, 10px 7.5px #b99de8,
+      12.5px 7.5px #b99de8, 15px 7.5px #b99de8, 17.5px 7.5px #b99de8,
+      20px 7.5px #b99de8, 22.5px 7.5px #b99de8, 25px 7.5px #b99de8,
+      27.5px 7.5px #b99de8, 30px 7.5px #f6ddd9, 32.5px 7.5px #f6ddd9,
+      35px 7.5px black, /*Fifth Row*/ 5px 10px black, 7.5px 10px black,
+      10px 10px black, 12.5px 10px black, 15px 10px black, 17.5px 10px black,
+      20px 10px black, 22.5px 10px black, 25px 10px black, 27.5px 10px black,
+      30px 10px black, 32.5px 10px black, /*Sixth Row*/ 5px 12.5px black,
+      7.5px 12.5px #4a1e79, 10px 12.5px #4a1e79, 12.5px 12.5px #f6ddd9,
+      15px 12.5px #4a1e79, 17.5px 12.5px #4a1e79, 20px 12.5px #4a1e79,
+      22.5px 12.5px #f6ddd9, 25px 12.5px black, 27.5px 12.5px #f6ddd9,
+      30px 12.5px black, /*Seventh Row*/ 5px 15px black, 7.5px 15px #4a1e79,
+      10px 15px #4a1e79, 12.5px 15px #f6ddd9, 15px 15px #f6ddd9,
+      17.5px 15px #4a1e79, 20px 15px #f6ddd9, 22.5px 15px #f6ddd9, 25px 15px black,
+      27.5px 15px #f6ddd9, 30px 15px black, /*Eighth Row*/ 5px 17.5px black,
+      7.5px 17.5px #4a1e79, 10px 17.5px #4a1e79, 12.5px 17.5px #4a1e79,
+      15px 17.5px #4a1e79, 17.5px 17.5px #f6ddd9, 20px 17.5px #f6ddd9,
+      22.5px 17.5px #f6ddd9, 25px 17.5px #f6ddd9, 27.5px 17.5px #f6ddd9,
+      30px 17.5px black, /*Ninth Row*/ 5px 20px black, 7.5px 20px #4a1e79,
+      10px 20px #4a1e79, 12.5px 20px #4a1e79, 15px 20px #f6ddd9,
+      17.5px 20px #f6ddd9, 20px 20px #f6ddd9, 22.5px 20px #f6ddd9,
+      25px 20px #f1c3c3, 27.5px 20px black, /*Tenth Row*/ 7.5px 22.5px black,
+      10px 22.5px #4a1e79, 12.5px 22.5px black, 15px 22.5px black,
+      17.5px 22.5px black, 20px 22.5px black, 22.5px 22.5px black,
+      25px 22.5px black, 27.5px 22.5px black, /*Eleventh Row*/ 7.5px 25px black,
+      10px 25px black, 12.5px 25px #f6ddd9, 15px 25px #f6ddd9, 17.5px 25px black,
+      20px 25px #b99de8, 22.5px 25px #b99de8, 25px 25px #b99de8, 27.5px 25px black,
+      30px 25px black, 32.5px 25px black, /*Twelfth Row*/ 5px 27.5px black,
+      7.5px 27.5px #b99de8, 10px 27.5px black, 12.5px 27.5px #f6ddd9,
+      15px 27.5px #f6ddd9, 17.5px 27.5px black, 20px 27.5px #b99de8,
+      22.5px 27.5px #b99de8, 25px 27.5px #b99de8, 27.5px 27.5px black,
+      30px 27.5px #b99de8, 32.5px 27.5px #b99de8, 35px 27.5px black,
+      /*Thirteenth Row*/ 5px 30px black, 7.5px 30px #b99de8, 10px 30px #b99de8,
+      12.5px 30px black, 15px 30px black, 17.5px 30px black, 20px 30px black,
+      22.5px 30px black, 25px 30px black, 27.5px 30px #b99de8, 30px 30px #b99de8,
+      32.5px 30px black, /*Fourteenth Row*/ 7.5px 32.5px black, 10px 32.5px black,
+      25px 32.5px black, 27.5px 32.5px black, 30px 32.5px black;
+  }
+  /*pos classes are the positions of tiles in a room  */
+  .pos1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  .pos2 {
+    position: absolute;
+    top: 0px;
+    left: 12.5px;
+  }
+  .pos3 {
+    position: absolute;
+    top: 0px;
+    left: 52.5px;
+  }
+  .pos4 {
+    position: absolute;
+    top: 0px;
+    left: 92.5px;
+  }
+  .pos5 {
+    position: absolute;
+    top: 0px;
+    left: 132.5px;
+  }
+  .pos6 {
+    position: absolute;
+    top: 0px;
+    left: 172.5px;
+  }
+  .pos7 {
+    position: absolute;
+    top: 0px;
+    left: 211.5px;
+  }
+  .pos8 {
+    position: absolute;
+    top: 12.5px;
+    left: 0px;
+  }
+  .pos9 {
+    position: absolute;
+    top: 12.5px;
+    left: 12.5px;
+  }
+  .pos10 {
+    position: absolute;
+    top: 12.5px;
+    left: 52.5px;
+  }
+  .pos11 {
+    position: absolute;
+    top: 12.5px;
+    left: 92.5px;
+  }
+  .pos12 {
+    position: absolute;
+    top: 12.5px;
+    left: 132.5px;
+  }
+  .pos13 {
+    position: absolute;
+    top: 12.5px;
+    left: 172.5px;
+  }
+  .pos14 {
+    position: absolute;
+    top: 12.5px;
+    left: 211.5px;
+  }
+  .pos15 {
+    position: absolute;
+    top: 52.5px;
+    left: 0px;
+  }
+  .pos16 {
+    position: absolute;
+    top: 52.5px;
+    left: 12.5px;
+  }
+  .pos17 {
+    position: absolute;
+    top: 52.5px;
+    left: 52.5px;
+  }
+  .pos18 {
+    position: absolute;
+    top: 52.5px;
+    left: 92.5px;
+  }
+  .pos19 {
+    position: absolute;
+    top: 52.5px;
+    left: 132.5px;
+  }
+  .pos20 {
+    position: absolute;
+    top: 52.5px;
+    left: 172.5px;
+  }
+  .pos21 {
+    position: absolute;
+    top: 52.5px;
+    left: 211.5px;
+  }
+  .pos22 {
+    position: absolute;
+    top: 92.5px;
+    left: 0px;
+  }
+  .pos23 {
+    position: absolute;
+    top: 92.5px;
+    left: 12.5px;
+  }
+  .pos24 {
+    position: absolute;
+    top: 92.5px;
+    left: 52.5px;
+  }
+  .pos25 {
+    position: absolute;
+    top: 92.5px;
+    left: 92.5px;
+  }
+  .pos26 {
+    position: absolute;
+    top: 92.5px;
+    left: 132.5px;
+  }
+  .pos27 {
+    position: absolute;
+    top: 92.5px;
+    left: 172.5px;
+  }
+  .pos28 {
+    position: absolute;
+    top: 92.5px;
+    left: 211.5px;
+  }
+  .pos29 {
+    position: absolute;
+    top: 132.5px;
+    left: 0px;
+  }
+  .pos30 {
+    position: absolute;
+    top: 132.5px;
+    left: 12.5px;
+  }
+  .pos31 {
+    position: absolute;
+    top: 132.5px;
+    left: 52.5px;
+  }
+  .pos32 {
+    position: absolute;
+    top: 132.5px;
+    left: 92.5px;
+  }
+  .pos33 {
+    position: absolute;
+    top: 132.5px;
+    left: 132.5px;
+  }
+  .pos34 {
+    position: absolute;
+    top: 132.5px;
+    left: 172.5px;
+  }
+  .pos35 {
+    position: absolute;
+    top: 132.5px;
+    left: 211.5px;
+  }
+  .pos36 {
+    position: absolute;
+    top: 172.5px;
+    left: 0px;
+  }
+  .pos37 {
+    position: absolute;
+    top: 172.5px;
+    left: 12.5px;
+  }
+  .pos38 {
+    position: absolute;
+    top: 172.5px;
+    left: 52.5px;
+  }
+  .pos39 {
+    position: absolute;
+    top: 172.5px;
+    left: 92.5px;
+  }
+  .pos40 {
+    position: absolute;
+    top: 172.5px;
+    left: 132.5px;
+  }
+  .pos41 {
+    position: absolute;
+    top: 172.5px;
+    left: 172.5px;
+  }
+  .pos42 {
+    position: absolute;
+    top: 172.5px;
+    left: 211.5px;
+  }
+  .pos43 {
+    position: absolute;
+    top: 212.5px;
+    left: 0px;
+  }
+  .pos44 {
+    position: absolute;
+    top: 212.5px;
+    left: 12.5px;
+  }
+  .pos45 {
+    position: absolute;
+    top: 212.5px;
+    left: 52.5px;
+  }
+  .pos46 {
+    position: absolute;
+    top: 212.5px;
+    left: 92.5px;
+  }
+  .pos47 {
+    position: absolute;
+    top: 212.5px;
+    left: 132.5px;
+  }
+  .pos48 {
+    position: absolute;
+    top: 212.5px;
+    left: 172.5px;
+  }
+  .pos49 {
+    position: absolute;
+    top: 212.5px;
+    left: 211.5px;
+  }
+  .pos50 {
+    position: absolute;
+    top: 110px;
+    left: 182px;
+  }
+  .pos51 {
+    position: absolute;
+    top: 110px;
+    left: 40px;
+  }
+  .pos52 {
+    position: absolute;
+    top: 25px;
+    left: 90px;
+  }
+  .pos53 {
+    position: absolute;
+    top: 110px;
+    left: 115px;
+  }
+  #room1 {
+    position: absolute;
+    top: 350px;
+    left: 0px;
+    height: 500px;
+    width: 500px;
+  }
+  #room2 {
+    position: absolute;
+    top: 350px;
+    left: 226.5px;
+    height: 1000px;
+    width: 1000px;
+  }
+  #room3 {
+    position: absolute;
+    top: 350px;
+    left: 453px;
+    height: 1000px;
+    width: 1000px;
+  }
+  #room4 {
+    position: absolute;
+    top: 122px;
+    left: 0px;
+    height: 500px;
+    width: 500px;
+  }
+  #room5 {
+    position: absolute;
+    top: 122px;
+    left: 226.5px;
+    height: 1000px;
+    width: 1000px;
+  }
+  #room6 {
+    position: absolute;
+    top: 122px;
+    left: 453px;
+    height: 1000px;
+    width: 1000px;
+  }
+  #room7 {
+    position: absolute;
+    top: -106px;
+    left: 0px;
+    height: 1000px;
+    width: 1000px;
+  }
+  #room8 {
+    position: absolute;
+    top: -106px;
+    left: 226.5px;
+    height: 1000px;
+    width: 1000px;
+  }
+  #room9 {
+    position: absolute;
+    top: -106px;
+    left: 453px;
+    height: 1000px;
+    width: 1000px;
+  }
+  
+  /* crt screen effect */
+  
+  @keyframes flicker {
+    0% {
+      opacity: 0.27861;
+    }
+    5% {
+      opacity: 0.34769;
+    }
+    10% {
+      opacity: 0.23604;
+    }
+    15% {
+      opacity: 0.90626;
+    }
+    20% {
+      opacity: 0.18128;
+    }
+    25% {
+      opacity: 0.83891;
+    }
+    30% {
+      opacity: 0.65583;
+    }
+    35% {
+      opacity: 0.67807;
+    }
+    40% {
+      opacity: 0.84693;
+    }
+    45% {
+      opacity: 0.96019;
+    }
+    50% {
+      opacity: 0.08594;
+    }
+    55% {
+      opacity: 0.20313;
+    }
+    60% {
+      opacity: 0.71988;
+    }
+    65% {
+      opacity: 0.53455;
+    }
+    70% {
+      opacity: 0.37288;
+    }
+    75% {
+      opacity: 0.71428;
+    }
+    80% {
+      opacity: 0.70419;
+    }
+    85% {
+      opacity: 0.7003;
+    }
+    90% {
+      opacity: 0.36108;
+    }
+    95% {
+      opacity: 0.24387;
+    }
+    100% {
+      opacity: 0.27861;
+    }
+  }
+  #crt::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+  }
+  #crt::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    z-index: 5;
+    pointer-events: none;
+    background-size: 100% 3px, 4px 100%;
+  }
+  
+  /* Typing Effect */
+  
+  .headBox {
+    left: 28vw;
+    height: 5em;
+    width: 42em;
+    background-color: #d1d9e0;
+    position: fixed;
+    border-radius: 10px;
+    border: 5px solid black;
+  }
+  .footBox {
+    left: 28vw;
+    top: 80vh;
+    height: 5em;
+    width: 42em;
+    background-color: #d1d9e0;
+    position: fixed;
+    border-radius: 10px;
+    border: 5px solid black;
+  }
+  .typing-Header {
+    /*   background-color: #d1d9e0; */
+    top: 25px;
+    left: 25px;
+    position: absolute;
+    width: 44ch;
+    animation: typing 2.5s steps(25);
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+    animation-fill-mode: forwards;
+  }
+  .typing-Header1 {
+    /*   background-color: #d1d9e0; */
+    top: 25px;
+    left: 25px;
+    position: absolute;
+    width: 37ch;
+    animation: typing1 2.5s steps(25);
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+    animation-fill-mode: forwards;
+  }
+  .typing-Header2 {
+    /*   background-color: #d1d9e0; */
+    top: 25px;
+    left: 25px;
+    position: absolute;
+    width: 37ch;
+    animation: typing2 2.5s steps(25);
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+    animation-fill-mode: forwards;
+  }
+  .typing-Header3 {
+    /*   background-color: #d1d9e0; */
+    top: 25px;
+    left: 25px;
+    position: absolute;
+    width: 35ch;
+    animation: typing3 2.5s steps(25);
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+    animation-fill-mode: forwards;
+  }
+  @keyframes typing {
+    0% {
+      width: 0;
+    }
+    99% {
+      border-right: 3px solid;
+    }
+    100% {
+      border: none;
+    }
+  }
+  @keyframes typing1 {
+    0% {
+      width: 0;
+    }
+    99% {
+      border-right: 3px solid;
+    }
+    100% {
+      border: none;
+    }
+  }
+  @keyframes typing2 {
+    0% {
+      width: 0;
+    }
+    99% {
+      border-right: 3px solid;
+    }
+    100% {
+      border: none;
+    }
+  }
+  @keyframes typing3 {
+    0% {
+      width: 0;
+    }
+    99% {
+      border-right: 3px solid;
+    }
+    100% {
+      border: none;
+    }
+  }
+  
+  @keyframes blink {
+    50% {
+      border-color: transparent;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div id="crt"></div>
+  <div id="camera">
+    <div id="wrap">
+      <div id="room1">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorWarp pos16"></div>
+        <div class="floorTiled pos17"></div>
+        <div class="floor pos18"></div>
+        <div class="floor pos19"></div>
+        <div class="floorWarp pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floorTiled pos23"></div>
+        <div class="floorTiled pos24"></div>
+        <div class="floor pos25"></div>
+        <div class="floor pos26"></div>
+        <div class="floorCracked pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floor pos30"></div>
+        <div class="floor pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floor pos33"></div>
+        <div class="floor pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorWarp pos37"></div>
+        <div class="floorCracked pos38"></div>
+        <div class="floor pos39"></div>
+        <div class="floorCracked pos40"></div>
+        <div class="floorWarp pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49">
+        </div>
+      </div>
+      <div id="room2">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorWarp pos16"></div>
+        <div class="floorTiled pos17"></div>
+        <div class="floor pos18"></div>
+        <div class="floorCracked pos19"></div>
+        <div class="floorWarp pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floor pos23"></div>
+        <div class="floorCracked pos24"></div>
+        <div class="floor pos25"></div>
+        <div class="floor pos26"></div>
+        <div class="floor pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floor pos30"></div>
+        <div class="floor pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floor pos33"></div>
+        <div class="floor pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorWarp pos37"></div>
+        <div class="floor pos38"></div>
+        <div class="floor pos39"></div>
+        <div class="floorCracked pos40"></div>
+        <div class="floorWarp pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49"></div>
+        <div class="npc1 pos50"></div>
+      </div>
+      <div id="room3">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorWarp pos16"></div>
+        <div class="floorTiled pos17"></div>
+        <div class="floor pos18"></div>
+        <div class="floor pos19"></div>
+        <div class="floorWarp pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floorTiled pos23"></div>
+        <div class="floor pos24"></div>
+        <div class="floor pos25"></div>
+        <div class="floor pos26"></div>
+        <div class="floor pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floorCracked pos30"></div>
+        <div class="floor pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floor pos33"></div>
+        <div class="floor pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorWarp pos37"></div>
+        <div class="floor pos38"></div>
+        <div class="floorCracked pos39"></div>
+        <div class="floor pos40"></div>
+        <div class="floorWarp pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49"></div>
+      </div>
+      <div id="room4">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorWarp pos16"></div>
+        <div class="floor pos17"></div>
+        <div class="floorCracked pos18"></div>
+        <div class="floor pos19"></div>
+        <div class="floorWarp pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floor pos23"></div>
+        <div class="floor pos24"></div>
+        <div class="floor pos25"></div>
+        <div class="floor pos26"></div>
+        <div class="floorCracked pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floorCracked pos30"></div>
+        <div class="floorTiled pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floor pos33"></div>
+        <div class="floor pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorWarp pos37"></div>
+        <div class="floorTiled pos38"></div>
+        <div class="floorCracked pos39"></div>
+        <div class="floor pos40"></div>
+        <div class="floorWarp pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49"></div>
+        <div class="npc2 pos51"></div>
+      </div>
+      <div id="room5">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorTiled pos16"></div>
+        <div class="floorTiled pos17"></div>
+        <div class="floorTiled pos18"></div>
+        <div class="npc3 pos52"></div>
+        <div class="floorTiled pos19"></div>
+        <div class="floorTiled pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floorTiled pos23"></div>
+        <div class="floor pos24"></div>
+        <div class="floorWarp pos25"></div>
+        <div class="floor pos26"></div>
+        <div class="floorTiled pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floorTiled pos30"></div>
+        <div class="floor pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floor pos33"></div>
+        <div class="floorTiled pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorTiled pos37"></div>
+        <div class="floorTiled pos38"></div>
+        <div class="floorWarp pos39"></div>
+        <div class="floorTiled pos40"></div>
+        <div class="floorTiled pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49"></div>
+      </div>
+      <div id="room6">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorWarp pos16"></div>
+        <div class="floor pos17"></div>
+        <div class="floorCracked pos18"></div>
+        <div class="floorTiled pos19"></div>
+        <div class="floorWarp pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floorCracked pos23"></div>
+        <div class="floor pos24"></div>
+        <div class="floor pos25"></div>
+        <div class="floorTiled pos26"></div>
+        <div class="floorTiled pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floor pos30"></div>
+        <div class="floor pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floor pos33"></div>
+        <div class="floorCracked pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorWarp pos37"></div>
+        <div class="floor pos38"></div>
+        <div class="floor pos39"></div>
+        <div class="floor pos40"></div>
+        <div class="floorWarp pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49"></div>
+      </div>
+      <div id="room7">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorWarp pos16"></div>
+        <div class="floorCracked pos17"></div>
+        <div class="floor pos18"></div>
+        <div class="floorCracked pos19"></div>
+        <div class="floorWarp pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floor pos23"></div>
+        <div class="floor pos24"></div>
+        <div class="floor pos25"></div>
+        <div class="floor pos26"></div>
+        <div class="floor pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floorCracked pos30"></div>
+        <div class="floorTiled pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floor pos33"></div>
+        <div class="floor pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorWarp pos37"></div>
+        <div class="floorTiled pos38"></div>
+        <div class="floor pos39"></div>
+        <div class="floorCracked pos40"></div>
+        <div class="floorWarp pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49"></div>
+      </div>
+      <div id="room8">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorWarp pos16"></div>
+        <div class="floor pos17"></div>
+        <div class="floor pos18"></div>
+        <div class="floor pos19"></div>
+        <div class="floorWarp pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floor pos23"></div>
+        <div class="floor pos24"></div>
+        <div class="floor pos25"></div>
+        <div class="floorCracked pos26"></div>
+        <div class="floor pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floorTiled pos30"></div>
+        <div class="floorTiled pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floor pos33"></div>
+        <div class="floor pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorWarp pos37"></div>
+        <div class="floorCracked pos38"></div>
+        <div class="floor pos39"></div>
+        <div class="floor pos40"></div>
+        <div class="floorWarp pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49"></div>
+      </div>
+      <div id="room9">
+        <div class="topLeft pos1"></div>
+        <div class="edgeTop pos2"></div>
+        <div class="edgeTop pos3"></div>
+        <div class="edgeTop pos4"></div>
+        <div class="edgeTop pos5"></div>
+        <div class="edgeTop pos6"></div>
+        <div class="topRight pos7"></div>
+        <div class="edgeLeft pos8"></div>
+        <div class="bricksV1 pos9"></div>
+        <div class="bricksV2 pos10"></div>
+        <div class="bricksV1 pos11"></div>
+        <div class="bricksV1 pos12"></div>
+        <div class="bricksV2 pos13"></div>
+        <div class="edgeRight pos14"></div>
+        <div class="edgeLeft pos15"></div>
+        <div class="floorWarp pos16"></div>
+        <div class="floor pos17"></div>
+        <div class="floorCracked pos18"></div>
+        <div class="floor pos19"></div>
+        <div class="floorWarp pos20"></div>
+        <div class="edgeRight pos21"></div>
+        <div class="edgeLeft pos22"></div>
+        <div class="floor pos23"></div>
+        <div class="floor pos24"></div>
+        <div class="floor pos25"></div>
+        <div class="floor pos26"></div>
+        <div class="floor pos27"></div>
+        <div class="edgeRight pos28"></div>
+        <div class="edgeLeft pos29"></div>
+        <div class="floorCracked pos30"></div>
+        <div class="floor pos31"></div>
+        <div class="floor pos32"></div>
+        <div class="floorTiled pos33"></div>
+        <div class="floorTiled pos34"></div>
+        <div class="edgeRight pos35"></div>
+        <div class="edgeLeft pos36"></div>
+        <div class="floorWarp pos37"></div>
+        <div class="floorCracked pos38"></div>
+        <div class="floor pos39"></div>
+        <div class="floorTiled pos40"></div>
+        <div class="floorWarp pos41"></div>
+        <div class="edgeRight pos42"></div>
+        <div class="botLeft pos43"></div>
+        <div class="edgeBot pos44"></div>
+        <div class="edgeBot pos45"></div>
+        <div class="edgeBot pos46"></div>
+        <div class="edgeBot pos47"></div>
+        <div class="edgeBot pos48"></div>
+        <div class="botRight pos49"></div>
+      </div>
+    </div>
+    <div id='player' class="playerDown1 pos53"></div>
+  </div>
+  <div class="headBox">
+    <div id=dialogue class="typing-Header">
+      OBJECTIVE: Find A Way Back To The Directory!
+    </div>
+  </div>
+  <div class="footBox">
+    <div class="typing-Header">
+      Use Arrow Keys To Move And Z To Interract
+    </div>
+  </div>
+
+  <script>
+let y = -402.5;
+let x = 102.5;
+let steps = 2;
+let player = document.getElementById("player");
+let inRoom1 = true;
+let inRoom2 = false;
+let inRoom3 = false;
+let inRoom4 = false;
+let inRoom5 = false;
+let inRoom6 = false;
+let inRoom7 = false;
+let inRoom8 = false;
+let inRoom9 = false;
+let prevRoom = 1;
+const move = (e) => {
+  if (e.keyCode === 38 && y != -260 && y != -257.5 && y != -35 && y != 197.5) {
+    if (y == -370 && x >= -287.5 && x <= -257.5) {
+      return;
+    }
+    if (y == -140 && x >= 72.5 && x <= 102.5) {
+      return;
+    }
+    if (y == -57.5 && x >= -227.5 && x <= -175) {
+      return;
+    }
+
+    document.getElementById("wrap").style.top = y + 7.5 + "px";
+    y += 7.5;
+    steps++;
+    if (steps == 3) {
+      player.classList.remove("playerRight1");
+      player.classList.remove("playerLeft1");
+      player.classList.remove("playerDown1");
+      player.classList.remove("playerUp1");
+      player.classList.remove("playerUp3");
+      player.classList.add("playerUp2");
+    } else if (steps == 6) {
+      player.classList.remove("playerUp2");
+      player.classList.remove("playerUp3");
+      player.classList.add("playerUp1");
+    } else if (steps == 9) {
+      player.classList.remove("playerUp1");
+      player.classList.remove("playerUp2");
+      player.classList.add("playerUp3");
+      steps = 0;
+    }
+  } else if (e.keyCode === 40 && y != -410 && y != -185 && y != 40) {
+    if (y == -310 && x >= -287.5 && x <= -257.5) {
+      return;
+    }
+    if (y == -87.5 && x >= 72.5 && x <= 102.5) {
+      return;
+    }
+
+    document.getElementById("wrap").style.top = y - 7.5 + "px";
+    y -= 7.5;
+    steps++;
+    if (steps == 3) {
+      player.classList.remove("playerRight1");
+      player.classList.remove("playerLeft1");
+      player.classList.remove("playerDown1");
+      player.classList.remove("playerUp1");
+      player.classList.remove("playerDown3");
+      player.classList.add("playerDown2");
+    } else if (steps == 6) {
+      player.classList.remove("playerDown2");
+      player.classList.remove("playerDown3");
+      player.classList.add("playerDown1");
+    } else if (steps == 9) {
+      player.classList.remove("playerDown1");
+      player.classList.remove("playerDown2");
+      player.classList.add("playerDown3");
+      steps = 0;
+    }
+  } else if (e.keyCode === 37 && x !=107.5 &&  x != 102.5 && x != -122.5 && x != -347.5) {
+    if (y <= -87.5 && y >= -140 && x == 72.5) {
+      return;
+    }
+    if (y >= -57.5 && y <= -35 && x == -227.5) {
+      return;
+    }
+
+    document.getElementById("wrap").style.left = x + 7.5 + "px";
+    x += 7.5;
+    steps++;
+    if (steps == 3) {
+      player.classList.remove("playerRight1");
+      player.classList.remove("playerLeft1");
+      player.classList.remove("playerDown1");
+      player.classList.remove("playerUp1");
+      player.classList.remove("playerLeft3");
+      player.classList.add("playerLeft2");
+    } else if (steps == 6) {
+      player.classList.remove("playerLeft2");
+      player.classList.remove("playerLeft3");
+      player.classList.add("playerLeft1");
+    } else if (steps == 9) {
+      player.classList.remove("playerLeft1");
+      player.classList.remove("playerLeft2");
+      player.classList.add("playerLeft3");
+      steps = 0;
+    }
+  } else if (e.keyCode === 39 && x != -62.5 && x != -287.5 && x != -512.5 && x !=-57.5) {
+    if (y >= -57.5 && y <= -35 && x == -175) {
+      return;
+    }
+    if (y <= -310 && y >= -370 && x == -257.5) {
+      return;
+    }
+
+    document.getElementById("wrap").style.left = x - 7.5 + "px";
+    x -= 7.5;
+    steps++;
+    if (steps == 3) {
+      player.classList.remove("playerRight1");
+      player.classList.remove("playerLeft1");
+      player.classList.remove("playerDown1");
+      player.classList.remove("playerUp1");
+      player.classList.remove("playerRight3");
+      player.classList.add("playerRight2");
+    } else if (steps == 6) {
+      player.classList.remove("playerRight2");
+      player.classList.remove("playerRight3");
+      player.classList.add("playerRight1");
+    } else if (steps == 9) {
+      player.classList.remove("playerRight1");
+      player.classList.remove("playerRight2");
+      player.classList.add("playerRight3");
+      steps = 0;
+    }
+  } else if (e.keyCode === 90) {
+    let text = document.getElementById("dialogue");
+    if (y >= -362.5 && y <= -302.5 && x >= -287.5 && x <= -250) {
+      text.innerHTML = "I heard the tiles show the way out...";
+      text.classList.remove("typing-Header");
+      text.classList.remove("typing-Header2");
+      text.classList.remove("typing-Header3");
+      text.classList.add("typing-Header1");
+    }
+    if (y >= -147.5 && y <= -80 && x >= 65 && x <= 110) {
+      text.innerHTML = "I lost my friends, so i`ll wait here.";
+      text.classList.remove("typing-Header");
+      text.classList.remove("typing-Header1");
+      text.classList.remove("typing-Header3");
+      text.classList.add("typing-Header2");
+    }
+    if (y == -57.5 && x >= -227.5 && x <= -175) {
+      text.innerHTML = "Congratz! You made it to the end!";
+      text.classList.remove("typing-Header");
+      text.classList.remove("typing-Header1");
+      text.classList.remove("typing-Header2");
+      text.classList.add("typing-Header3");
+    }
+  }
+  if (inRoom1 && x <= -55 && y >= -402.5 && y <= -395 && prevRoom != 9) {
+    x = -512.5;
+    y = 177.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom1 = false;
+    inRoom9 = true;
+    prevRoom = 1;
+  } else if (inRoom1 && x <= -55 && y >= -282.5 && prevRoom != 3) {
+    x = -512.5;
+    y = -282.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom1 = false;
+    inRoom3 = true;
+    prevRoom = 1;
+  } else if (
+    inRoom1 &&
+    x <= 117.5 &&
+    x >= 102.5 &&
+    y <= -282.5 &&
+    y >= -297.5 &&
+    prevRoom != 7
+  ) {
+    x = 107.5;
+    y = 55;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom1 = false;
+    inRoom7 = true;
+    prevRoom = 1;
+  }else if(inRoom9 && x <= -505 && x>=-512.5 && y >= 170 && y <= 177.5 && prevRoom != 1) {
+    x = -55
+    y = -395
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom9 = false;
+    inRoom1 = true;
+    prevRoom = 9;
+  } else if (
+    inRoom9 &&
+    x <= -505 &&
+    x >= -520 &&
+    y >= 50 &&
+    y <= 65 &&
+    prevRoom != 3
+  ) {
+    x = -347.5;
+    y = -400;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom9 = false;
+    inRoom3 = true;
+    prevRoom = 9;
+  } else if (
+    inRoom9 &&
+    x <= -340 &&
+    x >= -355 &&
+    y >= 50 &&
+    y <= 65 &&
+    prevRoom != 7
+  ) {
+    x = -55;
+    y = 57.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom9 = false;
+    inRoom7 = true;
+    prevRoom = 9;
+  } else if (
+    inRoom9 &&
+    x <= -340 &&
+    x >= -355 &&
+    y >= 167.5 &&
+    y <= 182.5 &&
+    prevRoom != 2
+  ) {
+    x = -122.5;
+    y = -400;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom9 = false;
+    inRoom2 = true;
+    prevRoom = 9;
+  }else if (
+    inRoom2 &&
+    x <= -115 &&
+    x >= -122.5 &&
+    y >= -400 &&
+    y <=  -392.5&&
+    prevRoom != 9
+  ) {
+    x = -347.5
+    y = 175
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom2 = false;
+    inRoom9 = true;
+    prevRoom = 2;
+  } else if (
+    inRoom2 &&
+    x <= -280 &&
+    x >= -295 &&
+    y >= -417.5 &&
+    y <= -402.5 &&
+    prevRoom != 6
+  ) {
+    x = -512.5;
+    y = -50;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom2 = false;
+    inRoom6 = true;
+    prevRoom = 2;
+  } else if (
+    inRoom2 &&
+    x <= -287.5 &&
+    x >= -302.5 &&
+    y >= -297.5 &&
+    y <= -282.5 &&
+    prevRoom != 4
+  ) {
+    x = 102.5;
+    y = -170;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom2 = false;
+    inRoom4 = true;
+    prevRoom = 2;
+  } else if (
+    inRoom2 &&
+    x <= -122.5 &&
+    x >= -137.5 &&
+    y >= -297.5 &&
+    y <= -282.5 &&
+    prevRoom != 8
+  ) {
+    x = -122.5;
+    y = 175;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom2 = false;
+    inRoom8 = true;
+    prevRoom = 2;
+  } else if (
+    inRoom8 &&
+    x <= -122.5 &&
+    x >= -137.5 &&
+    y >= 175 &&
+    y <= 182.5 &&
+    prevRoom != 2
+  ) {
+    x= -130
+    y = -290
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom8 = false;
+    inRoom2 = true;
+    prevRoom = 8;
+  } else if (
+    inRoom8 &&
+    x <= -280 &&
+    x >= -295 &&
+    y >= 175 &&
+    y <= 190 &&
+    prevRoom != 3
+  ) {
+    x = -512.5;
+    y = -402.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom8 = false;
+    inRoom3 = true;
+    prevRoom = 8;
+  } else if (
+    inRoom8 &&
+    x <= -280 &&
+    x >= -295 &&
+    y >= 55 &&
+    y <= 70 &&
+    prevRoom != 6
+  ) {
+    x = -347.5;
+    y = -50;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom8 = false;
+    inRoom6 = true;
+    prevRoom = 8;
+  } else if (
+    inRoom8 &&
+    x <= -122.5 &&
+    x >= -137.5 &&
+    y >= 55 &&
+    y <= 70 &&
+    prevRoom != 4
+  ) {
+    x = -55;
+    y = -170;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom8 = false;
+    inRoom4 = true;
+    prevRoom = 8;
+  } else if (
+    inRoom3 &&
+    x <= -512.5 &&
+    x >= -520 &&
+    y >= -410 &&
+    y <= -402.5 &&
+    prevRoom != 8
+  ) {
+    x=-287.5
+    y= 182.5
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom3 = false;
+    inRoom8 = true;
+    prevRoom = 3;
+  } else if (
+    inRoom3 &&
+    x <= -512.5 &&
+    x >= -527.5 &&
+    y >= -297.5 &&
+    y <= -282.5 &&
+    prevRoom != 1
+  ) {
+    x = -55;
+    y = -282.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom3 = false;
+    inRoom1 = true;
+    prevRoom = 3;
+  } else if (
+    inRoom3 &&
+    x <= -355 &&
+    x >= -370 &&
+    y >= -290 &&
+    y <= -275 &&
+    prevRoom != 7
+  ) {
+    x = 102.5;
+    y = 182.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom3 = false;
+    inRoom7 = true;
+    prevRoom = 3;
+  } else if (
+    inRoom3 &&
+    x <= -347.5 &&
+    x >= -362.5 &&
+    y >= -417.5 &&
+    y <= -402.5 &&
+    prevRoom != 9
+  ) {
+    x = -512.5;
+    y = 62.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom3 = false;
+    inRoom9 = true;
+    prevRoom = 3;
+  } else if (
+    inRoom7 &&
+    x <= 110 &&
+    x >= 102.5 &&
+    y >= 182.5 &&
+    y <= 190 &&
+    prevRoom != 3
+  ) {
+    x = -362.5
+    y = -282.5
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom7 = false;
+    inRoom3 = true;
+    prevRoom = 7;
+  } else if (
+    inRoom7 &&
+    x <= -55 &&
+    x >= -70 &&
+    y >= 160 &&
+    y <= 182.5 &&
+    prevRoom != 4
+  ) {
+    x = 102.5;
+    y = -50;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom7 = false;
+    inRoom4 = true;
+    prevRoom = 7;
+  } else if (
+    inRoom7 &&
+    x <= -55 &&
+    x >= -70 &&
+    y >= 55 &&
+    y <= 70 &&
+    prevRoom != 9
+  ) {
+    x = -347.5;
+    y = 55;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom7 = false;
+    inRoom9 = true;
+    prevRoom = 7;
+  } else if (
+    inRoom7 &&
+    x <= -102.5 &&
+    x >= -117.5 &&
+    y >= -70 &&
+    y <= -55 &&
+    prevRoom != 1
+  ) {
+    x = 102.5;
+    y = -282.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom7 = false;
+    inRoom1 = true;
+    prevRoom = 7;
+  } else if (
+    inRoom4 &&
+    x <= 110 &&
+    x >= 102.5 &&
+    y >= -57.5 &&
+    y <= -50 &&
+    prevRoom != 7
+  ) {
+    x= -62.5
+    y= 167.5
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom4 = false;
+    inRoom7 = true;
+    prevRoom = 4;
+  } else if (
+    inRoom4 &&
+    x <= -55 &&
+    x >= -70 &&
+    y >= -57.5 &&
+    y <= -42.5 &&
+    prevRoom != 6
+  ) {
+    x = -512.5;
+    y = -170;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom4 = false;
+    inRoom6 = true;
+    prevRoom = 4;
+  } else if (
+    inRoom4 &&
+    x <= -55 &&
+    x >= -70 &&
+    y >= -192.5 &&
+    y <= -177.5 &&
+    prevRoom != 8
+  ) {
+    x = -122.5;
+    y = 55;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom4 = false;
+    inRoom8 = true;
+    prevRoom = 4;
+  } else if (
+    inRoom4 &&
+    x <= 117.5 &&
+    x >= 102.5 &&
+    y >= -185 &&
+    y <= -170 &&
+    prevRoom != 2
+  ) {
+    x = -280;
+    y = -275;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom4 = false;
+    inRoom2 = true;
+    prevRoom = 4;
+  }  else if (
+    inRoom6 &&
+    x <= -512.5 &&
+    x >= -520 &&
+    y >= -177.5 &&
+    y <= -170 &&
+    prevRoom != 4
+  ) {
+    x= -62.5
+    y= -50
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom6 = false;
+    inRoom4 = true;
+    prevRoom = 6;
+  } else if (
+    inRoom6 &&
+    x <= -512.5 &&
+    x >= -527.5 &&
+    y >= -65 &&
+    y <= -50 &&
+    prevRoom != 2
+  ) {
+    x = -280;
+    y = -402.5;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom6 = false;
+    inRoom2 = true;
+    prevRoom = 6;
+  } else if (
+    inRoom6 &&
+    x <= -347.5 &&
+    x >= -362.5 &&
+    y >= -65 &&
+    y <= -50 &&
+    prevRoom != 8
+  ) {
+    x = -280;
+    y = 55;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom2 = false;
+    inRoom8 = true;
+    prevRoom = 6;
+  } else if (
+    inRoom6 &&
+    x <= -347.5 &&
+    x >= -362.5 &&
+    y >= -185 &&
+    y <= -170 &&
+    prevRoom != 5
+  ) {
+    x = -205;
+    y = -170;
+    document.getElementById("wrap").style.left = x + "px";
+    document.getElementById("wrap").style.top = y + "px";
+    inRoom6 = false;
+    inRoom5 = true;
+    prevRoom = 6;
+  } else if (inRoom5 && x <= -205 && x >= -220 && y >= -110 && y <= -95) {
+    window.location.href = "https://devvit.io/ReallyAnnoyingDirectory/";
+  }
+};
+
+const stop = (e) => {
+  if (e.keyCode === 38) {
+    steps = 2;
+    player.classList.remove("playerUp3");
+    player.classList.remove("playerUp2");
+    player.classList.add("playerUp1");
+  } else if (e.keyCode === 40) {
+    steps = 2;
+    player.classList.remove("playerDown3");
+    player.classList.remove("playerDown2");
+    player.classList.add("playerDown1");
+  } else if (e.keyCode === 37) {
+    steps = 2;
+    player.classList.remove("playerLeft3");
+    player.classList.remove("playerLeft2");
+    player.classList.add("playerLeft1");
+  } else if (e.keyCode === 39) {
+    steps = 2;
+    player.classList.remove("playerRight3");
+    player.classList.remove("playerRight2");
+    player.classList.add("playerRight1");
+  }
+};
+document.addEventListener("keyup", stop);
+document.addEventListener("keydown", move);
+
+  </script>
+</body>
+</html>
