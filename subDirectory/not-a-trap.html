@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>You asked for this</title>
+  <style>
+    body {
+      font-family: Comic Sans MS, cursive;
+      background: linear-gradient(45deg, #ff00ff, #00ffff);
+      cursor: none;
+      transition: transform 0.1s linear;
+    }
+    #backLink {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      animation: rainbow 2s linear infinite;
+    }
+    @keyframes rainbow {
+      0% { color: red; }
+      14% { color: orange; }
+      28% { color: yellow; }
+      42% { color: green; }
+      57% { color: blue; }
+      71% { color: indigo; }
+      85% { color: violet; }
+      100% { color: red; }
+    }
+    #popupText {
+      position: absolute;
+      font-size: 36px;
+      font-weight: bold;
+      color: #ff0000;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <a id="backLink" href="https://devvit.io/ReallyAnnoyingDirectory/">Escape While You Can!</a>
+  <audio id="audioPlayer" loop>
+    <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+  </audio>
+  <script>
+    // Custom cursor
+    document.body.style.cursor = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\" viewport=\"0 0 100 100\" style=\"fill:black;font-size:30px;\"><text y=\".9em\" font-size=\"30\">💩</text></svg>'), auto";
+
+    // Annoying popup text
+    document.addEventListener('mousemove', function(e) {
+      var text = document.createElement('div');
+      text.id = 'popupText';
+      text.innerText = 'Why are you here?';
+      text.style.left = e.pageX + 'px';
+      text.style.top = e.pageY + 'px';
+      document.body.appendChild(text);
+      setTimeout(() => text.remove(), 500);
+    });
+
+    // Auto-playing sound
+    window.addEventListener('click', function() {
+      document.getElementById('audioPlayer').play();
+    });
+
+    // Rotate everything slowly
+    let angle = 0;
+    setInterval(() => {
+      angle += 0.1;
+      document.body.style.transform = `rotate(${angle}deg)`;
+    }, 50);
+
+    // Alert on exit attempt
+    window.onbeforeunload = function() {
+      return "Are you sure you want to leave this amazing page?";
+    };
+  </script>
+</body>
+</html>
